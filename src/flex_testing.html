@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .panel {
+            border: 1px dotted red;
+            width: 80%;
+            height: 60px;
+            margin: auto;
+            padding: 10px;
+            display: flex;
+        }
+        .box1,
+        .box2 {
+            margin: 0 10px;
+            padding: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: stretch;
+        }
+        .box1 {
+            border: 1px solid purple;
+        }
+        .box2 {
+            border: 1px solid green;
+            flex-grow: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="panel">
+        <div class="box1">Container A</div>
+        <div class="box2">Container B</div>
+        <div class="box1">Container C</div>
+        
+    </div>
+</body>
+</html>

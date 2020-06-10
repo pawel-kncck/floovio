@@ -1,37 +1,83 @@
 import React, { useState } from 'react';
 import BaseButton from "../../Components/BaseButton"
-import EditorComponent from "./Editor/Editor";
-import AddIcon from '@material-ui/icons/Add';
-import Tag from '../../Components/Tags';
+import ViewToggle from './ViewToggle/ViewToggle';
+import { closeBuilder,cleanExerciseState } from '../../Store/actions';
+import { connect } from 'react-redux';
+import EditingView from './BuilderBody/EditingView';
+import PreviewView from './BuilderBody/PreviewView';
+import firebase from '../../firebase';
 
-const Builder = () => {
-    const [tagArray, setTagArray] = useState("");
+const Builder = (props) => {
+    const [editorMode,setEditorMode] = useState(true);
+    // const [createMode,setCreateMode] = useState(true);
 
-    function changeHandler(e) {
-        console.log(e.target.value);
-        setTagArray(e.target.value)
+    const toggleEditorPreview = (modeIdFromViewToggle) => {
+        if (modeIdFromViewToggle === "editor"){
+            setEditorMode(true);
+        } else {
+            setEditorMode(false);
+        }
     };
 
+    function saveHandler() {
+        const db = firebase.firestore();
+        db.collection("exercises").add(props.newExercise)
+            .then((res) => {
+                props.closeBuilder();
+                props.cleanExerciseState();
+                console.log(res);
+            })
+            .catch((err) => {
+                console.error(err);
+            })
+    }
+
+    function updateHandler() {
+        const db = firebase.firestore();
+        db.collection("exercises").doc(props.activeId).set(props.newExercise)
+            .then((res) => {
+                props.closeBuilder();
+                props.cleanExerciseState();
+                console.log(res);
+            })
+            .catch((err) => {
+                console.error(err);
+            })
+    }
+
     return (
-        <div className="app-builder">
-            <h1>Builder</h1>
-            <input type="text" placeholder="Insert your title..." className="builder-title"></input>
-            <EditorComponent />
-            <div className="bilder-tag-input">
-                <input type="text" placeholder="Insert tags..." className="bilder-tag-input-field" value={tagArray} onChange={changeHandler}></input>
-                <span className="bilder-tag-input-icon"><AddIcon /></span>
+        <div className="builder-dialog">
+
+            <div className="builder-dialog-header">
+                <div className="builder-dialog-header-title">{(props.activeId === "") ? "Create new exercise" : "Update exercise"}</div>
+                <div className="builder-dialog-header-input">
+                    <ViewToggle toggleEditorPreview={toggleEditorPreview} />
+                </div>
             </div>
-            <div className={(tagArray === "") ? "bilder-tag-array collapsed" : "bilder-tag-array expanded"}>
-                {tagArray.split(',').map((el,index) => {
-                    return (
-                        <Tag key={index} value={el} />
-                    )
-                })}
+            
+            {editorMode ? <EditingView /> : <PreviewView />}
+
+            <div className="builder-dialog-actions">
+                <BaseButton value="Cancel" secondary onClick={props.closeBuilder} />
+                <BaseButton value="Save" primary onClick={(props.activeId === "") ? saveHandler : updateHandler} />
             </div>
-            <BaseButton value="Preview" />
-            <BaseButton value="Save" />
+            
         </div>
     );
 }
+
+const mapStateToProps = state => {
+    return {
+      newExercise: state.newExercise,
+      activeId: state.activeId
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+      closeBuilder: () => {dispatch(closeBuilder())},
+      cleanExerciseState: () => {dispatch(cleanExerciseState())},
+    }
+}
  
-export default Builder;
+export default connect(mapStateToProps,mapDispatchToProps)(Builder);

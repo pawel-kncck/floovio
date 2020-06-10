@@ -3,11 +3,11 @@ import React from 'react';
 const BaseButton = (props) => {
     let btnClassName = () => {
         if (props.primary && !props.secondary){
-            return "btn primary"
+            return "btn-large primary"
         } else if (!props.primary && props.secondary){
-            return "btn secondary"
+            return "btn-large secondary"
         } else {
-            return "btn"
+            return "btn-large"
         }
     }
     return (

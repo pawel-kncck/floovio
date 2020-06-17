@@ -11,6 +11,13 @@ export const LOAD_EXERCISE_TO_STATE = 'LOAD_EXERCISE_TO_STATE'
 export const CLEAN_EXERCISE_STATE = 'CLEAN_EXERCISE_STATE'
 export const LOAD_ACTIVE_EXERCISE_TO_STATE = 'LOAD_ACTIVE_EXERCISE_TO_STATE'
 export const SET_ANSWER_IN_STATE = 'SET_ANSWER_IN_STATE'
+export const SET_LESSON_ANSWER_IN_STATE = 'SET_LESSON_ANSWER_IN_STATE'
+export const SET_ACTIVE_LESSON_DATA = 'SET_ACTIVE_LESSON_DATA'
+export const SET_USER = 'SET_USER'
+export const SET_MODE = 'SET_MODE'
+export const SET_SCORE_IN_STATE = 'SET_SCORE_IN_STATE'
+export const SET_COMMENT_IN_STATE = 'SET_COMMENT_IN_STATE'
+export const UPDATE_NEW_LESSON_TITLE = 'UPDATE_NEW_LESSON_TITLE'
 
 /*
  * action creators
@@ -50,5 +57,29 @@ export function cleanExerciseState() {
 
 export function setAnswerInState(id,value) {
   return { type: SET_ANSWER_IN_STATE, fieldId: id, answer: value }
+}
+
+export function setLessonAnswerInState(id,value) {
+  return { type: SET_LESSON_ANSWER_IN_STATE, id: id, answer: value }
+}
+
+export function setScoreInState(id,value) {
+  return { type: SET_SCORE_IN_STATE, id: id, score: value }
+}
+
+export function setCommentInState(id,value) {
+  return { type: SET_COMMENT_IN_STATE, id: id, comment: value }
+}
+
+export function setActiveLessonData(data) {
+  return { type: SET_ACTIVE_LESSON_DATA, data: data}
+}
+
+export function setUser(user) {
+  return { type: SET_USER, user: user}
+}
+
+export function setMode(user) {
+  return { type: SET_MODE, user: user}
 }
 

@@ -8,6 +8,9 @@
 		},
 		{
 			"path": "../dialetton-functions"
+		},
+		{
+			"path": "../JavaScript/html_parser"
 		}
 	],
 	"settings": {}

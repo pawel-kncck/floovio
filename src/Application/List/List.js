@@ -4,7 +4,7 @@ import axios from 'axios';
 import SearchIcon from '@material-ui/icons/Search';
 import LargeButton from '../../Components/LargeButton'
 import { connect } from 'react-redux';
-import { openBuilder,loadExerciseToState,cleanExerciseState } from '../../Store/actions';
+import { openBuilder,loadExerciseToState,cleanExerciseState } from '../../Store/oldActions';
 import { Link } from 'react-router-dom';
 import OpenInNewOutlinedIcon from '@material-ui/icons/OpenInNewOutlined';
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';

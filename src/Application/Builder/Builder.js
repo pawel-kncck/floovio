@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import BaseButton from "../../Components/BaseButton"
 import ViewToggle from './ViewToggle/ViewToggle';
-import { closeBuilder,cleanExerciseState } from '../../Store/actions';
+import { closeBuilder,cleanExerciseState } from '../../Store/oldActions';
 import { connect } from 'react-redux';
 import EditingView from './BuilderBody/EditingView';
 import PreviewView from './BuilderBody/PreviewView';

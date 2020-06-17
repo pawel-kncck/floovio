@@ -2,13 +2,10 @@ import React from 'react';
 import { Editor } from '@tinymce/tinymce-react';
 import { stripTags } from '../../../Utilities/Utilities';
 
-// import html2json from '../../../Utilities/html2json';
-
 class EditorComponent extends React.Component {
 
     handleEditorChange = (content, editor) => {
         this.props.transformOutput(content);
-        // console.log(html2json(content));
     }
 
     render() {

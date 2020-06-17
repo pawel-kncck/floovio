@@ -1,14 +1,14 @@
 import React, { useState,useEffect } from 'react';
-import HTMLTransformer from '../../Utilities/HTMLTransformer';
-import NewParser from '../../Utilities/TestNewParser';
+// import HTMLTransformer from '../../Utilities/HTMLTransformer';
+// import NewParser from '../../Utilities/TestNewParser';
 import BaseButton from "../../Components/BaseButton";
-import axios from 'axios';
+// import axios from 'axios';
 import { Link } from 'react-router-dom';
 import LargeButton from '../../Components/LargeButton';
 import firebase from '../../firebase';
 import GapFillerA from '../AnswerComponents/Input';
 import { connect } from 'react-redux';
-import { loadActiveExerciseToState } from '../../Store/actions';
+import { loadActiveExerciseToState } from '../../Store/oldActions';
 
 const Solver = (props) => {
     const [sharableLink, setSharableLink] = useState("")

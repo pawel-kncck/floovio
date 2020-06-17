@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
-import { setAnswerInState } from '../../Store/actions';
+import { setAnswerInState } from '../../Store/oldActions';
 
 const Input = (props) => {
     const [value,setValue] = useState(props.answer)

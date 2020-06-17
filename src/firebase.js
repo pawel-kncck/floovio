@@ -1,4 +1,10 @@
-import firebase from 'firebase';
+import firebase from 'firebase/app';
+import 'firebase/auth';        // for authentication
+import 'firebase/storage';     // for storage
+import 'firebase/database';    // for realtime database
+import 'firebase/firestore';
+import 'firebase/analytics';
+
 
 const config = {
     apiKey: "AIzaSyDc_JHhvxSz3a-EJDaGJqAi3GhMI4RPsfA",
@@ -12,6 +18,9 @@ const config = {
 };
 // Initialize Firebase
 firebase.initializeApp(config);
+const storage = firebase.storage()
 firebase.analytics();
 
-export default firebase;
+export  {
+    storage, firebase as default
+  }

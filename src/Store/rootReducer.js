@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux'
-import oldRerucer from './oldReducer'
+import oldReducer from './oldReducer'
 import newLessonReducer from './newLessonReducer'
 
 export default combineReducers({
-    oldRerucer,
+    oldReducer,
     newLessonReducer
 })

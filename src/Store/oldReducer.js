@@ -16,6 +16,7 @@ import {
 	SET_COMMENT_IN_STATE,
 	SET_USER,
 	UPDATE_NEW_LESSON_TITLE,
+	TOGGLE_TEACHER_MODE,
 } from './oldActions';
 
 const emptyExercise = {
@@ -53,6 +54,12 @@ const reducer = (state = initialState,action) => {
 			return {
 				...state,
 				showBuilder: false,
+			}
+		case TOGGLE_TEACHER_MODE:
+			const updatedTeacherMode = !state.checking_mode;
+			return {
+				...state,
+				checking_mode: updatedTeacherMode,
 			}
 		case UPDATE_NEW_LESSON_TITLE:
 			return {

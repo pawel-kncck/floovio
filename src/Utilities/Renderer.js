@@ -1,13 +1,17 @@
 import React from 'react';
-import TextField from '../Application/Lesson/TextField';
+import PassiveTextField from '../Application/Lesson/PassiveTextField';
 import DropDown from '../Application/Lesson/DropDown';
 import RadioGroup from '../Application/Lesson/RadioGroup';
 
 const componentMap = {
-    textfield: TextField,
+    textfield: PassiveTextField,
     dropdown: DropDown,
     radiogroup: RadioGroup
 }
+
+function makeId(n) {
+    return Math.random().toString(36).substr(2, n);
+};
 
 function Renderer(config) {
 
@@ -16,7 +20,7 @@ function Renderer(config) {
     } else {
         return React.createElement(
             componentMap[config.tag] || config.tag,
-            config.attr,
+            { ...config.attr, key: makeId(4) },
             config.child && (typeof config.child === "string"
                 ? config.child
                 : config.child.map(c => Renderer(c)))

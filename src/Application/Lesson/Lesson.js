@@ -1,18 +1,53 @@
-import React, { useState,useEffect } from 'react';
+import React, { useState,useEffect, Fragment } from 'react';
 import firebase from '../../firebase';
 import { connect } from 'react-redux';
 import TextField from './TextField';
 import DropDown from './DropDown';
 import RadioGroup from './RadioGroup';
-import { setActiveLessonData,setUser } from '../../Store/oldActions';
+import { setActiveLessonData,setUser,toggleTeacherMode } from '../../Store/oldActions';
 import { hasOwnNestedProperty } from '../../Utilities/Utilities'
 import UserDropdown from './UserDropdown';
+import { Paper, makeStyles, Box, Button, Typography, FormControlLabel, Switch } from '@material-ui/core';
+
+const useStyles = makeStyles({
+    root: {
+        margin: '10px'
+    },
+    h1title: {
+        marginTop: '20px'
+    },
+    header: {
+        margin: '20px 0',
+        display: 'flex'
+    },
+    title: {
+        marginRight: '20px',
+        flexGrow: '1'
+    },
+    exrcContainer: {
+        padding: '10px',
+        display: 'flex',
+        marginTop: '20px'
+    },
+    exrcContent: {
+        flexGrow: '1',
+        marginLeft: '20px'
+    },
+    boxForButton: {
+        width: '150px'
+    },
+    saveButton: {
+        height: '55px',
+        width: '100%'
+    },
+})
 
 const Lesson = (props) => {
+    const classes = useStyles();
     const [data, setData] = useState({
         author: "",
         users: {},
-        json: {},
+        json: { child: [] },
         lessonId: ""
     });
 
@@ -54,8 +89,8 @@ const Lesson = (props) => {
     }
 
     const userHasAnswers = () => {
-        if (props.activeLessonData.users) {
-            if (props.activeLessonData.users[props.user]) {
+        if (data.users) {
+            if (data.users[props.user]) {
                 return true
             }
         }
@@ -96,26 +131,47 @@ const Lesson = (props) => {
     }
 
     return (
-        <div>
-            {(data.lessonId !== "") ? renderer(data.json) : null}
-            {/* <div>
-                {(data.lessonId !== "") ? React.createElement('div',null,data.users[props.user].test) : null}
-            </div> */}
-            <button onClick={updateHandler}>SAVE</button>
-            { (userHasAnswers(props.user)) ? "User has answers" : "No answers" }
+        <Fragment>
+            <Box className={classes.header}>
+                <Typography variant="h1" className={classes.title}>{data.title}</Typography>
+                <Box className={classes.boxForButton}>
+                    <Button size="large" variant="contained" color="primary" className={classes.saveButton} onClick={updateHandler}>Save</Button>
+                </Box>
+            </Box>
+            <FormControlLabel
+                control={
+                <Switch
+                    checked={props.teacherMode}
+                    onChange={props.toggleTeacherMode}
+                    name="checkedB"
+                    color="primary"
+                />
+                }
+                label="Teacher mode"
+            />
+            {data.json.child.map((el,index) => {
+                return (
+                <Paper key={index} elevation={3} className={classes.exrcContainer}>
+                    <div className={classes.exrcContent}>
+                        {renderer(el)}
+                    </div>
+                </Paper>)
+            })}
+            
             <pre>
                 <code>
                     {(userHasAnswers()) ? JSON.stringify(props.activeLessonData.users[props.user],null,'\t') : ""}
                 </code>
             </pre>
-        </div>
+        </Fragment>
     );
 }
 
 const mapStateToProps = state => {
     return{
-        user: state.loggedUser,
-        activeLessonData: state.activeLessonData
+        user: state.oldReducer.loggedUser,
+        activeLessonData: state.oldReducer.activeLessonData,
+        teacherMode: state.oldReducer.checking_mode,
     }
 }
 
@@ -123,6 +179,7 @@ const mapDispatchToProps = dispatch => {
     return {
         setActiveLessonData: (data) => {dispatch(setActiveLessonData(data))},
         setUser: (user) => {dispatch(setUser(user))}, 
+        toggleTeacherMode: () => {dispatch(toggleTeacherMode())}
     }
 }
  

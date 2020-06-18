@@ -18,6 +18,7 @@ export const SET_MODE = 'SET_MODE'
 export const SET_SCORE_IN_STATE = 'SET_SCORE_IN_STATE'
 export const SET_COMMENT_IN_STATE = 'SET_COMMENT_IN_STATE'
 export const UPDATE_NEW_LESSON_TITLE = 'UPDATE_NEW_LESSON_TITLE'
+export const TOGGLE_TEACHER_MODE = 'TOGGLE_TEACHER_MODE'
 
 /*
  * action creators
@@ -83,3 +84,6 @@ export function setMode(user) {
   return { type: SET_MODE, user: user}
 }
 
+export function toggleTeacherMode() {
+  return { type: TOGGLE_TEACHER_MODE }
+}

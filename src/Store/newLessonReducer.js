@@ -1,5 +1,5 @@
 import { 
-	SET_TITLE, SET_AUTHOR, ADD_USER_TO_LESSON,ADD_EXERCISE,
+	SET_TITLE, SET_AUTHOR, ADD_USER_TO_LESSON,ADD_EXERCISE,UPDATE_EXERCISE,
 } from './newLessonActions';
 
 const initialState = {
@@ -10,7 +10,8 @@ const initialState = {
         node: 'element',
         tag: 'div',
         child: []
-    }
+    },
+    htmlStrings: []
 }
 
 const reducer = (state = initialState,action) => {
@@ -35,12 +36,28 @@ const reducer = (state = initialState,action) => {
             }
         case ADD_EXERCISE:
             let newExerciseArray = [...state.json.child];
-            newExerciseArray.push(action.payload);
+            newExerciseArray.push(action.payload.json);
+            let newHtmlStringsArray = [...state.htmlStrings]
+            newHtmlStringsArray.push({__html: action.payload.html})
             return {
                 ...state,
+                htmlStrings: newHtmlStringsArray,
                 json: {
                     ...state.json,
                     child: newExerciseArray
+                },
+            }
+        case UPDATE_EXERCISE:
+            let updatedExerciseArray = [...state.json.child];
+            updatedExerciseArray[action.payload.index] = (action.payload.json);
+            let updatedHtmlStringsArray = [...state.htmlStrings]
+            updatedHtmlStringsArray[action.payload.index] = ({__html: action.payload.html})
+            return {
+                ...state,
+                htmlStrings: updatedHtmlStringsArray,
+                json: {
+                    ...state.json,
+                    child: updatedExerciseArray
                 },
             }
 		default:

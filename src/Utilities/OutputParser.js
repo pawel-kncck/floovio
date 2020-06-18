@@ -9,7 +9,27 @@ const testInput = '<p style="color:blue;font-size:17px;" class="test-class">Choo
 // groupMatchTest(testInput);
 
 function groupMatchTest(input) {
-    let result = new DOMParser().parseFromString(input, 'text/html');
+    const inputRegex = RegExp(/\[\]/,'gum');
+    const radioGroupRegex = RegExp(/<ul>.*?<\/ul>/s,'gum');
+    const radioRegex = RegExp(/<li>.*?<\/li>/s,'gum');
+
+    let stringInputReplaced = input.replace(inputRegex, () => {
+        let index = makeId(7);
+        return `<textfield id="${index}" key="${index}"></textfield>`;
+    })
+
+    let stringDropdownReplaced = stringInputReplaced.replace(radioGroupRegex, (match_outer) => {
+        let index = makeId(7);
+        let inside = match_outer.replace(radioRegex, (match_inner) => {
+            let inner_index = makeId(4);
+            // return `<li><input type="radio" key="${inner_index}" id="${inner_index}" name="${index}" /></li>`
+            return `<li><input type="radio" key="${inner_index}" id="${inner_index}" name="${index}"><label for="${inner_index}">${match_inner.substr(4,match_inner.length - 9)}</label></li>`
+        })
+        return inside;
+    })
+
+    let result = new DOMParser().parseFromString(stringDropdownReplaced, 'text/html');
+
     const nodes = result.body.childNodes;
     // console.log(parseNodes(nodes));
     // const jsonOutput = JSON.stringify(parseNodes(nodes), null, 4);
@@ -28,15 +48,21 @@ function parseNodes(nodes) {
             let newNode = {
                 node: 'element',
                 // nodeType: node.nodeType,
-                nodeObject: node,
+                // nodeObject: node,
                 // styleLength: node.style.length,
                 attr: { id: makeId(5)},
                 tag: node.tagName.toLowerCase(),
-                child: parseNodes(node.childNodes)
+                child: node.childNodes.length > 0 ? parseNodes(node.childNodes) : null
             }
             if (node.className !== "") {
                 newNode.attr.className = node.className
             }
+            // if (node.type !== "") {
+            //     newNode.attr.type = node.type
+            // }
+            // if (node.name !== "") {
+            //     newNode.attr.name = node.name
+            // }
             if (node.style.length > 0) {
                 newNode.attr.style = {};
                 styles.map((prop) => {
@@ -52,6 +78,7 @@ function parseNodes(nodes) {
                 // nodeType: node.nodeType,
                 // nodeObject: node,
                 text: node.textContent,
+                heyNodeType: typeof node.textContent,
                 // tag: node.tagName,
                 // child: parseNodes(node.childNodes)
             }

@@ -4,8 +4,21 @@ import CancelOutlinedIcon from '@material-ui/icons/CancelOutlined';
 import ChatOutlinedIcon from '@material-ui/icons/ChatOutlined';
 import { setScoreInState,setCommentInState } from '../../Store/oldActions';
 import { connect } from 'react-redux';
+import { makeStyles, Button, IconButton } from '@material-ui/core';
+import { green,red } from '@material-ui/core/colors';
+
+
+const useStyles = makeStyles({
+    root: {
+        display: 'inline',
+    },
+    comment: {
+        display: 'inline',
+    }
+})
 
 const TeacherBox = (props) => {
+    const classes = useStyles();
     const [commentBoxVisible,setCommentBoxVisible] = useState(false);
 
     let comment = "";
@@ -19,28 +32,20 @@ const TeacherBox = (props) => {
     };
 
     return (
-        <div>
-            <button>
-                <CheckBoxOutlinedIcon onClick={() => props.setScoreInState(props.id,1)} />
-            </button>
-            <button>
-                <CancelOutlinedIcon onClick={() => props.setScoreInState(props.id,0)} />
-            </button>
-            <div>
-                <button onClick={() => setCommentBoxVisible(!commentBoxVisible)}>
-                    <ChatOutlinedIcon />
-                </button>
-                {(commentBoxVisible) ? <input type="text" defaultValue={comment} onChange={(e) => props.setCommentInState(props.id, e.target.value)} /> : null}
-            </div>
+        <div className={classes.root}>
+            <CheckBoxOutlinedIcon style={{ color: green[500] }} onClick={() => props.setScoreInState(props.id,1)} />
+            <CancelOutlinedIcon style={{ color: red[500] }} onClick={() => props.setScoreInState(props.id,0)} />
+            <ChatOutlinedIcon onClick={() => setCommentBoxVisible(!commentBoxVisible)} />
+            {(commentBoxVisible) ? <input type="text" defaultValue={comment} onChange={(e) => props.setCommentInState(props.id, e.target.value)} /> : null}
         </div>
     );
 }
 
 const mapStateToProps = (state,ownProps) => {
     return {
-        activeLessonData: state.activeLessonData,
-        checking_mode: state.checking_mode,
-        user: state.loggedUser,
+        activeLessonData: state.oldReducer.activeLessonData,
+        checking_mode: state.oldReducer.checking_mode,
+        user: state.oldReducer.loggedUser,
         id: ownProps.id
     }
 }

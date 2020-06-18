@@ -1,9 +1,18 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { setLessonAnswerInState,createEmptyUsers,createEmptyUser,createEmptyElement } from '../../Store/oldActions';
+import { setLessonAnswerInState } from '../../Store/oldActions';
 import TeacherBox from './TeacherBox';
+import { makeStyles } from '@material-ui/core';
+
+const useStyles = makeStyles({
+    root: {
+        display: 'inline'
+    }
+})
 
 const TextField = (props) => {
+    const classes = useStyles();
+
     let answer = "";
     if (props.activeLessonData.users) {
         if (props.activeLessonData.users[props.user]) {
@@ -13,22 +22,23 @@ const TextField = (props) => {
             }
         }
     };
+
+
         
     
     return (
-        <div className="text-field-outer-div">
+        <div className={classes.root}>
             <input className="text-field-input-box" type="text" defaultValue={answer} onChange={(el) => props.setAnswerInState(props.id,el.target.value)} />
             {(props.checking_mode) ? <TeacherBox id={props.id} /> : null}
         </div>
-        
     );
 }
 
 const mapStateToProps = (state,ownProps) => {
     return{
-        user: state.loggedUser,
-        activeLessonData: state.activeLessonData,
-        checking_mode: state.checking_mode,
+        user: state.oldReducer.loggedUser,
+        activeLessonData: state.oldReducer.activeLessonData,
+        checking_mode: state.oldReducer.checking_mode,
         id: ownProps.id
     }
 }

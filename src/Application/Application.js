@@ -15,6 +15,8 @@ import LoginPage from './Authentication/LoginPage';
 import LogoutDestinationPage from './Authentication/LogoutDestinationPage';
 import CreateNewLesson from './Lesson/CreateNewLesson';
 import TestCreateElement from '../Lab/testCreateElement';
+import Timer from '../Lab/TimerTest';
+import Courses from '../Application/Courses/CoursesLanding';
 
 const Application = (props) => {
     return (
@@ -22,12 +24,20 @@ const Application = (props) => {
             <Backdrop show={props.showBuilder}>
                 <Builder show={props.showBuilder}/>
             </Backdrop>
-            <Route path="/" exact component={List} />
+            <Switch>
+                <Route path="/course/:courseId/lesson/:lessonId" exact component={Lesson} />
+                <Route path="/course/:id" exact component={LessonList} />
+                <Route path="/" exact component={Courses} />
+            </Switch>
+            
+            
+
             <Route path="/exercises" exact component={List} />
             <Route path="/solve/:exerciseId" component={Solver} />
-            <Route path="/lab" component={NewParser} />
+            <Route path="/lab" component={Timer} />
             <Route path="/solvelab/:exerciseId" component={NewSolver} />
             <Route path="/loadlessons" component={LoadLessons} />
+            
             <Switch>
                 <Route path="/lesson/new" exact component={CreateNewLesson} />
                 <Route path="/lesson/:lessonId" component={Lesson} />
@@ -47,6 +57,7 @@ const Application = (props) => {
 const mapStateToProps = state => {
     return {
         showBuilder: state.showBuilder,
+        authUser: state.auth.authUser,
     };
 }
  

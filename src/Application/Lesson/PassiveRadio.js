@@ -1,10 +1,15 @@
-// import React from 'react';
+import React from 'react';
+import { RadioGroup, FormControlLabel, Radio } from '@material-ui/core';
 
-// const PassiveTextField = (props) => {
+const PassiveRadioGroup = (props) => {
     
-//     return (
-//         <input type="radio"
-//     );
-// }
+    return (
+        <RadioGroup name={props.id}>
+            {props.options.map((el,index) => {
+                return <FormControlLabel value={el} control={<Radio />} label={el} />
+            })}
+        </RadioGroup>
+    );
+}
 
-// export default PassiveTextField;
+export default PassiveRadioGroup;

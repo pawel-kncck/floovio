@@ -99,7 +99,7 @@ const CreateNewLesson = (props) => {
 
     const saveHandler = () => {
         const db = firebase.firestore();
-        db.collection("lessons").add(props.activeLesson)
+        db.collection("courses").doc('M4iGPRQosf50ZM8BlB8t').collection('lessons').add(props.activeLesson)
             .then((res) => {
                 // props.closeBuilder();
                 // props.cleanExerciseState();
@@ -155,8 +155,8 @@ const CreateNewLesson = (props) => {
                     <Paper key={index} elevation={3} className={classes.exrcContainer}>
                         <div className={classes.exrcContent}>{Renderer(el)}</div>
                         <div>
-                            {/* <Button color="primary"><ArrowUpwardIcon /></Button> */}
-                            {/* <Button color="primary"><ArrowDownwardIcon /></Button> */}
+                            <Button color="primary"><ArrowUpwardIcon /></Button>
+                            <Button color="primary"><ArrowDownwardIcon /></Button>
                             <Button color="primary" onClick={() => handleOpenEditorInEditMode(index)}><EditIcon /></Button>
                             <Button color="primary"><DeleteIcon /></Button>
                         </div>
@@ -216,44 +216,4 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
-
 export default connect(mapStateToProps,mapDispatchToProps)(CreateNewLesson);
-
-const hey = {
-    title: "hey",
-    author: "abc@test.com",
-    users: {
-        Pb2oZKc2xTgGDrP8tDI1xSC65g32: {}
-    },
-    json: {
-        node: "element",
-        tag: "div",
-        child: [
-            {
-                node: "element",
-                tag: "div",
-                child: [
-                    {
-                        node: "element",
-                        nodeObject: {},
-                        attr: {
-                            id: "zudtn"
-                        },
-                        tag: "p",
-                        child: [
-                            {
-                                node: "text",
-                                text: "test"
-                            }
-                        ]
-                    }
-                ]
-            }
-        ]
-    },
-    htmlStrings: [
-        {
-            __html: "<p>test</p>"
-        }
-    ]
-}

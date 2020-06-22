@@ -44,6 +44,7 @@ const useStyles = makeStyles({
 
 const Lesson = (props) => {
     const classes = useStyles();
+    console.log("Lesson loaded");
     const [data, setData] = useState({
         author: "",
         users: {},
@@ -52,26 +53,34 @@ const Lesson = (props) => {
     });
 
     useEffect(() => {
-        const fetchData = async () => {
-            const db = firebase.firestore();
-            const data = await (await db.doc(`/lessons/${props.match.params.lessonId}`).get()).data();
-            setData({...data, lessonId: props.match.params.lessonId});
-            props.setActiveLessonData({ ...data, lessonId: props.match.params.lessonId });
-            authListener();
-        };
-        fetchData();
-    }, [props.match.params.lessonId]);
+        let lessonRef;
+        console.log(props);
+        if (props.match.params.courseId) {
+            lessonRef = firebase.firestore().collection("courses").doc(props.match.params.courseId).collection("lessons").doc(props.match.params.lessonId);
+        } else {
+            lessonRef = firebase.firestore().collection("lessons").doc(props.match.params.lessonId);
+        }
+        lessonRef.get()
+            .then(doc => {
+                setData({...doc.data(), lessonId: doc.id});
+                setActiveLessonData({...doc.data(), lessonId: doc.id});
+                console.log(doc.data());
+            })
+            .catch(err => {
+                console.log(err);
+            })
+    }, []);
 
-    function authListener() {
-        firebase.auth().onAuthStateChanged(user => {
-            if (user) {
-                console.log(user.uid)
-                props.setUser(user.uid)
-            } else {
-                console.log("not logged in");
-            }
-        })
-    }
+    // function authListener() {
+    //     firebase.auth().onAuthStateChanged(user => {
+    //         if (user) {
+    //             console.log(user.uid)
+    //             props.setUser(user.uid)
+    //         } else {
+    //             console.log("not logged in");
+    //         }
+    //     })
+    // }
 
     function updateHandler() {
         const db = firebase.firestore();
@@ -97,12 +106,10 @@ const Lesson = (props) => {
         return false
     }
 
-    
-
     const componentMap = {
-        textfield: TextField,
-        dropdown: DropDown,
-        radiogroup: RadioGroup
+        hyphentextfield: TextField,
+        hyphendropdown: DropDown,
+        hyphenradiogroup: RadioGroup
     }
 
     function renderer(config) {
@@ -169,7 +176,7 @@ const Lesson = (props) => {
 
 const mapStateToProps = state => {
     return{
-        user: state.oldReducer.loggedUser,
+        user: state.auth.authUser,
         activeLessonData: state.oldReducer.activeLessonData,
         teacherMode: state.oldReducer.checking_mode,
     }

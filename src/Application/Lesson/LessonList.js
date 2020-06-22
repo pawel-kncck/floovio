@@ -3,16 +3,17 @@ import firebase from "../../firebase";
 import UserContext from '../../Context/UserContext';
 import { Link } from 'react-router-dom';
 
-const LessonList = () => {
+const LessonList = (props) => {
     const [lessons, setLessons] = useState([]);
-    const authUser = useContext(UserContext);
+    console.log(props);
 
     useEffect(() => {
         const db = firebase.firestore()
-        return db.collection("lessons").onSnapshot((snapshot) => {
+        return db.collection("courses").doc(props.match.params.id).collection("lessons").onSnapshot((snapshot) => {
             const lessonsFromSnapshot = [];
             snapshot.forEach(doc => lessonsFromSnapshot.push(({...doc.data(), lessonId: doc.id})));
             setLessons(lessonsFromSnapshot);
+            console.log(lessonsFromSnapshot);
         });
     },[])
 
@@ -20,7 +21,7 @@ const LessonList = () => {
         <div>
             <ul>
                 {lessons.map((el) => {
-                    return (el.users[authUser.uid]) ? <li key={el.lessonId}><Link to={`lesson/${el.lessonId}`}>{el.title}</Link></li> : null
+                    return <li key={el.lessonId}><Link to={`/course/${props.match.params.id}/lesson/${el.lessonId}`}>{el.title}</Link></li>
                 })}    
             </ul>
         </div>

@@ -6,19 +6,21 @@ import { BrowserRouter } from 'react-router-dom';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import UserContext from './Context/UserContext';
 import firebase from './firebase';
+import { connect } from 'react-redux';
+import { setUser } from './Store/auth.actions';
 
-function App() {
-  const [authUser, setAuthUser] = useState(null);
+function App(props) {
+  // const [authUser, setAuthUser] = useState(null);
 
   useEffect(() => {
     firebase.auth()
     .onAuthStateChanged(user => {
-      user ? setAuthUser(user) : setAuthUser(null)
+      props.setUser(user)
     })
   }, []);
 
   return (
-    <UserContext.Provider value={authUser}>
+    // <UserContext.Provider value={authUser}>
       <BrowserRouter>
       <CssBaseline />
           <div className="app">
@@ -27,8 +29,15 @@ function App() {
 
           </div>
       </BrowserRouter>
-    </UserContext.Provider>
+    // </UserContext.Provider>
   );
 }
 
-export default App;
+const mapDispatchToProps = dispatch => {
+  return {
+    setUser: (user, id, email) => dispatch(setUser(user,id,email)),
+  }
+}
+
+
+export default connect(null,mapDispatchToProps)(App);

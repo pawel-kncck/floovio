@@ -1,9 +1,10 @@
 import React from 'react';
+import { TextField } from '@material-ui/core';
 
 const PassiveTextField = (props) => {
     
     return (
-        <input id={props.id} type="text" />
+        <TextField id={props.id} />
     );
 }
 

@@ -3,6 +3,8 @@ import { Button, TextField, Grid, Typography, makeStyles } from '@material-ui/co
 import firebase from '../../firebase';
 import { Redirect } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
+import * as actions from '../../Store/auth.actions';
+import { connect } from 'react-redux';
 
 const useStyles = makeStyles({
     textField: {
@@ -16,7 +18,7 @@ const useStyles = makeStyles({
     }
 })
 
-const LoginPage = () => {
+const LoginPage = (props) => {
     const [email,setEmail] = useState('');
     const [password,setPassword] = useState('');
     const [error,setError] = useState(null);
@@ -28,15 +30,8 @@ const LoginPage = () => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        console.log("Submit clicked!")
-        firebase.auth().signInWithEmailAndPassword(email,password)
-            .then((u) => {
-                console.log(u.user.email);
-                history.push("/lessons")
-            })
-            .catch((err) => {
-                setError(err);
-            });
+        props.onLogin(email, password);
+        history.push("/")
     };
 
     return (
@@ -53,6 +48,12 @@ const LoginPage = () => {
             <Grid item sm/>
         </Grid>
     );
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        onLogin: (email, password) => dispatch(actions.login(email, password))
+    }
 }
  
-export default LoginPage;
+export default connect(null,mapDispatchToProps)(LoginPage);

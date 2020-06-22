@@ -1,12 +1,14 @@
 import React from 'react';
 import PassiveTextField from '../Application/Lesson/PassiveTextField';
 import DropDown from '../Application/Lesson/DropDown';
+import PassiveDropDown from '../Application/Lesson/PassiveDropDown';
 import RadioGroup from '../Application/Lesson/RadioGroup';
+import PassiveRadioGroup from '../Application/Lesson/PassiveRadio';
 
 const componentMap = {
-    textfield: PassiveTextField,
-    dropdown: DropDown,
-    radiogroup: RadioGroup
+    hyphentextfield: PassiveTextField,
+    hyphenradiogroup: PassiveRadioGroup,
+    hyphendropdown: PassiveDropDown,
 }
 
 function makeId(n) {

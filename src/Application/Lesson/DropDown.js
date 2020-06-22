@@ -2,8 +2,19 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { setLessonAnswerInState } from '../../Store/oldActions';
 import TeacherBox from './TeacherBox';
+import { makeStyles, MenuItem, Select, FormControl } from '@material-ui/core';
+
+const useStyles = makeStyles({
+    root: {
+        display: 'inline',
+    },
+    select: {
+        width: '150px',
+    }
+})
 
 const DropDown = (props) => {
+    const classes = useStyles();
     let answer = "";
     if (props.activeLessonData.users) {
         if (props.activeLessonData.users[props.user]) {
@@ -14,23 +25,26 @@ const DropDown = (props) => {
         }
     };
 
+    // console.log(`Id: ${props.id}; answer: ${answer}`)
+
     return (
-        <div>
-            <select id={props.id} onChange={(el) => props.setAnswerInState(props.id, el.target.value)}>
-                <option key="99"></option>
+
+        <FormControl className={classes.root}>
+            <Select id={props.id} className={classes.select} defaultValue={answer} onChange={(el) => props.setAnswerInState(props.id, el.target.value)}>
                 {props.options.map((el,index) => {
-                    return <option key={index} value={el} selected={el === answer}>{el}</option>
+                    return <MenuItem key={index} value={el}>{el}</MenuItem>
                 })}
-            </select>
-            <TeacherBox id={props.id} />
-        </div>
+            </Select>
+            {(props.checking_mode) ? <TeacherBox id={props.id} /> : null}
+        </FormControl>
     );
 };
 
 const mapStateToProps = (state,ownProps) => {
     return{
-        user: state.loggedUser,
-        activeLessonData: state.activeLessonData,
+        user: state.oldReducer.loggedUser,
+        activeLessonData: state.oldReducer.activeLessonData,
+        checking_mode: state.oldReducer.checking_mode,
         id: ownProps.id
     }
 }

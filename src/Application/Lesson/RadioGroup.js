@@ -33,15 +33,16 @@ const RadioGroup = (props) => {
 
                 )
             })}
-            <TeacherBox id={props.id} />
+            {(props.checking_mode) ? <TeacherBox id={props.id} /> : null}
         </div>
     );
 }
 
 const mapStateToProps = (state,ownProps) => {
     return{
-        user: state.loggedUser,
-        activeLessonData: state.activeLessonData,
+        user: state.oldReducer.loggedUser,
+        activeLessonData: state.oldReducer.activeLessonData,
+        checking_mode: state.oldReducer.checking_mode,
         id: ownProps.id
     }
 }

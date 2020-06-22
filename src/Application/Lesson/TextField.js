@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { setLessonAnswerInState } from '../../Store/oldActions';
 import TeacherBox from './TeacherBox';
 import { makeStyles } from '@material-ui/core';
+import { TextField as MUITextField }  from '@material-ui/core';
 
 const useStyles = makeStyles({
     root: {
@@ -22,13 +23,10 @@ const TextField = (props) => {
             }
         }
     };
-
-
-        
     
     return (
         <div className={classes.root}>
-            <input className="text-field-input-box" type="text" defaultValue={answer} onChange={(el) => props.setAnswerInState(props.id,el.target.value)} />
+            <MUITextField id={props.id} defaultValue={answer} value={answer} onChange={(el) => props.setAnswerInState(props.id,el.target.value)} />
             {(props.checking_mode) ? <TeacherBox id={props.id} /> : null}
         </div>
     );

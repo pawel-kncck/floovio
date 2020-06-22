@@ -1,0 +1,9 @@
+USERS FOR DEVELOPMENT
+
+ana@test.com, ana123, student, Ana Schmidt, uid: y9a2pWqIRKVSrwUO6nh7EMWEQ9s2, gs://dialetton.appspot.com/profile_pics/ana.jpg
+wang@test.com, wang123, student, Wang Wei, uid: pKX0pe45NmYydMH1FCm3XwPU8Du1, gs://dialetton.appspot.com/profile_pics/wang.jpg
+emma@test.com, emma123, student, Emma Clark, uid: CIQ6sVqmmkVmkLHHy4MkI8xSGI83, gs://dialetton.appspot.com/profile_pics/emma.jpg
+peter@test.com, peter123, student, Peter de Jong, uid: qiDcyfyxqVTxElZCVgKaqZZuvQe2, gs://dialetton.appspot.com/profile_pics/peter.jpg
+
+juan@test.com, juan123, teacher, Juan Fernandex, uid: RycFVn9dagYQC5ZZNhMeN8sBnbP2, gs://dialetton.appspot.com/profile_pics/juan.jpg
+carmen@test.com, carmen123, teacher, Carmen Lopez, uid: O6ZSV9uBRmdV5USjsdx4JLDw1Mx2, gs://dialetton.appspot.com/profile_pics/carmen.jpg

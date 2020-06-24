@@ -22,7 +22,7 @@ function Renderer(config) {
     } else {
         return React.createElement(
             componentMap[config.tag] || config.tag,
-            { ...config.attr, key: makeId(4) },
+            { ...config.attr, key: ((config.attr) ? ((config.attr.id) ? config.attr.id : null ) : null) },
             config.child && (typeof config.child === "string"
                 ? config.child
                 : config.child.map(c => Renderer(c)))

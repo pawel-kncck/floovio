@@ -3,9 +3,18 @@ import { deepCopyFunction, createNestedObject } from '../Application/HyphenLesso
 
 const initialState = {
     lessonId: "",
-    lessonData: { json: { child: []} },
+    lessonData: {
+        title: "",
+        author: "",
+        userInput: {},
+        json: {
+            node: 'element',
+            tag: 'div',
+            child: []
+        },
+        htmlStrings: []
+    },
     lessonMode: undefined,
-    lessonPath: "",
     isFetching: true,
     error: null
 }
@@ -16,6 +25,23 @@ const reducer = (state = initialState, action) => {
 			return {
                 ...state,
                 lessonData: action.data
+            }
+		case actionTypes.SET_TITLE:
+			return {
+				...state,
+				lessonData: {
+                    ...state.lessonData,
+                    title: action.payload,
+                }
+			}
+        case actionTypes.SET_AUTHOR:
+            return {
+                ...state,
+                lessonData: {
+                    ...state.lessonData,
+                    author: action.payload,
+                }
+                
             }
         case actionTypes.SET_MODE:
             return {
@@ -42,6 +68,55 @@ const reducer = (state = initialState, action) => {
         case actionTypes.SET_ANSWER_IN_STATE:
             const initState = deepCopyFunction(state)
             return createNestedObject(initState, action.keys, action.value)
+
+        case actionTypes.ADD_EXERCISE:
+            let newExerciseArray = [...state.lessonData.json.child];
+            newExerciseArray.push(action.payload.json);
+            let newHtmlStringsArray = [...state.lessonData.htmlStrings]
+            newHtmlStringsArray.push({__html: action.payload.html})
+            return {
+                ...state,
+                lessonData: {
+                    ...state.lessonData,
+                    htmlStrings: newHtmlStringsArray,
+                    json: {
+                        ...state.lessonData.json,
+                        child: newExerciseArray
+                    },
+                }
+            }
+        case actionTypes.UPDATE_EXERCISE:
+            let updatedExerciseArray = [...state.lessonData.json.child];
+            updatedExerciseArray[action.payload.index] = (action.payload.json);
+            let updatedHtmlStringsArray = [...state.lessonData.htmlStrings]
+            updatedHtmlStringsArray[action.payload.index] = ({__html: action.payload.html})
+            return {
+                ...state,
+                lessonData: {
+                    ...state.lessonData,
+                    htmlStrings: updatedHtmlStringsArray,
+                    json: {
+                        ...state.json,
+                        child: updatedExerciseArray
+                    },
+                }
+            }
+        case actionTypes.DELETE_EXERCISE:
+            let trimmedExerciseArray = [...state.lessonData.json.child];
+            trimmedExerciseArray.splice(action.payload.index,1)
+            let trimmedHtmlStringsArray = [...state.lessonData.htmlStrings]
+            trimmedHtmlStringsArray.splice(action.payload.index,1)
+            return {
+                ...state,
+                lessonData: {
+                    ...state.lessonData,
+                    htmlStrings: trimmedHtmlStringsArray,
+                    json: {
+                        ...state.json,
+                        child: trimmedExerciseArray
+                    },
+                }
+            }
 		default:
 			return state;
 	}

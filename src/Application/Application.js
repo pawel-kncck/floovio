@@ -32,7 +32,7 @@ const Application = (props) => {
                         <Route path={routes.LESSON_CREATE_NEW} exact component={CreateNewLesson} />
                         <Route path={routes.LESSON_EDIT} exact component={CreateNewLesson} />
                         <Route path={routes.LESSON_SOLVE} exact component={props => <HyphenLesson {...props} />} />
-                        <Route path={routes.LESSON_CHECK} exact component={Lesson} />
+                        <Route path={routes.LESSON_CHECK} exact component={HyphenLesson} />
                         <Route path={routes.LESSON_DEV} exact component={HyphenLesson} />
                     </Switch>
                 </main>

@@ -241,8 +241,6 @@ const mapDispatchToProps = dispatch => {
     return {
         fetchLesson: (mode, lessonId, courseId) => {dispatch(fetchLesson(mode, lessonId, courseId))},
         setMode: (path) => {dispatch(setMode(path))},
-
-
         setTitle: (title) => {dispatch(setTitle(title))},
         setAuthor: (author) => {dispatch(setAuthor(author))},
         addExercise: (json,html) => {dispatch(addExercise(json,html))},

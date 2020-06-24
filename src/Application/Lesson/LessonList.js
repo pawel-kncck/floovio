@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom';
 
 const LessonList = (props) => {
     const [lessons, setLessons] = useState([]);
-    console.log(props);
 
     useEffect(() => {
         const db = firebase.firestore()

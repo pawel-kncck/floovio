@@ -17,16 +17,34 @@ import CreateNewLesson from './Lesson/CreateNewLesson';
 import TestCreateElement from '../Lab/testCreateElement';
 import Timer from '../Lab/TimerTest';
 import Courses from '../Application/Courses/CoursesLanding';
+import * as routes from '../routes';
+import HyphenLesson from './HyphenLesson/Lesson';
 
 const Application = (props) => {
     return (
         <div className="app-container">
+            <div className="lesson-viewer">
+                <aside>
+                    <Route path="/course/:id" component={LessonList} />
+                </aside>
+                <main>
+                    <Switch>
+                        <Route path={routes.LESSON_CREATE_NEW} exact component={CreateNewLesson} />
+                        <Route path={routes.LESSON_EDIT} exact component={CreateNewLesson} />
+                        <Route path={routes.LESSON_SOLVE} exact component={props => <HyphenLesson {...props} />} />
+                        <Route path={routes.LESSON_CHECK} exact component={Lesson} />
+                        <Route path={routes.LESSON_DEV} exact component={HyphenLesson} />
+                    </Switch>
+                </main>
+            </div>
+            
+            
+
+
             <Backdrop show={props.showBuilder}>
                 <Builder show={props.showBuilder}/>
             </Backdrop>
             <Switch>
-                <Route path="/course/:courseId/lesson/:lessonId" exact component={Lesson} />
-                <Route path="/course/:id" exact component={LessonList} />
                 <Route path="/" exact component={Courses} />
             </Switch>
             
@@ -38,12 +56,7 @@ const Application = (props) => {
             <Route path="/solvelab/:exerciseId" component={NewSolver} />
             <Route path="/loadlessons" component={LoadLessons} />
             
-            <Switch>
-                <Route path="/lesson/new" exact component={CreateNewLesson} />
-                <Route path="/lesson/:lessonId" component={Lesson} />
-                
-                <Route path="/lesson/edit/:id" exact component={CreateNewLesson} />
-            </Switch>
+            
             
             <Route path="/lessons" component={LessonList} />
             <Route path="/images" component={ImageUpload} />

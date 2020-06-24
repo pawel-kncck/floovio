@@ -11,6 +11,9 @@
 		},
 		{
 			"path": "../JavaScript/html_parser"
+		},
+		{
+			"path": "../JavaScript/deep_object_creator"
 		}
 	],
 	"settings": {}

@@ -67,6 +67,18 @@ body li {
   position: relative;
 }
 
+.lesson-viewer {
+  display: flex;
+}
+
+.lesson-viewer aside {
+  width: 25%;
+}
+
+.lesson-viewer main {
+  width: 75%
+}
+
 /* NAVBAR */
 
 .navbar {

@@ -1,5 +1,4 @@
-import { mapPathToMode } from '../Application/HyphenLesson/helpers';
-import { getLesson, handleDbErrors } from '../Database/db.lesson';
+import { getLesson } from '../Database/db.lesson';
 
 /*
 action types
@@ -12,11 +11,13 @@ export const FETCH_LESSON_SUCCESS = 'FETCH_LESSON_SUCCESS'
 export const FETCH_LESSON_FAIL = 'FETCH_LESSON_FAIL'
 export const SET_ANSWER_IN_STATE = 'SET_ANSWER_IN_STATE'
 export const SET_TITLE = 'SET_TITLE'
+export const SET_LESSON_DATE = 'SET_LESSON_DATE'
 export const SET_AUTHOR = 'SET_AUTHOR'
 export const ADD_EXERCISE = 'ADD_EXERCISE'
 export const ADD_HTML_STRING = 'ADD_HTML_STRING'
 export const UPDATE_EXERCISE = 'UPDATE_EXERCISE'
 export const DELETE_EXERCISE = 'DELETE_EXERCISE'
+export const KILL_SPINNER = 'KILL_SPINNER'
 
 /*
 action creators
@@ -33,6 +34,10 @@ export function setTitle(value) {
     return { type: SET_TITLE, payload: value }
 }
 
+export function setLessonDate(value) {
+    return { type: SET_LESSON_DATE, payload: value }
+}
+
 export function setAuthor(value) {
     return { type: SET_AUTHOR, payload: value }
 }
@@ -43,6 +48,10 @@ export function addExercise(json,html) {
 
 export function updateExercise(json,html,index) {
     return { type: UPDATE_EXERCISE, payload: {html: html, json: json, index: index} }
+}
+
+export function killSpinner() {
+    return { type: KILL_SPINNER }
 }
 
 

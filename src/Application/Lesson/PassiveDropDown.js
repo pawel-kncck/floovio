@@ -18,7 +18,7 @@ const useStyles = makeStyles({
 const PassiveDropDown = (props) => {
     const classes = useStyles();
     const userInputKeys = ["lessonData","userInput",props.userId,props.id,"answer"];
-    const answer = getDeepValue(props.currentLessonState,userInputKeys);
+    const answer = (getDeepValue(props.currentLessonState,userInputKeys) || "");
     const scoreInputKeys = ["lessonData","userInput",props.userId,props.id,"score"];
     const score = getDeepValue(props.currentLessonState,scoreInputKeys);
 

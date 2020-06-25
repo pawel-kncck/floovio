@@ -1,5 +1,4 @@
 import React, { Fragment, useState, useEffect } from 'react';
-import { Typography, Divider } from '@material-ui/core';
 import { connect } from 'react-redux';
 import firebase from '../../firebase';
 import { Link } from 'react-router-dom';
@@ -37,7 +36,7 @@ const CoursesList = (props) => {
             .catch(err => {
                 console.log(err);
             })
-    }, [])
+    }, [props])
 
     return (
         <Fragment>

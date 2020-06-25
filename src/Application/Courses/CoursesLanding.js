@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import { Typography, Divider } from '@material-ui/core';
+import { Typography } from '@material-ui/core';
 import { connect } from 'react-redux';
 import CoursesList from './CoursesList';
 

@@ -19,19 +19,36 @@ import Timer from '../Lab/TimerTest';
 import Courses from '../Application/Courses/CoursesLanding';
 import * as routes from '../routes';
 import HyphenLesson from './HyphenLesson/Lesson';
+import { makeStyles } from '@material-ui/core';
+import AudioPlayer from '../Lab/AudioPlayer';
+
+const useStyles = makeStyles({
+    aside: {
+        display: 'flex',
+        flexDirection: "column",
+        marginTop: '150px'
+    },
+    main: {
+        display: 'flex',
+        flexDirection: "column",
+    }
+})
 
 const Application = (props) => {
+    const classes = useStyles();
+
     return (
         <div className="app-container">
             <div className="lesson-viewer">
-                <aside>
+                <aside className={classes.aside}>
                     <Route path="/course/:id" component={LessonList} />
                 </aside>
-                <main>
+                <main className={classes.main}>
                     <Switch>
                         <Route path={routes.LESSON_CREATE_NEW} exact component={CreateNewLesson} />
-                        <Route path={routes.LESSON_EDIT} exact component={CreateNewLesson} />
-                        <Route path={routes.LESSON_SOLVE} exact component={props => <HyphenLesson {...props} />} />
+                        <Route path={routes.LESSON_NEW} exact component={HyphenLesson} />
+                        <Route path={routes.LESSON_EDIT} exact component={HyphenLesson} />
+                        <Route path={routes.LESSON_SOLVE} exact component={HyphenLesson} />
                         <Route path={routes.LESSON_CHECK} exact component={HyphenLesson} />
                         <Route path={routes.LESSON_DEV} exact component={HyphenLesson} />
                     </Switch>
@@ -52,7 +69,7 @@ const Application = (props) => {
 
             <Route path="/exercises" exact component={List} />
             <Route path="/solve/:exerciseId" component={Solver} />
-            <Route path="/lab" component={Timer} />
+            <Route path="/lab" component={AudioPlayer} />
             <Route path="/solvelab/:exerciseId" component={NewSolver} />
             <Route path="/loadlessons" component={LoadLessons} />
             

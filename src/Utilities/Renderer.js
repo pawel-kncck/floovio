@@ -4,11 +4,13 @@ import DropDown from '../Application/Lesson/DropDown';
 import PassiveDropDown from '../Application/Lesson/PassiveDropDown';
 import RadioGroup from '../Application/Lesson/RadioGroup';
 import PassiveRadioGroup from '../Application/Lesson/PassiveRadio';
+import AudioPlayer from '../Lab/AudioPlayer';
 
 const componentMap = {
     hyphentextfield: PassiveTextField,
     hyphenradiogroup: PassiveRadioGroup,
     hyphendropdown: PassiveDropDown,
+    hyphenaudio: AudioPlayer,
 }
 
 function makeId(n) {

@@ -5,8 +5,6 @@ import TextField from './TextField';
 import DropDown from './DropDown';
 import RadioGroup from './RadioGroup';
 import { setActiveLessonData,setUser,toggleTeacherMode } from '../../Store/oldActions';
-import { hasOwnNestedProperty } from '../../Utilities/Utilities'
-import UserDropdown from './UserDropdown';
 import { Paper, makeStyles, Box, Button, Typography, FormControlLabel, Switch } from '@material-ui/core';
 
 const useStyles = makeStyles({

@@ -6,6 +6,7 @@ const initialState = {
     lessonData: {
         title: "",
         author: "",
+        lessonDate: 1112470620000,
         userInput: {},
         json: {
             node: 'element',
@@ -14,7 +15,7 @@ const initialState = {
         },
         htmlStrings: []
     },
-    lessonMode: undefined,
+    lessonMode: "",
     isFetching: true,
     error: null
 }
@@ -33,7 +34,15 @@ const reducer = (state = initialState, action) => {
                     ...state.lessonData,
                     title: action.payload,
                 }
-			}
+            }
+        case actionTypes.SET_LESSON_DATE:
+            return {
+                ...state,
+                lessonData: {
+                    ...state.lessonData,
+                    lessonDate: action.payload,
+                }
+            }
         case actionTypes.SET_AUTHOR:
             return {
                 ...state,
@@ -63,6 +72,11 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 error: action.error,
+                isFetching: false
+            }
+        case actionTypes.KILL_SPINNER:
+            return {
+                ...state,
                 isFetching: false
             }
         case actionTypes.SET_ANSWER_IN_STATE:

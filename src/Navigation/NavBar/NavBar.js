@@ -1,9 +1,6 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import MenuIcon from '@material-ui/icons/Menu';
 import { NavLink } from 'react-router-dom';
-import UserContext from '../../Context/UserContext';
-import firebase from '../../firebase';
-import { Avatar } from '@material-ui/core';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import { connect } from 'react-redux';
 import { logout } from '../../Store/auth.actions';

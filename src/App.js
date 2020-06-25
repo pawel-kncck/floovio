@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import './App.css';
 import NavBar from './Navigation/NavBar/NavBar';
 import Application from './Application/Application'
 import { BrowserRouter } from 'react-router-dom';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import UserContext from './Context/UserContext';
 import firebase from './firebase';
 import { connect } from 'react-redux';
 import { setUser } from './Store/auth.actions';
@@ -17,7 +16,7 @@ function App(props) {
     .onAuthStateChanged(user => {
       props.setUser(user)
     })
-  }, []);
+  }, [props]);
 
   return (
     // <UserContext.Provider value={authUser}>

@@ -23,11 +23,11 @@ const enhancer = composeEnhancers(
 const  store  =  createStore(rootReducer, enhancer);
 
 ReactDOM.render(
-  <React.StrictMode>
+  // <React.StrictMode>
     <Provider store={store}>
       <App />
-    </Provider>
-  </React.StrictMode>,
+    </Provider>,
+  // </React.StrictMode>,
   document.getElementById('root')
 );
 

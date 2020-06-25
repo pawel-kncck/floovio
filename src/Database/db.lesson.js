@@ -35,11 +35,22 @@ export const updateAnswers = (courseId, lessonId, userInput) => {
 
 export const updateLesson = (courseId, lessonId, lessonData) => {
     const lessonRef = setLessonRef(courseId,lessonId);
-    lessonRef.update({ json: lessonData })
+    lessonRef.update(lessonData)
         .then((res) => {
             console.log(res);
         })
         .catch((err) => {
             console.error(err);
+        })
+}
+
+export const addNewLesson = (courseId, lessonData) => {
+    const db = firebase.firestore();
+    db.collection("courses").doc(courseId).collection('lessons').add(lessonData)
+        .then((response) => {
+            if (response.error) {
+                throw Error(response.error);
+            }
+            return response;
         })
 }

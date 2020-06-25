@@ -1,18 +1,28 @@
 import React from 'react';
-import { TextField, makeStyles } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core';
 import { getDeepValue } from '../HyphenLesson/helpers';
 import { connect } from 'react-redux';
 import { setAnswerInState } from '../../Store/lesson.actions';
 import TeacherBox from './TeacherBox';
 
 const useStyles = makeStyles({
-    root: {}
+    root: {
+        borderTop: 'none',
+        borderRight: 'none',
+        borderBottom: '1px solid #333',
+        borderLeft: 'none',
+        outline: 'none',
+        fontSize: '16px',
+            '&:focus': {
+                borderBottom: '2px solid #777'
+            },
+    }
 })
 
 const PassiveTextField = (props) => {
     const classes = useStyles();
     const userInputKeys = ["lessonData","userInput",props.userId,props.id,"answer"];
-    const answer = getDeepValue(props.currentLessonState,userInputKeys);
+    const answer = (getDeepValue(props.currentLessonState,userInputKeys) || "");
     const scoreInputKeys = ["lessonData","userInput",props.userId,props.id,"score"];
     const score = getDeepValue(props.currentLessonState,scoreInputKeys);
 
@@ -32,14 +42,23 @@ const PassiveTextField = (props) => {
     
     return (
         <>
-        <TextField 
-            className={classes.root} 
-            id={props.id}
-            style={{ backgroundColor: bgColor(score) }}
-            value={answer}
-            onChange={(e) => updateAnswerHandler(e)} 
-        ></TextField>
-        {(props.mode === 'check') ? <TeacherBox id={props.id} /> : null}
+            {(props.mode === 'solve')
+                ?   <input
+                        type='text' 
+                        className={classes.root} 
+                        id={props.id}
+                        style={{ backgroundColor: bgColor(score) }}
+                        value={answer}
+                        onChange={(e) => updateAnswerHandler(e)} 
+                    ></input>
+                :   <input
+                        type='text' 
+                        className={classes.root} 
+                        id={props.id}
+                        style={{ backgroundColor: bgColor(score) }}
+                    ></input>
+            }
+            {(props.mode === 'check') ? <TeacherBox id={props.id} /> : null}
         </>
     );
 }

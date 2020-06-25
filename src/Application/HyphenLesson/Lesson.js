@@ -1,9 +1,9 @@
-import React, { Fragment, useContext, useEffect, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { makeStyles, Paper, CircularProgress, Box, Typography, Button, FormControlLabel, Switch, MenuItem, InputLabel, FormControl, Select, Input, Fab, Dialog, DialogTitle, DialogContent, DialogActions, TextField } from '@material-ui/core';
+import { makeStyles, Paper, CircularProgress, Box, Typography, Button, MenuItem, InputLabel, FormControl, Select, Fab, Dialog, DialogTitle, DialogContent, DialogActions, TextField } from '@material-ui/core';
 
-import { fetchLesson, setMode, setTitle, setAuthor, addExercise, updateExercise, deleteExercise } from '../../Store/lesson.actions';
-import { mapPathToMode } from './helpers';
+import { fetchLesson, setMode, setTitle, setLessonDate, setAuthor, addExercise, updateExercise, deleteExercise, killSpinner } from '../../Store/lesson.actions';
+import { mapPathToMode, convertEpoch, convertDateStringToEpoch } from './helpers';
 import renderer from '../../Utilities/Renderer';
 import HTextField from '../Lesson/PassiveTextField'
 import HDropDown from '../Lesson/PassiveDropDown'
@@ -17,6 +17,8 @@ import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import AddIcon from '@material-ui/icons/Add';
 import Editor from '../Builder/Editor/Editor';
 import OutputParser from '../../Utilities/OutputParser';
+import firebase from '../../firebase';
+import ReactAudioPlayer from 'react-audio-player';
 
 
 const useStyles = makeStyles({
@@ -32,12 +34,14 @@ const useStyles = makeStyles({
     },
     title: {
         marginRight: '20px',
+        height: '40px',
         flexGrow: '1'
     },
     exrcContainer: {
         padding: '10px',
         display: 'flex',
-        marginTop: '20px'
+        marginTop: '20px',
+        justifyContent: 'center'
     },
     exrcContent: {
         flexGrow: '1',
@@ -57,6 +61,18 @@ const useStyles = makeStyles({
     spinner: {
         margin: '20px 0',
         textAlign: 'center'
+    },
+    emptyState: {
+        width: '100%',
+        height: '200px',
+        border: '2px dashed #ddd',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        flexDirection: 'column'
+    },
+    datepicker: {
+        margin: '10px'
     }
 });
 
@@ -69,26 +85,26 @@ const Lesson = (props) => {
     const [outputParsed, setParsedOutput] = useState("");
     const [rawHtml,setRawHtml] = useState("");
     const [open,setOpen] = useState(false);
-    const [isInvalid,setIsInvalid] = useState(false);
+    // const [isInvalid,setIsInvalid] = useState(false);
     const [isLessonNew,setIsLessonNew] = useState();
     // For adding new exercise activeExercise = -1, for editing existing activeExercise = index
     const [activeExercise,setActiveExercise] = useState(-1);
     const [initialEditorContent,setInitialEditorContent] = useState("");
 
     useEffect(() => {
-        props.fetchLesson(mode,courseIdFromPath,lessonIdFromPath);
+        if (mode !== 'new') {
+            props.fetchLesson(mode,courseIdFromPath,lessonIdFromPath);
+        } else {
+            props.killSpinner()
+        }
         props.setMode(mode);
     }, [props.fetchLesson,mode,courseIdFromPath,lessonIdFromPath])
-
-    const componentMap = {
-        hyphentextfield: HTextField,
-        hyphendropdown: HDropDown,
-        hyphenradiogroup: HRadioGroup
-    }
 
     const modeSwitchHandler = (e) => {
         props.setMode(e.target.value)
     }
+
+    const isInvalid = (props.exercises.length === 0)
 
     const ITEM_HEIGHT = 48;
     const ITEM_PADDING_TOP = 8;
@@ -139,34 +155,73 @@ const Lesson = (props) => {
         if (props.mode === ('solve' || 'check')) {
             updateAnswers(courseIdFromPath,lessonIdFromPath,props.userInput)
         } else if (props.mode === 'edit') {
-            updateLesson(courseIdFromPath,lessonIdFromPath,props.data.json)
+            updateLesson(courseIdFromPath,lessonIdFromPath,props.data)
+        } else if (props.mode === 'new') {
+            const db = firebase.firestore();
+            db.collection("courses").doc(courseIdFromPath).collection('lessons').add({
+                ...props.data,
+                date: Date.now()
+            })
+                .then((response) => {
+                    // console.log("Response: ", response)
+                    history.push(`/course/${courseIdFromPath}/lesson/edit/${response.id}`)
+                })
+                .catch((err) => {
+                    console.log(err)
+                })
+            props.setMode('edit')
+
         }
     }
+
+    console.log(convertEpoch(props.data.lessonDate))
    
     return (
         <Fragment>
             <Box className={classes.header}>
-                <Typography variant="h1" className={classes.title}>{props.data.title}</Typography>
+                {(props.mode === 'edit' || props.mode === 'new')
+                    ?   <Fragment>
+                            <TextField className={classes.title} variant="outlined" id="title" label="Title" placeholder="Enter title of the lesson" fullWidth value={props.title} onChange={(e) => props.setTitle(e.target.value)} />
+                            <form className={classes.datepicker} noValidate>
+                                <TextField
+                                    id="date"
+                                    label="Lesson date"
+                                    type="date"
+                                    defaultValue={convertEpoch(props.data.lessonDate).substr(0,10)}
+                                    onChange={(e) => props.setLessonDate(convertDateStringToEpoch(e.target.value))}
+                                    className={classes.textField}
+                                    InputLabelProps={{
+                                        shrink: true,
+                                    }}
+                                />
+                            </form>
+                        </Fragment>
+                    :   <Typography variant="h1" className={classes.title}>{props.data.title}</Typography>
+                }
+
                 <Box className={classes.boxForButton}>
-                    <Button size="large" variant="contained" color="primary" className={classes.saveButton} onClick={saveHandler}>Save</Button>
+                    <Button size="large" variant="contained" disabled={isInvalid} color="primary" className={classes.saveButton} onClick={saveHandler}>Save</Button>
                 </Box>
             </Box>
-            <FormControl className={classes.formControl}>
-                <InputLabel id="demo-mutiple-name-label">Mode</InputLabel>
-                <Select
-                    labelId="mode-selector-label"
-                    id="mode-selector"
-                    style={{ minWidth: '150px' }}
-                    defaultValue={mode}
-                    value={props.mode}
-                    onChange={modeSwitchHandler}
-                    MenuProps={MenuProps}
-                >
-                    <MenuItem key='10' value='solve'>Student</MenuItem>
-                    <MenuItem key='20' value='check'>Teacher</MenuItem>
-                    <MenuItem key='30' value='edit'>Editor</MenuItem>
-                </Select>
-            </FormControl>
+            {(props.mode !== 'new')
+                ? <FormControl className={classes.formControl}>
+                    <InputLabel id="demo-mutiple-name-label">Mode</InputLabel>
+                    <Select
+                        labelId="mode-selector-label"
+                        id="mode-selector"
+                        style={{ minWidth: '150px' }}
+                        defaultValue={mode}
+                        value={props.mode}
+                        onChange={modeSwitchHandler}
+                        MenuProps={MenuProps}
+                    >
+                        <MenuItem key='10' value='solve'>Student</MenuItem>
+                        <MenuItem key='20' value='check'>Teacher</MenuItem>
+                        <MenuItem key='30' value='edit'>Editor</MenuItem>
+                    </Select>
+                </FormControl>
+                : null
+            }
             {(props.isFetching) ? <div className={classes.spinner}><CircularProgress disableShrink /></div> : null}
 
             {props.data.json.child.map((el,index) => {
@@ -175,7 +230,7 @@ const Lesson = (props) => {
                     <div className={classes.exrcContent}>
                         {renderer(el)}
                     </div>
-                    {(props.mode === 'edit') 
+                    {(props.mode === 'edit' || props.mode === 'new') 
                         ?   <div className={classes.editButtons}>
                                 <Button color="primary"><ArrowUpwardIcon /></Button>
                                 <Button color="primary"><ArrowDownwardIcon /></Button>
@@ -187,7 +242,15 @@ const Lesson = (props) => {
                 </Paper>)
             })}
 
-            {(props.mode === 'edit')
+            {(props.exercises.length === 0) 
+                ?   <Box className={classes.emptyState}>
+                        <Typography variant='h1'>Start building a new lesson!</Typography><br></br>
+                        <Typography variant='h6'>Click on the button below to add a first exercise</Typography>
+                    </Box>
+                : null
+            }
+
+            {(props.mode === 'edit' || props.mode === 'new')
                 ?   <Paper elevation={0} className={classes.exrcContainer}>
                         <Fab variant="extended" size="medium" color="primary" onClick={handleOpenEditorInCreateMode}>
                             <AddIcon />
@@ -242,10 +305,12 @@ const mapDispatchToProps = dispatch => {
         fetchLesson: (mode, lessonId, courseId) => {dispatch(fetchLesson(mode, lessonId, courseId))},
         setMode: (path) => {dispatch(setMode(path))},
         setTitle: (title) => {dispatch(setTitle(title))},
+        setLessonDate: (epoch) => {dispatch(setLessonDate(epoch))},
         setAuthor: (author) => {dispatch(setAuthor(author))},
         addExercise: (json,html) => {dispatch(addExercise(json,html))},
         updateExercise: (json,html,index) => {dispatch(updateExercise(json,html,index))},
         deleteExercise: (index) => {dispatch(deleteExercise(index))},
+        killSpinner: () => {dispatch(killSpinner())},
     }
 }
 

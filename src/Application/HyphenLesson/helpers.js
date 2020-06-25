@@ -1,13 +1,13 @@
-import { LESSON_CREATE_NEW, LESSON_EDIT, LESSON_SOLVE, LESSON_CHECK, LESSON_DEV } from '../../routes';
+import { LESSON_NEW, LESSON_EDIT, LESSON_SOLVE, LESSON_CHECK, LESSON_DEV } from '../../routes';
 
 export const mapPathToMode = (path) => {
     switch (path) {
-        case LESSON_CREATE_NEW: return 'create'
-        case LESSON_EDIT: return 'edit'
-        case LESSON_SOLVE: return 'solve'
-        case LESSON_CHECK: return 'check'
-        case LESSON_DEV: return 'dev'
-        default: return 'error'
+      case LESSON_NEW: return 'new'
+      case LESSON_EDIT: return 'edit'
+      case LESSON_SOLVE: return 'solve'
+      case LESSON_CHECK: return 'check'
+      case LESSON_DEV: return 'dev'
+      default: return 'error'
     };
 }
 
@@ -87,3 +87,21 @@ export const deepCopyFunction = (inObject) => {
 
   return outObject
 };
+
+export const convertEpoch = (epoch) => {
+  let date = new Date(epoch);
+  let isoDateTime = date.toISOString()
+  return isoDateTime
+}
+
+export const convertEpochToDateString = (epoch) => {
+  let date = new Date(epoch);
+  let isoDate = date.toISOString().substr(0,10)
+  return isoDate
+}
+
+export const convertDateStringToEpoch = (datestring) => {
+  let date = new Date(datestring);
+  let epoch = date.getTime()
+  return epoch
+}

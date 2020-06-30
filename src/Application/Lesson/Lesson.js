@@ -69,17 +69,6 @@ const Lesson = (props) => {
             })
     }, []);
 
-    // function authListener() {
-    //     firebase.auth().onAuthStateChanged(user => {
-    //         if (user) {
-    //             console.log(user.uid)
-    //             props.setUser(user.uid)
-    //         } else {
-    //             console.log("not logged in");
-    //         }
-    //     })
-    // }
-
     function updateHandler() {
         const db = firebase.firestore();
         db.collection("lessons").doc(props.activeLessonData.lessonId).update({ 

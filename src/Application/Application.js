@@ -15,22 +15,49 @@ import LoginPage from './Authentication/LoginPage';
 import LogoutDestinationPage from './Authentication/LogoutDestinationPage';
 import CreateNewLesson from './Lesson/CreateNewLesson';
 import TestCreateElement from '../Lab/testCreateElement';
-import Timer from '../Lab/TimerTest';
 import Courses from '../Application/Courses/CoursesLanding';
 import * as routes from '../routes';
 import HyphenLesson from './HyphenLesson/Lesson';
 import { makeStyles } from '@material-ui/core';
 import AudioPlayer from '../Lab/AudioPlayer';
+import Notes from '../Application/Notes/Notes';
 
 const useStyles = makeStyles({
     aside: {
         display: 'flex',
+        backgroundColor: '#fff',
         flexDirection: "column",
-        marginTop: '150px'
+        zIndex: 110,
+        height: '100%',
+        boxShadow: '1px 3px 3px #ccc'
     },
     main: {
+        display: 'grid',
+        zIndex: 100,
+        gridTemplateColumns: '268px 1fr 268px',
+        width: '100%',
+        gridGap: '30px',
+        position: 'fixed',
+        backgroundColor: '#eee',
+        height: '100%',
+        overflowX: 'hidden',
+        overflowY: 'auto',
+    },
+    article: {
         display: 'flex',
-        flexDirection: "column",
+        flexDirection: 'column',
+        backgroundColor: '#fff',
+        margin: '40px 0',
+        boxShadow: '0 1px 2px 0 rgba(60,64,67,.3)',
+        padding: '40px',
+        maxWidth: '969px',
+    },
+    dummyColumn: {
+        zIndex: -100,
+    },
+    notes: {
+        zIndex: '120px',
+        backgroundColor: '#fff',
     }
 })
 
@@ -44,42 +71,25 @@ const Application = (props) => {
                     <Route path="/course/:id" component={LessonList} />
                 </aside>
                 <main className={classes.main}>
-                    <Switch>
-                        <Route path={routes.LESSON_CREATE_NEW} exact component={CreateNewLesson} />
-                        <Route path={routes.LESSON_NEW} exact component={HyphenLesson} />
-                        <Route path={routes.LESSON_EDIT} exact component={HyphenLesson} />
-                        <Route path={routes.LESSON_SOLVE} exact component={HyphenLesson} />
-                        <Route path={routes.LESSON_CHECK} exact component={HyphenLesson} />
-                        <Route path={routes.LESSON_DEV} exact component={HyphenLesson} />
-                    </Switch>
+                    <div className={classes.dummyColumn}></div>
+                    <article className={classes.article}>
+                        <Switch>
+                            <Route path="/" exact component={Courses} />
+                            <Route path={routes.LESSON_CREATE_NEW} exact component={CreateNewLesson} />
+                            <Route path={routes.LESSON_NEW} exact component={HyphenLesson} />
+                            <Route path={routes.LESSON_EDIT} exact component={HyphenLesson} />
+                            <Route path={routes.LESSON_SOLVE} exact component={HyphenLesson} />
+                            <Route path={routes.LESSON_CHECK} exact component={HyphenLesson} />
+                            <Route path={routes.LESSON_DEV} exact component={HyphenLesson} />
+                        </Switch>
+                    </article>
+                    <div className={classes.notes}>
+                        <Route path="/course/:id" component={Notes} />
+                    </div>
+                    Dialecton
                 </main>
             </div>
             
-            
-
-
-            <Backdrop show={props.showBuilder}>
-                <Builder show={props.showBuilder}/>
-            </Backdrop>
-            <Switch>
-                <Route path="/" exact component={Courses} />
-            </Switch>
-            
-            
-
-            <Route path="/exercises" exact component={List} />
-            <Route path="/solve/:exerciseId" component={Solver} />
-            <Route path="/lab" component={AudioPlayer} />
-            <Route path="/solvelab/:exerciseId" component={NewSolver} />
-            <Route path="/loadlessons" component={LoadLessons} />
-            
-            
-            
-            <Route path="/lessons" component={LessonList} />
-            <Route path="/images" component={ImageUpload} />
-            <Route path="/login" component={LoginPage} />
-            <Route path="/logoutpage" component={LogoutDestinationPage} />
-            <Route path="/test" component={TestCreateElement} />
         </div>
     );
 }

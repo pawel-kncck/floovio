@@ -28,19 +28,25 @@ const NavBar = (props) => {
             <MenuIcon />
             <div className="navbar-brand">Dialecton</div>
             <ul className="navbar-menu left">
-                <li><NavLink to='/lessons'>All lessons</NavLink></li>
-                <li><NavLink to='/lesson/new'>Create new lesson</NavLink></li>
+                {(props.user)
+                    ?   <li><NavLink to='/'>My courses</NavLink></li>
+                    :   null
+                }
             </ul>
             <ul className="navbar-menu right">
-                <li>User: placeholder</li>
-                {/* {authUser ? <li><Avatar alt={authUser.displayName} src={authUser.photoURL} /></li> : null} */}
-                <li><MoreIcon /></li>
-                <li><NavLink to='/login'>Log in</NavLink></li>
-                <li><NavLink to='/logoutpage' onClick={handleSignOut}>Log out</NavLink></li>
-                <li><NavLink to='/'>Sign up</NavLink></li>
+                {(props.user)
+                    ?   <li><NavLink to='/login' onClick={handleSignOut}>Log out</NavLink></li>
+                    :   <li><NavLink to='/login'>Log in</NavLink></li>
+                }
             </ul>
         </div>
     );
+}
+
+const mapStateToProps = state => {
+    return {
+        user: state.auth.authUser,
+    }
 }
 
 const mapDispatchToProps = dispatch => {
@@ -49,4 +55,4 @@ const mapDispatchToProps = dispatch => {
     }
 }
  
-export default connect(null,mapDispatchToProps)(NavBar);
+export default connect(mapStateToProps,mapDispatchToProps)(NavBar);

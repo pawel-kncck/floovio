@@ -2,11 +2,16 @@ import React, { useEffect } from 'react';
 import './App.css';
 import NavBar from './Navigation/NavBar/NavBar';
 import Application from './Application/Application'
-import { BrowserRouter } from 'react-router-dom';
+import Home from './Application/Courses/CoursesLanding';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import Login from './Application/Authentication/LoginPage';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import firebase from './firebase';
 import { connect } from 'react-redux';
 import { setUser } from './Store/auth.actions';
+import ProtecedRoute from './Hoc/ProtectedRoute';
+import Unauthorized from './Application/Authentication/LogoutDestinationPage';
+
 
 function App(props) {
   // const [authUser, setAuthUser] = useState(null);
@@ -16,7 +21,7 @@ function App(props) {
     .onAuthStateChanged(user => {
       props.setUser(user)
     })
-  }, [props]);
+  }, [props,props.user]);
 
   return (
     // <UserContext.Provider value={authUser}>
@@ -24,14 +29,24 @@ function App(props) {
       <CssBaseline />
           <div className="app">
             <NavBar />
-            <Application />
-
+            <Switch>
+              <Route path="/" exact component={Home} />
+              <Route path="/login" component={Login} />
+              {/* <ProtecedRoute path='/course' user={props.user} component={Application} /> */}
+              <Route path='/course' component={Application} />
+              <Route path="/unauthorized" component={Unauthorized} />
+            </Switch>
           </div>
       </BrowserRouter>
     // </UserContext.Provider>
   );
 }
 
+const mapStateToProps = state => {
+  return {
+    user: state.auth.authUser,
+  }
+}
 const mapDispatchToProps = dispatch => {
   return {
     setUser: (user, id, email) => dispatch(setUser(user,id,email)),
@@ -39,4 +54,4 @@ const mapDispatchToProps = dispatch => {
 }
 
 
-export default connect(null,mapDispatchToProps)(App);
+export default connect(mapStateToProps,mapDispatchToProps)(App);

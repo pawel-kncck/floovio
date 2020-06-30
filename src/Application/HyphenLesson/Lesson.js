@@ -5,9 +5,9 @@ import { makeStyles, Paper, CircularProgress, Box, Typography, Button, MenuItem,
 import { fetchLesson, setMode, setTitle, setLessonDate, setAuthor, addExercise, updateExercise, deleteExercise, killSpinner } from '../../Store/lesson.actions';
 import { mapPathToMode, convertEpoch, convertDateStringToEpoch } from './helpers';
 import renderer from '../../Utilities/Renderer';
-import HTextField from '../Lesson/PassiveTextField'
-import HDropDown from '../Lesson/PassiveDropDown'
-import HRadioGroup from '../Lesson/PassiveRadio'
+// import HTextField from '../Lesson/PassiveTextField'
+// import HDropDown from '../Lesson/PassiveDropDown'
+// import HRadioGroup from '../Lesson/PassiveRadio'
 import { updateAnswers, updateLesson } from '../../Database/db.lesson';
 import { useHistory } from 'react-router-dom';
 import EditIcon from '@material-ui/icons/Edit';
@@ -19,11 +19,28 @@ import Editor from '../Builder/Editor/Editor';
 import OutputParser from '../../Utilities/OutputParser';
 import firebase from '../../firebase';
 import ReactAudioPlayer from 'react-audio-player';
+import SpeedDial from '@material-ui/lab/SpeedDial';
+import SpeedDialIcon from '@material-ui/lab/SpeedDialIcon';
+import SpeedDialAction from '@material-ui/lab/SpeedDialAction';
+import NotesIcon from '@material-ui/icons/Notes';
+import FileCopyIcon from '@material-ui/icons/FileCopyOutlined';
+import SaveIcon from '@material-ui/icons/Save';
+import PrintIcon from '@material-ui/icons/Print';
+import ShareIcon from '@material-ui/icons/Share';
+import FavoriteIcon from '@material-ui/icons/Favorite';
+import ExerciseIcon from '@material-ui/icons/TocOutlined';
+import VideoIcon from '@material-ui/icons/OndemandVideoOutlined';
+import TextIcon from '@material-ui/icons/TextFieldsOutlined';
+import ImageIcon from '@material-ui/icons/ImageOutlined';
 
 
 const useStyles = makeStyles({
     root: {
         margin: '10px'
+    },
+    crossBarWithTitle: {
+        width: '100%',
+        backgroundColor: 'rgb(3, 37, 140)'
     },
     h1title: {
         marginTop: '20px'
@@ -40,8 +57,14 @@ const useStyles = makeStyles({
     exrcContainer: {
         padding: '10px',
         display: 'flex',
-        marginTop: '20px',
         justifyContent: 'center'
+    },
+    exrcContainerEdit: {
+        padding: '10px',
+        display: 'flex',
+        justifyContent: 'center',
+        border: '1px dashed #ccc',
+        margin: '10px',  
     },
     exrcContent: {
         flexGrow: '1',
@@ -75,6 +98,14 @@ const useStyles = makeStyles({
         margin: '10px'
     }
 });
+
+const actions = [
+    { icon: <ExerciseIcon />, name: 'Exercise' },
+    { icon: <TextIcon />, name: 'Text' },
+    { icon: <ImageIcon />, name: 'Image' },
+    { icon: <VideoIcon />, name: 'Video' },
+    // { icon: <FavoriteIcon />, name: 'Like' },
+];
 
 const Lesson = (props) => {
     const classes = useStyles();
@@ -226,20 +257,21 @@ const Lesson = (props) => {
 
             {props.data.json.child.map((el,index) => {
             return (
-                <Paper key={index} elevation={3} className={classes.exrcContainer}>
-                    <div className={classes.exrcContent}>
-                        {renderer(el)}
-                    </div>
-                    {(props.mode === 'edit' || props.mode === 'new') 
-                        ?   <div className={classes.editButtons}>
-                                <Button color="primary"><ArrowUpwardIcon /></Button>
-                                <Button color="primary"><ArrowDownwardIcon /></Button>
-                                <Button color="primary" onClick={() => handleOpenEditorInEditMode(index)}><EditIcon /></Button>
-                                <Button color="primary" onClick={() => props.deleteExercise(index)}><DeleteIcon /></Button>
-                            </div>
-                        :   null
-                    }
-                </Paper>)
+                    <Paper key={index} elevation={0} className={(props.mode === 'edit') ? classes.exrcContainerEdit : classes.exrcContainer}>
+                        <div className={classes.exrcContent}>
+                            {renderer(el)}
+                        </div>
+                        {(props.mode === 'edit' || props.mode === 'new') 
+                            ?   <div className={classes.editButtons}>
+                                    <Button color="primary"><ArrowUpwardIcon /></Button>
+                                    <Button color="primary"><ArrowDownwardIcon /></Button>
+                                    <Button color="primary" onClick={() => handleOpenEditorInEditMode(index)}><EditIcon /></Button>
+                                    <Button color="primary" onClick={() => props.deleteExercise(index)}><DeleteIcon /></Button>
+                                </div>
+                            :   null
+                        }
+                    </Paper>
+                )
             })}
 
             {(props.exercises.length === 0) 
@@ -250,13 +282,35 @@ const Lesson = (props) => {
                 : null
             }
 
-            {(props.mode === 'edit' || props.mode === 'new')
+            {/* {(props.mode === 'edit' || props.mode === 'new')
                 ?   <Paper elevation={0} className={classes.exrcContainer}>
                         <Fab variant="extended" size="medium" color="primary" onClick={handleOpenEditorInCreateMode}>
                             <AddIcon />
                             Add new exercise
                         </Fab>
                     </Paper>
+                : null
+            } */}
+
+            {(props.mode === 'edit' || props.mode === 'new')
+                ?   <SpeedDial
+                        ariaLabel="SpeedDial example"
+                        // className={classes.speedDial}
+                        icon={<SpeedDialIcon />}
+                        // onClose={handleClose}
+                        // onOpen={handleOpen}
+                        open
+                        direction='right'
+                    >
+                        {actions.map((action) => (
+                            <SpeedDialAction
+                                key={action.name}
+                                icon={action.icon}
+                                tooltipTitle={action.name}
+                                onClick={handleOpenEditorInCreateMode}
+                            />
+                        ))}
+                    </SpeedDial>
                 : null
             }
             

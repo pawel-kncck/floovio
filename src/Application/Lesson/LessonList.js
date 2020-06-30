@@ -1,18 +1,31 @@
-import React, { useEffect,useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import firebase from "../../firebase";
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import LessonCard from './LessonListCard';
-import { makeStyles } from '@material-ui/core';
+import { makeStyles, Button } from '@material-ui/core';
 
 const useStyles = makeStyles({
     root: {
-        marginRight: '20px' 
+        width: '268px',
+        margin: 0,
+        padding: 0,
+    },
+    listContainer: {
+        margin: 0,
+        padding: 0,
+    },
+    buttomContainer: {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: '20px',
     }
 })
 
 const LessonList = (props) => {
     const classes = useStyles();
     const [lessons, setLessons] = useState([]);
+    const history = useHistory();
 
     useEffect(() => {
         const db = firebase.firestore()
@@ -25,19 +38,26 @@ const LessonList = (props) => {
         });
     },[props])
 
+    const handleNewLesson = () => {
+        history.push(`/course/${props.match.params.id}/lesson/new`);
+    }
+
     return (
         <div className={classes.root}>
-            <ul>
-                {lessons.map((el) => {
+            <ul className={classes.listContainer}>
+                {lessons.map((el,index) => {
 
                     // return <li key={el.lessonId}><Link to={`/course/${props.match.params.id}/lesson/${el.lessonId}`}>{el.title}</Link></li>
                     return (
                         <Link key={el.lessonId} to={`/course/${props.match.params.id}/lesson/${el.lessonId}`} style={{ textDecoration: 'none' }}>
-                            <LessonCard title={el.title} date={el.lessonDate} exrcNum={el.json.child.length} />
+                            <LessonCard lesNum={lessons.length - index} title={el.title} date={el.lessonDate} exrcNum={el.json.child.length} />
                         </Link>
                     )
                 })}    
             </ul>
+            <div className={classes.buttomContainer}>
+                <Button variant='contained' color='primary' onClick={handleNewLesson}>+ New lesson</Button>
+            </div>
         </div>
 
     );

@@ -1,9 +1,9 @@
 import React from 'react';
 
-const LogoutDestinationPage = () => {
+const Unauthorized = () => {
     return (
-        <h2>You have logged out!</h2>
+        <h2>Access denied</h2>
     );
 }
  
-export default LogoutDestinationPage;
+export default Unauthorized;

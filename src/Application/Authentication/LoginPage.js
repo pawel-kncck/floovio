@@ -8,13 +8,23 @@ import { connect } from 'react-redux';
 
 const useStyles = makeStyles({
     textField: {
-        margin: '20px'
+        margin: '20px 0'
     },
     button: {
-        margin: '20px'
+        margin: '20px 0 0 0'
     },
     title: {
-        marginTop: '20px'
+        textAlign: 'center',
+        margin: 0,
+    },
+    formContainer: {
+        display: 'flex',
+        marginTop: '30px',
+        justifyContent: 'center',
+        flexDirection: 'column',
+        padding: '30px',
+        border: '1px solid #ccc',
+        borderRadius: '10px'
     }
 })
 
@@ -38,12 +48,14 @@ const LoginPage = (props) => {
         <Grid container>
             <Grid item sm/>
             <Grid item sm>
-                <Typography variant="h1" className={classes.title}>Login</Typography>
-                <form onSubmit={handleSubmit}>
-                    <TextField type="email" id="email" name="email" label="Email" className={classes.textField} fullWidth onChange={(e) => setEmail(e.target.value)}></TextField>
-                    <TextField type="password" id="password" name="password" label="Password" className={classes.textField} fullWidth onChange={(e) => setPassword(e.target.value)}></TextField>
-                    <Button type="submit" variant="contained" color="primary" disabled={isInvalid} className={classes.button}>Sign in</Button>
-                </form>
+                <div className={classes.formContainer}>
+                    <form onSubmit={handleSubmit}>
+                        <h1 className={classes.title}>Login</h1>
+                        <TextField type="email" id="email" name="email" label="Email" className={classes.textField} fullWidth onChange={(e) => setEmail(e.target.value)}></TextField>
+                        <TextField type="password" id="password" name="password" label="Password" className={classes.textField} fullWidth onChange={(e) => setPassword(e.target.value)}></TextField>
+                        <Button type="submit" variant="contained" color="primary" disabled={isInvalid} className={classes.button}>Sign in</Button>
+                    </form>
+                </div>
             </Grid>
             <Grid item sm/>
         </Grid>

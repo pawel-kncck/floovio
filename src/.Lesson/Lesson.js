@@ -2,22 +2,22 @@ import React, { Fragment, useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { makeStyles, Paper, CircularProgress, Box, Typography, Button, MenuItem, InputLabel, FormControl, Select, Fab, Dialog, DialogTitle, DialogContent, DialogActions, TextField } from '@material-ui/core';
 
-import { fetchLesson, setMode, setTitle, setLessonDate, setAuthor, addExercise, updateExercise, deleteExercise, killSpinner } from '../../Store/lesson.actions';
-import { mapPathToMode, convertEpoch, convertDateStringToEpoch } from './helpers';
-import renderer from '../../Utilities/Renderer';
+import { fetchLesson, setMode, setTitle, setLessonDate, setAuthor, addExercise, updateExercise, deleteExercise, killSpinner, addImage, resetLessonData } from '../../Store/lesson.actions';
+import { mapPathToMode, convertEpoch, convertDateStringToEpoch } from '../.Utilities/helpers';
+import renderer from '../Utilities/Renderer';
 // import HTextField from '../Lesson/PassiveTextField'
 // import HDropDown from '../Lesson/PassiveDropDown'
 // import HRadioGroup from '../Lesson/PassiveRadio'
-import { updateAnswers, updateLesson } from '../../Database/db.lesson';
+import { updateAnswers, updateLesson } from '../Database/db.lesson';
 import { useHistory } from 'react-router-dom';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import AddIcon from '@material-ui/icons/Add';
-import Editor from '../Builder/Editor/Editor';
-import OutputParser from '../../Utilities/OutputParser';
-import firebase from '../../firebase';
+import Editor from '../Application/Builder/Editor/Editor';
+import OutputParser from '../Utilities/OutputParser';
+import firebase from '../firebase';
 import ReactAudioPlayer from 'react-audio-player';
 import SpeedDial from '@material-ui/lab/SpeedDial';
 import SpeedDialIcon from '@material-ui/lab/SpeedDialIcon';
@@ -32,6 +32,9 @@ import ExerciseIcon from '@material-ui/icons/TocOutlined';
 import VideoIcon from '@material-ui/icons/OndemandVideoOutlined';
 import TextIcon from '@material-ui/icons/TextFieldsOutlined';
 import ImageIcon from '@material-ui/icons/ImageOutlined';
+import AddImage from '../Application/HyphenLesson/AddImage/AddImage';
+
+import Header from './Header/LessonHeader';
 
 
 const useStyles = makeStyles({
@@ -116,6 +119,7 @@ const Lesson = (props) => {
     const [outputParsed, setParsedOutput] = useState("");
     const [rawHtml,setRawHtml] = useState("");
     const [open,setOpen] = useState(false);
+    const [imgDialogOpen,setImgDialogOpen] = useState(false);
     // const [isInvalid,setIsInvalid] = useState(false);
     const [isLessonNew,setIsLessonNew] = useState();
     // For adding new exercise activeExercise = -1, for editing existing activeExercise = index
@@ -126,7 +130,8 @@ const Lesson = (props) => {
         if (mode !== 'new') {
             props.fetchLesson(mode,courseIdFromPath,lessonIdFromPath);
         } else {
-            props.killSpinner()
+            props.killSpinner();
+            props.resetLessonData();
         }
         props.setMode(mode);
     }, [props.fetchLesson,mode,courseIdFromPath,lessonIdFromPath])
@@ -152,6 +157,28 @@ const Lesson = (props) => {
         setOpen(true);
         setInitialEditorContent("");
         setActiveExercise(-1);
+    }
+
+    const handleAddNew = (actionName) => {
+        if (actionName === 'Image') {
+            handleOpenImageUploaderInCreateMode();
+        } else if (actionName === 'Exercise') {
+            handleOpenEditorInCreateMode();
+        }
+    }
+
+    const handleOpenImageUploaderInCreateMode = () => {
+        setImgDialogOpen(true);
+        setActiveExercise(-1);
+    }
+
+    const handleCancelImageUploader = () => {
+        setImgDialogOpen(false);
+    }
+
+    const handleAddImage = (url) => {
+        setImgDialogOpen(false);
+        props.addImage(url);
     }
 
     const handleEditorChange = (editorOutput) => {
@@ -182,58 +209,12 @@ const Lesson = (props) => {
         setOpen(false);
     }
 
-    const saveHandler = () => {
-        if (props.mode === ('solve' || 'check')) {
-            updateAnswers(courseIdFromPath,lessonIdFromPath,props.userInput)
-        } else if (props.mode === 'edit') {
-            updateLesson(courseIdFromPath,lessonIdFromPath,props.data)
-        } else if (props.mode === 'new') {
-            const db = firebase.firestore();
-            db.collection("courses").doc(courseIdFromPath).collection('lessons').add({
-                ...props.data,
-                date: Date.now()
-            })
-                .then((response) => {
-                    // console.log("Response: ", response)
-                    history.push(`/course/${courseIdFromPath}/lesson/edit/${response.id}`)
-                })
-                .catch((err) => {
-                    console.log(err)
-                })
-            props.setMode('edit')
-
-        }
-    }
-
     console.log(convertEpoch(props.data.lessonDate))
    
     return (
         <Fragment>
-            <Box className={classes.header}>
-                {(props.mode === 'edit' || props.mode === 'new')
-                    ?   <Fragment>
-                            <TextField className={classes.title} variant="outlined" id="title" label="Title" placeholder="Enter title of the lesson" fullWidth value={props.title} onChange={(e) => props.setTitle(e.target.value)} />
-                            <form className={classes.datepicker} noValidate>
-                                <TextField
-                                    id="date"
-                                    label="Lesson date"
-                                    type="date"
-                                    defaultValue={convertEpoch(props.data.lessonDate).substr(0,10)}
-                                    onChange={(e) => props.setLessonDate(convertDateStringToEpoch(e.target.value))}
-                                    className={classes.textField}
-                                    InputLabelProps={{
-                                        shrink: true,
-                                    }}
-                                />
-                            </form>
-                        </Fragment>
-                    :   <Typography variant="h1" className={classes.title}>{props.data.title}</Typography>
-                }
-
-                <Box className={classes.boxForButton}>
-                    <Button size="large" variant="contained" disabled={isInvalid} color="primary" className={classes.saveButton} onClick={saveHandler}>Save</Button>
-                </Box>
-            </Box>
+            <Header />
+            
             {(props.mode !== 'new')
                 ? <FormControl className={classes.formControl}>
                     <InputLabel id="demo-mutiple-name-label">Mode</InputLabel>
@@ -255,11 +236,11 @@ const Lesson = (props) => {
             }
             {(props.isFetching) ? <div className={classes.spinner}><CircularProgress disableShrink /></div> : null}
 
-            {props.data.json.child.map((el,index) => {
+            {props.data.elements.map((el,index) => {
             return (
                     <Paper key={index} elevation={0} className={(props.mode === 'edit') ? classes.exrcContainerEdit : classes.exrcContainer}>
                         <div className={classes.exrcContent}>
-                            {renderer(el)}
+                            {renderer(el.json)}
                         </div>
                         {(props.mode === 'edit' || props.mode === 'new') 
                             ?   <div className={classes.editButtons}>
@@ -307,14 +288,12 @@ const Lesson = (props) => {
                                 key={action.name}
                                 icon={action.icon}
                                 tooltipTitle={action.name}
-                                onClick={handleOpenEditorInCreateMode}
+                                onClick={() => handleAddNew(action.name)}
                             />
                         ))}
                     </SpeedDial>
                 : null
             }
-            
-
             
             <Dialog open={open}>
                 <DialogTitle>
@@ -336,6 +315,17 @@ const Lesson = (props) => {
                         </Button>}
                 </DialogActions>
             </Dialog>
+
+            {(imgDialogOpen) 
+                ? <AddImage 
+                    activeExercise={activeExercise} 
+                    handleCancel={handleCancelImageUploader} 
+                    handleSave={(url) => handleAddImage(url)}
+                    /> 
+                : null
+            }
+
+
 
             {/* <pre>{JSON.stringify(props.userInput, null, "\t")}</pre> */}
         </Fragment>
@@ -365,6 +355,8 @@ const mapDispatchToProps = dispatch => {
         updateExercise: (json,html,index) => {dispatch(updateExercise(json,html,index))},
         deleteExercise: (index) => {dispatch(deleteExercise(index))},
         killSpinner: () => {dispatch(killSpinner())},
+        addImage: (url) => {dispatch(addImage(url))},
+        resetLessonData: () => {dispatch(resetLessonData())}
     }
 }
 

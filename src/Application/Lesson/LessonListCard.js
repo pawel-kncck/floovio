@@ -1,6 +1,6 @@
 import React from 'react';
 import { Card, CardActionArea, CardContent, Typography, makeStyles } from '@material-ui/core';
-import { convertEpochToDateString } from '../HyphenLesson/helpers';
+import { convertEpochToDateString } from '../../.Utilities/helpers';
 import MoreIcon from '@material-ui/icons/MoreVert';
 
 const useStyles = makeStyles({

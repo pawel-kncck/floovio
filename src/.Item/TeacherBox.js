@@ -3,11 +3,11 @@ import CheckBoxOutlinedIcon from '@material-ui/icons/CheckBoxOutlined';
 import CancelOutlinedIcon from '@material-ui/icons/CancelOutlined';
 import ChatOutlinedIcon from '@material-ui/icons/ChatOutlined';
 // import { setScoreInState,setCommentInState } from '../../Store/oldActions';
-import { setAnswerInState } from '../../Store/lesson.actions';
+import { setAnswerInState } from '../.Store/lesson.actions'
 import { connect } from 'react-redux';
 import { makeStyles, Button, IconButton } from '@material-ui/core';
 import { green,red } from '@material-ui/core/colors';
-import { getDeepValue } from '../HyphenLesson/helpers';
+import { getDeepValue } from '../.Utilities/helpers';
 
 
 const useStyles = makeStyles({

@@ -1,4 +1,4 @@
-import { LESSON_NEW, LESSON_EDIT, LESSON_SOLVE, LESSON_CHECK, LESSON_DEV } from '../../routes';
+import { LESSON_NEW, LESSON_EDIT, LESSON_SOLVE, LESSON_CHECK, LESSON_DEV } from '../routes';
 
 export const mapPathToMode = (path) => {
     switch (path) {

@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { setLessonAnswerInState } from '../../Store/oldActions';
 // import withAnswers from './withAnswers';
-import TeacherBox from './TeacherBox';
+import TeacherBox from '../../.Item/TeacherBox';
 
 const RadioGroup = (props) => {
     let answer = "";

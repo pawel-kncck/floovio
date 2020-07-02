@@ -8,6 +8,7 @@ const initialState = {
         author: "",
         lessonDate: 1112470620000,
         userInput: {},
+        elements: [],
         json: {
             node: 'element',
             tag: 'div',
@@ -34,6 +35,11 @@ const reducer = (state = initialState, action) => {
                     ...state.lessonData,
                     title: action.payload,
                 }
+            }
+        case actionTypes.RESET_LESSON_DATA:
+            return {
+                ...state,
+                lessonData: initialState.lessonData
             }
         case actionTypes.SET_LESSON_DATE:
             return {
@@ -97,6 +103,40 @@ const reducer = (state = initialState, action) => {
                         ...state.lessonData.json,
                         child: newExerciseArray
                     },
+                }
+            }
+        case actionTypes.ADD_IMAGE:
+            let appendedExerciseArray = [...state.lessonData.json.child];
+            appendedExerciseArray.push(action.payload);
+            let appendedHtmlStringsArray = [...state.lessonData.htmlStrings]
+            appendedHtmlStringsArray.push({__html: ""})
+            return {
+                ...state,
+                lessonData: {
+                    ...state.lessonData,
+                    elements: {
+                        type: 'image',
+                        json: appendedExerciseArray,
+                        htmlString: appendedHtmlStringsArray
+                    },
+                    htmlStrings: appendedHtmlStringsArray,
+                    json: {
+                        ...state.lessonData.json,
+                        child: appendedExerciseArray
+                    },
+                }
+            }
+
+        case actionTypes.ADD_ELEMENT:
+            let updatedElementArray = [...state.lessonData.elements];
+            updatedElementArray.push(action.element);
+            // let appendedHtmlStringsArray = [...state.lessonData.htmlStrings]
+            // appendedHtmlStringsArray.push({__html: ""})
+            return {
+                ...state,
+                lessonData: {
+                    ...state.lessonData,
+                    elements: updatedElementArray
                 }
             }
         case actionTypes.UPDATE_EXERCISE:

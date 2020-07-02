@@ -89,7 +89,7 @@ const Notes = (props) => {
                 {(notesArray.length > 0)
                     ?   notesArray.map((el,index) => {
                             return (
-                                <div className={classes.noteOuter}>
+                                <div key={'no' + index} className={classes.noteOuter}>
                                     <div key={'nt' + index} className={classes.noteItem}>{el.body}</div>
                                 </div>
                                 )

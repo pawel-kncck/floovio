@@ -1,3 +1,4 @@
+import { v4 as uuid } from 'uuid';
 import { getLesson } from '../Database/db.lesson';
 
 /*
@@ -18,6 +19,9 @@ export const ADD_HTML_STRING = 'ADD_HTML_STRING'
 export const UPDATE_EXERCISE = 'UPDATE_EXERCISE'
 export const DELETE_EXERCISE = 'DELETE_EXERCISE'
 export const KILL_SPINNER = 'KILL_SPINNER'
+export const ADD_IMAGE = 'ADD_IMAGE'
+export const ADD_ELEMENT = 'ADD_ELEMENT'
+export const RESET_LESSON_DATA = 'RESET_LESSON_DATA'
 
 /*
 action creators
@@ -42,8 +46,24 @@ export function setAuthor(value) {
     return { type: SET_AUTHOR, payload: value }
 }
 
-export function addExercise(json,html) {
-    return { type: ADD_EXERCISE, payload: {html: html, json: json} }
+
+export function resetLessonData() {
+    return { type: RESET_LESSON_DATA }
+}
+
+// export function addExercise(json,html) {
+//     return { type: ADD_EXERCISE, payload: {html: html, json: json} }
+// }
+
+export function addExercise(json, html) {
+    return { 
+        type: ADD_ELEMENT, 
+        element: {
+            type: 'exercise',
+            json: json,
+            htmlString: html,
+        }
+    }
 }
 
 export function updateExercise(json,html,index) {
@@ -54,9 +74,27 @@ export function killSpinner() {
     return { type: KILL_SPINNER }
 }
 
-
 export function deleteExercise(index) {
     return { type: DELETE_EXERCISE, payload: {index: index} }
+}
+
+export function addImage(url) {
+    return { 
+        type: ADD_ELEMENT, 
+        element: {
+            type: 'image',
+            json: {
+                node: 'element',
+                tag: 'img',
+                attr: {
+                    src: url,
+                    alt: 'exercise illustration',
+                    id: uuid(),
+                }
+            },
+            htmlString: ""
+        }
+    }
 }
 
 export const fetchLessonStart = () => {return { type: FETCH_LESSON_START }};

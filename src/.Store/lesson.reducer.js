@@ -1,5 +1,5 @@
 import * as actionTypes from './lesson.actions';
-import { deepCopyFunction, createNestedObject } from '../Application/HyphenLesson/helpers';
+import { deepCopyFunction, createNestedObject } from '../.Utilities/helpers';
 
 const initialState = {
     lessonId: "",

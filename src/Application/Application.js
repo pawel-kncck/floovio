@@ -16,11 +16,11 @@ import LogoutDestinationPage from './Authentication/LogoutDestinationPage';
 import CreateNewLesson from './Lesson/CreateNewLesson';
 import TestCreateElement from '../Lab/testCreateElement';
 import Courses from '../Application/Courses/CoursesLanding';
-import * as routes from '../routes';
+import * as routes from '../.Application/routes';
 import HyphenLesson from './HyphenLesson/Lesson';
 import { makeStyles } from '@material-ui/core';
 import AudioPlayer from '../Lab/AudioPlayer';
-import Notes from '../Application/Notes/Notes';
+import Notes from '../.Notes/Notes';
 
 const useStyles = makeStyles({
     aside: {

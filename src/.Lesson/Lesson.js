@@ -1,8 +1,9 @@
 import React, { Fragment, useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import { makeStyles, Paper, CircularProgress, Box, Typography, Button, MenuItem, InputLabel, FormControl, Select, Fab, Dialog, DialogTitle, DialogContent, DialogActions, TextField } from '@material-ui/core';
+// import { makeStyles, Paper, CircularProgress, Box, Typography, Button, MenuItem, InputLabel, FormControl, Select, Fab, Dialog, DialogTitle, DialogContent, DialogActions, TextField } from '@material-ui/core';
+import { makeStyles, CircularProgress } from '@material-ui/core';
 
-import { fetchLesson, setMode, setTitle, setLessonDate, setAuthor, addExercise, updateExercise, deleteExercise, killSpinner, addImage, resetLessonData } from '../../Store/lesson.actions';
+import { fetchLesson, setMode, setTitle, setLessonDate, setAuthor, addExercise, updateExercise, deleteExercise, killSpinner, addImage, resetLessonData } from '../.Store/lesson.actions';
 import { mapPathToMode, convertEpoch, convertDateStringToEpoch } from '../.Utilities/helpers';
 import renderer from '../Utilities/Renderer';
 // import HTextField from '../Lesson/PassiveTextField'
@@ -35,72 +36,56 @@ import ImageIcon from '@material-ui/icons/ImageOutlined';
 import AddImage from '../Application/HyphenLesson/AddImage/AddImage';
 
 import Header from './Header/LessonHeader';
+import ModeSwitch from './ModeSwitch';
+import Body from './Body/LessonBody';
+import Dialog from './Dialog/SegmentDialog';
 
 
-const useStyles = makeStyles({
-    root: {
-        margin: '10px'
-    },
-    crossBarWithTitle: {
-        width: '100%',
-        backgroundColor: 'rgb(3, 37, 140)'
-    },
-    h1title: {
-        marginTop: '20px'
-    },
-    header: {
-        margin: '20px 0',
-        display: 'flex'
-    },
-    title: {
-        marginRight: '20px',
-        height: '40px',
-        flexGrow: '1'
-    },
-    exrcContainer: {
-        padding: '10px',
-        display: 'flex',
-        justifyContent: 'center'
-    },
-    exrcContainerEdit: {
-        padding: '10px',
-        display: 'flex',
-        justifyContent: 'center',
-        border: '1px dashed #ccc',
-        margin: '10px',  
-    },
-    exrcContent: {
-        flexGrow: '1',
-        marginLeft: '20px'
-    },
-    editButtons: {
-        display: 'flex',
-        flexDirection: 'column'
-    },
-    boxForButton: {
-        width: '150px'
-    },
-    saveButton: {
-        height: '55px',
-        width: '100%'
-    },
-    spinner: {
-        margin: '20px 0',
-        textAlign: 'center'
-    },
-    emptyState: {
-        width: '100%',
-        height: '200px',
-        border: '2px dashed #ddd',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        flexDirection: 'column'
-    },
-    datepicker: {
-        margin: '10px'
-    }
-});
+// const useStyles = makeStyles({
+//     root: {
+//         margin: '10px'
+//     },
+//     crossBarWithTitle: {
+//         width: '100%',
+//         backgroundColor: 'rgb(3, 37, 140)'
+//     },
+//     exrcContainer: {
+//         padding: '10px',
+//         display: 'flex',
+//         justifyContent: 'center'
+//     },
+//     exrcContainerEdit: {
+//         padding: '10px',
+//         display: 'flex',
+//         justifyContent: 'center',
+//         border: '1px dashed #ccc',
+//         margin: '10px',  
+//     },
+//     exrcContent: {
+//         flexGrow: '1',
+//         marginLeft: '20px'
+//     },
+//     editButtons: {
+//         display: 'flex',
+//         flexDirection: 'column'
+//     },
+//     boxForButton: {
+//         width: '150px'
+//     },
+//     spinner: {
+//         margin: '20px 0',
+//         textAlign: 'center'
+//     },
+//     emptyState: {
+//         width: '100%',
+//         height: '200px',
+//         border: '2px dashed #ddd',
+//         display: 'flex',
+//         alignItems: 'center',
+//         justifyContent: 'center',
+//         flexDirection: 'column'
+//     },
+// });
 
 const actions = [
     { icon: <ExerciseIcon />, name: 'Exercise' },
@@ -111,7 +96,7 @@ const actions = [
 ];
 
 const Lesson = (props) => {
-    const classes = useStyles();
+    // const classes = useStyles();
     const mode = mapPathToMode(props.match.path);
     const lessonIdFromPath = props.match.params.lessonId || null;
     const courseIdFromPath = props.match.params.courseId || null;
@@ -136,22 +121,6 @@ const Lesson = (props) => {
         props.setMode(mode);
     }, [props.fetchLesson,mode,courseIdFromPath,lessonIdFromPath])
 
-    const modeSwitchHandler = (e) => {
-        props.setMode(e.target.value)
-    }
-
-    const isInvalid = (props.exercises.length === 0)
-
-    const ITEM_HEIGHT = 48;
-    const ITEM_PADDING_TOP = 8;
-    const MenuProps = {
-        PaperProps: {
-            style: {
-            maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-            width: 250,
-            },
-        },
-    };
 
     const handleOpenEditorInCreateMode = () => {
         setOpen(true);
@@ -208,126 +177,26 @@ const Lesson = (props) => {
         props.updateExercise(outputParsed,rawHtml,activeExercise);
         setOpen(false);
     }
-
-    console.log(convertEpoch(props.data.lessonDate))
    
     return (
         <Fragment>
-            <Header />
-            
-            {(props.mode !== 'new')
-                ? <FormControl className={classes.formControl}>
-                    <InputLabel id="demo-mutiple-name-label">Mode</InputLabel>
-                    <Select
-                        labelId="mode-selector-label"
-                        id="mode-selector"
-                        style={{ minWidth: '150px' }}
-                        defaultValue={mode}
-                        value={props.mode}
-                        onChange={modeSwitchHandler}
-                        MenuProps={MenuProps}
-                    >
-                        <MenuItem key='10' value='solve'>Student</MenuItem>
-                        <MenuItem key='20' value='check'>Teacher</MenuItem>
-                        <MenuItem key='30' value='edit'>Editor</MenuItem>
-                    </Select>
-                </FormControl>
-                : null
-            }
-            {(props.isFetching) ? <div className={classes.spinner}><CircularProgress disableShrink /></div> : null}
-
-            {props.data.elements.map((el,index) => {
-            return (
-                    <Paper key={index} elevation={0} className={(props.mode === 'edit') ? classes.exrcContainerEdit : classes.exrcContainer}>
-                        <div className={classes.exrcContent}>
-                            {renderer(el.json)}
-                        </div>
-                        {(props.mode === 'edit' || props.mode === 'new') 
-                            ?   <div className={classes.editButtons}>
-                                    <Button color="primary"><ArrowUpwardIcon /></Button>
-                                    <Button color="primary"><ArrowDownwardIcon /></Button>
-                                    <Button color="primary" onClick={() => handleOpenEditorInEditMode(index)}><EditIcon /></Button>
-                                    <Button color="primary" onClick={() => props.deleteExercise(index)}><DeleteIcon /></Button>
-                                </div>
-                            :   null
-                        }
-                    </Paper>
-                )
-            })}
-
-            {(props.exercises.length === 0) 
-                ?   <Box className={classes.emptyState}>
-                        <Typography variant='h1'>Start building a new lesson!</Typography><br></br>
-                        <Typography variant='h6'>Click on the button below to add a first exercise</Typography>
-                    </Box>
-                : null
-            }
-
-            {/* {(props.mode === 'edit' || props.mode === 'new')
-                ?   <Paper elevation={0} className={classes.exrcContainer}>
-                        <Fab variant="extended" size="medium" color="primary" onClick={handleOpenEditorInCreateMode}>
-                            <AddIcon />
-                            Add new exercise
-                        </Fab>
-                    </Paper>
-                : null
-            } */}
-
-            {(props.mode === 'edit' || props.mode === 'new')
-                ?   <SpeedDial
-                        ariaLabel="SpeedDial example"
-                        // className={classes.speedDial}
-                        icon={<SpeedDialIcon />}
-                        // onClose={handleClose}
-                        // onOpen={handleOpen}
-                        open
-                        direction='right'
-                    >
-                        {actions.map((action) => (
-                            <SpeedDialAction
-                                key={action.name}
-                                icon={action.icon}
-                                tooltipTitle={action.name}
-                                onClick={() => handleAddNew(action.name)}
-                            />
-                        ))}
-                    </SpeedDial>
-                : null
+            {(props.mode === 'new' || props.mode === 'edit') 
+                ? <ModeSwitch />
+                :   null
             }
             
-            <Dialog open={open}>
-                <DialogTitle>
-                    Create new exercise
-                </DialogTitle>
-                <DialogContent>
-                    <Editor transformOutput={(content) => handleEditorChange(content)} initialContent={initialEditorContent} />
-                </DialogContent>
-                <DialogActions>
-                    <Button autoFocus onClick={handleEditorCancel} color="primary">
-                        Cancel
-                    </Button>
-                    {(activeExercise === -1) 
-                    ?   <Button autoFocus onClick={handleEditorAddNewExercise} color="primary" variant="contained">
-                            Add new
-                        </Button>
-                    :   <Button autoFocus onClick={handleEditorUpdateExercise} color="primary" variant="contained">
-                            Save changes
-                        </Button>}
-                </DialogActions>
-            </Dialog>
-
-            {(imgDialogOpen) 
-                ? <AddImage 
-                    activeExercise={activeExercise} 
-                    handleCancel={handleCancelImageUploader} 
-                    handleSave={(url) => handleAddImage(url)}
-                    /> 
-                : null
+            {(props.isFetching) 
+                ? <CircularProgress disableShrink />
+                :   <>
+                        <Header />
+                        <Body /> 
+                    </>
             }
 
-
-
-            {/* <pre>{JSON.stringify(props.userInput, null, "\t")}</pre> */}
+            {(props.open) 
+                ? <Dialog />
+                :   null
+            }
         </Fragment>
     );
 }

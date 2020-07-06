@@ -1,9 +1,9 @@
 import React from 'react';
 import { makeStyles, Select, FormControl } from '@material-ui/core';
 import { connect } from 'react-redux';
-import { getDeepValue } from '../../.Utilities/helpers';
-import { setAnswerInState } from '../../Store/lesson.actions';
-import TeacherBox from '../../.Item/TeacherBox';
+import { getDeepValue } from '../.Utilities/helpers';
+import { setAnswerInState } from '../.Store/lesson.actions';
+import TeacherBox from './TeacherBox';
 import { green, red } from '@material-ui/core/colors';
 
 const useStyles = makeStyles({

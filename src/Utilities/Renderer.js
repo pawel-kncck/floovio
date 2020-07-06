@@ -1,9 +1,9 @@
 import React from 'react';
-import PassiveTextField from '../Application/Lesson/PassiveTextField';
+import PassiveTextField from '../.Item/PassiveTextField';
 import DropDown from '../Application/Lesson/DropDown';
-import PassiveDropDown from '../Application/Lesson/PassiveDropDown';
+import PassiveDropDown from '../.Item/PassiveDropDown';
 import RadioGroup from '../Application/Lesson/RadioGroup';
-import PassiveRadioGroup from '../Application/Lesson/PassiveRadio';
+import PassiveRadioGroup from '../.Item/PassiveRadio';
 import AudioPlayer from '../Lab/AudioPlayer';
 
 const componentMap = {

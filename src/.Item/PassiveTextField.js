@@ -1,9 +1,9 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core';
-import { getDeepValue } from '../../.Utilities/helpers';
+import { getDeepValue } from '../.Utilities/helpers';
 import { connect } from 'react-redux';
-import { setAnswerInState } from '../../.Store/lesson.actions'
-import TeacherBox from '../../.Item/TeacherBox';
+import { setAnswerInState } from '../.Store/lesson.actions'
+import TeacherBox from './TeacherBox';
 
 const useStyles = makeStyles({
     root: {

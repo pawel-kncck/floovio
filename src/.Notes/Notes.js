@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core';
-import firebase from '../../firebase';
+import firebase from '../firebase';
 import SendBox from './SendBox';
 import { connect } from 'react-redux';
 

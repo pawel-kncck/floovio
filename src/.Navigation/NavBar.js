@@ -3,7 +3,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import { NavLink } from 'react-router-dom';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import { connect } from 'react-redux';
-import { logout } from '../../Store/auth.actions';
+import { logout } from '../.Store/auth.actions';
 
 
 

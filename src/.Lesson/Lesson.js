@@ -5,35 +5,14 @@ import { makeStyles, CircularProgress } from '@material-ui/core';
 
 import { fetchLesson, setMode, setTitle, setLessonDate, setAuthor, addExercise, updateExercise, deleteExercise, killSpinner, addImage, resetLessonData } from '../.Store/lesson.actions';
 import { mapPathToMode, convertEpoch, convertDateStringToEpoch } from '../.Utilities/helpers';
-import renderer from '../Utilities/Renderer';
+import renderer from '../.Utilities/Renderer';
 // import HTextField from '../Lesson/PassiveTextField'
 // import HDropDown from '../Lesson/PassiveDropDown'
 // import HRadioGroup from '../Lesson/PassiveRadio'
 import { updateAnswers, updateLesson } from '../Database/db.lesson';
 import { useHistory } from 'react-router-dom';
-import EditIcon from '@material-ui/icons/Edit';
-import DeleteIcon from '@material-ui/icons/Delete';
-import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
-import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
-import AddIcon from '@material-ui/icons/Add';
-import Editor from '../Application/Builder/Editor/Editor';
 import OutputParser from '../Utilities/OutputParser';
 import firebase from '../firebase';
-import ReactAudioPlayer from 'react-audio-player';
-import SpeedDial from '@material-ui/lab/SpeedDial';
-import SpeedDialIcon from '@material-ui/lab/SpeedDialIcon';
-import SpeedDialAction from '@material-ui/lab/SpeedDialAction';
-import NotesIcon from '@material-ui/icons/Notes';
-import FileCopyIcon from '@material-ui/icons/FileCopyOutlined';
-import SaveIcon from '@material-ui/icons/Save';
-import PrintIcon from '@material-ui/icons/Print';
-import ShareIcon from '@material-ui/icons/Share';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import ExerciseIcon from '@material-ui/icons/TocOutlined';
-import VideoIcon from '@material-ui/icons/OndemandVideoOutlined';
-import TextIcon from '@material-ui/icons/TextFieldsOutlined';
-import ImageIcon from '@material-ui/icons/ImageOutlined';
-import AddImage from '../Application/HyphenLesson/AddImage/AddImage';
 
 import Header from './Header/LessonHeader';
 import ModeSwitch from './ModeSwitch';
@@ -86,14 +65,6 @@ import Dialog from './Dialog/SegmentDialog';
 //         flexDirection: 'column'
 //     },
 // });
-
-const actions = [
-    { icon: <ExerciseIcon />, name: 'Exercise' },
-    { icon: <TextIcon />, name: 'Text' },
-    { icon: <ImageIcon />, name: 'Image' },
-    { icon: <VideoIcon />, name: 'Video' },
-    // { icon: <FavoriteIcon />, name: 'Like' },
-];
 
 const Lesson = (props) => {
     // const classes = useStyles();

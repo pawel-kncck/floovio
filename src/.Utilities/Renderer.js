@@ -1,8 +1,6 @@
 import React from 'react';
 import PassiveTextField from '../.Item/PassiveTextField';
-import DropDown from '../Application/Lesson/DropDown';
 import PassiveDropDown from '../.Item/PassiveDropDown';
-import RadioGroup from '../Application/Lesson/RadioGroup';
 import PassiveRadioGroup from '../.Item/PassiveRadio';
 import AudioPlayer from '../Lab/AudioPlayer';
 

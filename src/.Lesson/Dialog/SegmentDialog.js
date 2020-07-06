@@ -1,39 +1,26 @@
 import React from 'react';
+import ImageDialog from './ImageUploader/ImageDialog';
+import EditorDialog from './Editor/EditorDialog';
+import { connect } from 'react-redux';
 
-const SegmentDialog = () => {
-    return (
-        <>
-            <Dialog open={open}>
-                <DialogTitle>
-                    Create new exercise
-                </DialogTitle>
-                <DialogContent>
-                    <Editor transformOutput={(content) => handleEditorChange(content)} initialContent={initialEditorContent} />
-                </DialogContent>
-                <DialogActions>
-                    <Button autoFocus onClick={handleEditorCancel} color="primary">
-                        Cancel
-                    </Button>
-                    {(activeExercise === -1) 
-                    ?   <Button autoFocus onClick={handleEditorAddNewExercise} color="primary" variant="contained">
-                            Add new
-                        </Button>
-                    :   <Button autoFocus onClick={handleEditorUpdateExercise} color="primary" variant="contained">
-                            Save changes
-                        </Button>}
-                </DialogActions>
-            </Dialog>
 
-            {(imgDialogOpen) 
-                ? <AddImage 
-                    activeExercise={activeExercise} 
-                    handleCancel={handleCancelImageUploader} 
-                    handleSave={(url) => handleAddImage(url)}
-                    /> 
-                : null
-            }
-        </>
-    );
+const SegmentDialog = (props) => {
+    
+    switch (props.segmentType) {
+        case 'image': return <ImageDialog />
+        case 'exercise': return <EditorDialog />
+        default: return null
+    }
 }
+
+const mapStateToProps = state => {
+    return {
+        data: state.lesson.lessonData,
+        mode: state.lesson.lessonMode,
+        open: state.dialog.open,
+        activeSegment: state.dialog.activeSegment,
+        segmentType: state.lesson.lessonData.segments[state.dialog.activeSegment].type, // image, exercise
+    }
+};
  
-export default SegmentDialog;
+export default connect(mapStateToProps,null)(SegmentDialog);

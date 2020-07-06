@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Button, TextField, Grid, Typography, makeStyles } from '@material-ui/core';
-import firebase from '../../firebase';
+import firebase from '../firebase';
 
 const useStyles = makeStyles({
     textField: {

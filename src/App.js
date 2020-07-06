@@ -1,16 +1,16 @@
 import React, { useEffect } from 'react';
 import './App.css';
-import NavBar from './Navigation/NavBar/NavBar';
+import NavBar from './.Navigation/NavBar';
 // import Application from './Application/Application'
-import Home from './Application/Courses/CoursesLanding';
+import Home from './.Course/CoursesLanding';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import Login from './Application/Authentication/LoginPage';
+import Login from './.Authentication/LoginPage';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import firebase from './firebase';
 import { connect } from 'react-redux';
-import { setUser } from './Store/auth.actions';
+import { setUser } from './.Store/auth.actions';
 import ProtecedRoute from './Hoc/ProtectedRoute';
-import Unauthorized from './Application/Authentication/LogoutDestinationPage';
+import Unauthorized from './.Authentication/LogoutDestinationPage';
 import Workspace from './.Application/Workspace';
 
 

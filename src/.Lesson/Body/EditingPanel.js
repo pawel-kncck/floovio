@@ -1,19 +1,27 @@
 import React from 'react';
-import { Button } from '@material-ui/core';
-
+import { Button, makeStyles } from '@material-ui/core';
+import { setOpen, setActiveSegment } from '../../.Store/dialog.actions';
+import { connect } from 'react-redux';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 
 // props = index, mode
+const useStyles = makeStyles({
+    root: {
+        display: 'flex',
+        flexDirection: 'column',
+    }
+})
 
 const EditingPanel = (props) => {
+    const classes = useStyles();
     
     const handleOpenEditorInEditMode = (index) => {
-        setOpen(true);
-        setInitialEditorContent(props.data.htmlStrings[index].__html);
-        setActiveExercise(index);
+        props.setOpen(true);
+        props.setActiveExercise(index);
+        // setInitialEditorContent(props.data.htmlStrings[index].__html);
     }
 
     return (
@@ -28,29 +36,15 @@ const EditingPanel = (props) => {
 
 const mapStateToProps = state => {
     return {
-        data: state.lesson.lessonData,
         mode: state.lesson.lessonMode,
-        userInput: state.lesson.lessonData.userInput,
-        isFetching: state.lesson.isFetching,
-        title: state.lesson.lessonData.title,
-        exercises: state.lesson.lessonData.json.child,
-        htmlStrings: state.lesson.lessonData.htmlStrings,
     }
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        fetchLesson: (mode, lessonId, courseId) => {dispatch(fetchLesson(mode, lessonId, courseId))},
-        setMode: (path) => {dispatch(setMode(path))},
-        setTitle: (title) => {dispatch(setTitle(title))},
-        setLessonDate: (epoch) => {dispatch(setLessonDate(epoch))},
-        setAuthor: (author) => {dispatch(setAuthor(author))},
-        addExercise: (json,html) => {dispatch(addExercise(json,html))},
-        updateExercise: (json,html,index) => {dispatch(updateExercise(json,html,index))},
         deleteExercise: (index) => {dispatch(deleteExercise(index))},
-        killSpinner: () => {dispatch(killSpinner())},
-        addImage: (url) => {dispatch(addImage(url))},
-        resetLessonData: () => {dispatch(resetLessonData())}
+        setOpen: (isOpen) => {dispatch(setOpen(isOpen))},
+        setActiveSegment: (index) => {dispatch(setActiveSegment(index))},
     }
 }
 

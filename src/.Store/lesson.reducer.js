@@ -8,7 +8,7 @@ const initialState = {
         author: "",
         lessonDate: 1112470620000,
         userInput: {},
-        elements: [],
+        segments: [],
         json: {
             node: 'element',
             tag: 'div',

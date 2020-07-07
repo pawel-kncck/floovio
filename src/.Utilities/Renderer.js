@@ -2,7 +2,7 @@ import React from 'react';
 import PassiveTextField from '../.Item/PassiveTextField';
 import PassiveDropDown from '../.Item/PassiveDropDown';
 import PassiveRadioGroup from '../.Item/PassiveRadio';
-import AudioPlayer from '../Lab/AudioPlayer';
+import AudioPlayer from '../.Lab/AudioPlayer';
 
 const componentMap = {
     hyphentextfield: PassiveTextField,

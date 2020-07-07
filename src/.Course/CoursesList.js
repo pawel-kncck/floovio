@@ -1,6 +1,6 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import { connect } from 'react-redux';
-import firebase from '../../firebase';
+import firebase from '../firebase';
 import { Link } from 'react-router-dom';
 import CourseCard from './CourseCard';
 import { makeStyles } from '@material-ui/core';

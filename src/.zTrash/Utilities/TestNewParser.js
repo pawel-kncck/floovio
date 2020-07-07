@@ -1,5 +1,5 @@
 // import DOMPurify from 'dompurify';
-import { makeId } from '../Utilities/Utilities';
+import { makeId } from '../.Utilities/Utilities';
 
 export default function HTMLTransformer(editorOutput) {
     const inputRegex = RegExp(/\[\]/,'gum');

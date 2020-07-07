@@ -2,21 +2,6 @@
 	"folders": [
 		{
 			"path": "."
-		},
-		{
-			"path": "../JavaScript/tinymce-react-demo"
-		},
-		{
-			"path": "../dialetton-functions"
-		},
-		{
-			"path": "../JavaScript/html_parser"
-		},
-		{
-			"path": "../JavaScript/deep_object_creator"
-		},
-		{
-			"path": "../JavaScript/fire design"
 		}
 	],
 	"settings": {}

@@ -35,6 +35,8 @@ const useStyles = makeStyles({
         boxShadow: '0 1px 2px 0 rgba(60,64,67,.3)',
         padding: '40px',
         maxWidth: '969px',
+        height: '100vh',
+        overflowY: 'auto',
     },
     notes: {
         zIndex: 110,
@@ -56,7 +58,7 @@ const Workspace = (props) => {
                 <Switch>
                     {/* <Route path="/" exact component={Courses} /> */}
                     {/* <Route path={routes.LESSON_CREATE_NEW} exact component={CreateNewLesson} /> */}
-                    {/* <Route path={routes.LESSON_NEW} exact component={HyphenLesson} /> */}
+                    <Route path={routes.LESSON_NEW} exact component={Lesson} />
                     <Route path={routes.LESSON_EDIT} exact component={Lesson} />
                     <Route path={routes.LESSON_SOLVE} exact component={Lesson} />
                     {/* <Route path={routes.LESSON_CHECK} exact component={HyphenLesson} /> */}

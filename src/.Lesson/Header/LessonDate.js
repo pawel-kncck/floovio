@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { convertEpoch, convertDateStringToEpoch } from '../../.Utilities/helpers';
+import { TextField } from '@material-ui/core';
 
 const LessonDate = (props) => {
     return (
@@ -14,7 +15,6 @@ const LessonDate = (props) => {
                         type="date"
                         defaultValue={convertEpoch(props.data.lessonDate).substr(0,10)}
                         onChange={(e) => props.setLessonDate(convertDateStringToEpoch(e.target.value))}
-                        className={classes.textField}
                         InputLabelProps={{
                             shrink: true,
                         }}

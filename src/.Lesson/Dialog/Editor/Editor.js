@@ -1,6 +1,6 @@
 import React from 'react';
 import { Editor } from '@tinymce/tinymce-react';
-import { stripTags } from '../../../Utilities/Utilities';
+import { stripTags } from '../../../.Utilities/Utilities';
 
 class EditorComponent extends React.Component {
 

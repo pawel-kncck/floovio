@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Dialog, DialogTitle, DialogContent, DialogActions, Button, Input, makeStyles } from '@material-ui/core';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 // import { firebaseImageUpload } from './db.image';
-import { storage } from '../../../firebase';
+import { storage } from '../../../.Database/firebase';
 import { v4 as uuid } from 'uuid'
 import PanoramaOutlinedIcon from '@material-ui/icons/PanoramaOutlined';
 

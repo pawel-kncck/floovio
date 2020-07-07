@@ -1,4 +1,4 @@
-import firebase from '../firebase';
+import firebase from './firebase';
 
 const setLessonRef = (courseId,lessonId) => {
     let lessonRef;

@@ -1,5 +1,5 @@
 import { v4 as uuid } from 'uuid';
-import { getLesson } from '../Database/db.lesson';
+import { getLesson } from '../.Database/db.lesson';
 
 /*
 action types

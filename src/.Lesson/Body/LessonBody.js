@@ -8,7 +8,7 @@ const LessonBody = (props) => {
 
     return (
         <>
-            {(segments.length !== 0) ? <Segments /> : <EmptySegment />}
+            {(props.segments.length !== 0) ? <Segments /> : <EmptySegment />}
             {(props.mode === 'edit' || props.mode === 'new') ? <AddSegment /> : null}
         </>
     );
@@ -16,7 +16,7 @@ const LessonBody = (props) => {
 
 const mapStateToProps = state => {
     return {
-        segments: state.lesson.lessonMode.segments,
+        segments: state.lesson.lessonData.segments,
         mode: state.lesson.lessonMode,
     }
 };

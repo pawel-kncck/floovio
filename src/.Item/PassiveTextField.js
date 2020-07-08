@@ -42,22 +42,14 @@ const PassiveTextField = (props) => {
     
     return (
         <>
-            {(props.mode === 'solve')
-                ?   <input
-                        type='text' 
-                        className={classes.root} 
-                        id={props.id}
-                        style={{ backgroundColor: bgColor(score) }}
-                        value={answer}
-                        onChange={(e) => updateAnswerHandler(e)} 
-                    ></input>
-                :   <input
-                        type='text' 
-                        className={classes.root} 
-                        id={props.id}
-                        style={{ backgroundColor: bgColor(score) }}
-                    ></input>
-            }
+            <input
+                type='text' 
+                className={classes.root} 
+                id={props.id}
+                style={{ backgroundColor: bgColor(score) }}
+                value={answer}
+                onChange={(e) => updateAnswerHandler(e)} 
+            ></input>
             {(props.mode === 'check') ? <TeacherBox id={props.id} /> : null}
         </>
     );

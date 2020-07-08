@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { getDeepValue } from '../.Utilities/helpers';
 import { setAnswerInState } from '../.Store/lesson.actions';
 import TeacherBox from './TeacherBox';
-import { green, red } from '@material-ui/core/colors';
 
 const useStyles = makeStyles({
     root: {
@@ -37,7 +36,8 @@ const PassiveDropDown = (props) => {
     }
 
     return (
-        <FormControl className={classes.root}>
+        // <FormControl className={classes.root}>
+        <>
             <Select 
                 native 
                 id={props.id} 
@@ -55,7 +55,8 @@ const PassiveDropDown = (props) => {
                 })}
             </Select>
             {(props.mode === 'check') ? <TeacherBox id={props.id} /> : null}
-        </FormControl>
+        </>
+        // </FormControl>
     );
 };
 

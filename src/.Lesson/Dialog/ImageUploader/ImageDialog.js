@@ -3,8 +3,10 @@ import { Dialog, DialogTitle, DialogContent, DialogActions, Button, Input, makeS
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 // import { firebaseImageUpload } from './db.image';
 import { storage } from '../../../.Database/firebase';
-import { v4 as uuid } from 'uuid'
+import { v4 as uuid } from 'uuid';
+import { setDialog, addImage } from '../../../.Store/lesson.actions';
 import PanoramaOutlinedIcon from '@material-ui/icons/PanoramaOutlined';
+import { connect } from 'react-redux';
 
 const useStyles = makeStyles({
     imageinput: {
@@ -30,7 +32,6 @@ const useStyles = makeStyles({
     }
 })
 
-
 const AddImage = (props) => {
     const classes = useStyles();
     const [imageAsFile,setImageAsFile] = useState({});
@@ -39,28 +40,6 @@ const AddImage = (props) => {
     const handleClick = () => {
         document.getElementById('imageupload').click();
     }
-
-    // const handleImageAsFile = (event) => {
-    //     const loadedImage = event.target.files[0];
-    //     console.log(typeof event.target.files[0]);
-    //     console.log(event.target.files[0]);
-    //     setImageAsFile(loadedImage);
-
-        // const image = e.target.files[0]
-        // setImageAsFile(imageFile => (image))
-    // }
-
-    // const handleUpload = () => {
-    //     console.log(imageAsFile)
-    //     firebaseImageUpload(imageAsFile)
-    //         .then(res => {
-    //             setImageAsUrl(res)
-    //         })
-    //     // if typeof (imageAsFile 
-
-    // }
-
-    
 
     const firebaseImageUpload = (event) => {
         const imageId = uuid();
@@ -100,15 +79,6 @@ const AddImage = (props) => {
                     {(imageAsUrl === '') ? 'Upload' : 'Change'}
                 </Button>
                 </label>
-                {/* <Button
-                    variant="contained"
-                    color="default"
-                    className={classes.button}
-                    startIcon={<CloudUploadIcon />}
-                    onClick={firebaseImageUpload}
-                >
-                    Upload
-                </Button> */}
                 {(imageAsUrl === '') 
                     ? <div className={classes.imagePlaceholder}><PanoramaOutlinedIcon fontSize="large" /></div> 
                     : <img src={imageAsUrl} className={classes.uploadedImage} alt='supporting illustration' /> }
@@ -117,16 +87,29 @@ const AddImage = (props) => {
                 <Button autoFocus onClick={props.handleCancel} color="primary">
                     Cancel
                 </Button>
-                {(props.activeExercise === -1) 
-                ?   <Button autoFocus onClick={() => props.handleSave(imageAsUrl)} color="primary" variant="contained">
-                        Add to lesson
-                    </Button>
-                :   <Button autoFocus onClick={() => console.log('Save clicked')} color="primary" variant="contained">
-                        Save changes
-                    </Button>}
+                {(props.index === -1) 
+                    ?   <Button autoFocus onClick={() => props.handleSave(imageAsUrl)} color="primary" variant="contained">
+                            Add to lesson
+                        </Button>
+                    :   <Button autoFocus onClick={() => console.log('Save clicked')} color="primary" variant="contained">
+                            Save changes
+                        </Button>}
             </DialogActions>
         </Dialog>
     );
 }
- 
-export default AddImage;
+const mapStateToProps = state => {
+    return {
+        index: state.lesson.dialog.index,
+    }
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        setDialog: (open,type,index,html,json) => {dispatch(setDialog(open,type,index,html,json))},
+        handleCancel: () => {dispatch(setDialog(false, null, null, "", {}))},
+        handleSave: (url) => {dispatch(addImage(url))},
+    }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(AddImage);

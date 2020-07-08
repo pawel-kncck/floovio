@@ -23,5 +23,6 @@ const mapStateToProps = state => {
         // segmentType: state.lesson.lessonData.segments[state.dialog.activeSegment].type, // image, exercise
     }
 };
+
  
 export default connect(mapStateToProps,null)(SegmentDialog);

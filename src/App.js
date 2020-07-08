@@ -9,7 +9,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import firebase from './.Database/firebase';
 import { connect } from 'react-redux';
 import { setUser } from './.Store/auth.actions';
-import ProtecedRoute from './.Hoc/ProtectedRoute';
+// import ProtecedRoute from './.Hoc/ProtectedRoute';
 import Unauthorized from './.Authentication/LogoutDestinationPage';
 import Workspace from './.Application/Workspace';
 

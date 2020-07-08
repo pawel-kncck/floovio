@@ -11,6 +11,7 @@ const useStyles = makeStyles({
         justifyContent: 'center'
     },
     exrcContainerEdit: {
+        margin: '10px 0',
         padding: '10px',
         display: 'flex',
         justifyContent: 'center',

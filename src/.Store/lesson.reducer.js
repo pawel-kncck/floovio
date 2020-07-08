@@ -144,39 +144,61 @@ const reducer = (state = initialState, action) => {
                     },
                 }
             }
-            case actionTypes.ADD_SEGMENT:
-                let newSegmentArray = [...state.lessonData.segments];
-                newSegmentArray.push(action.segment);
+        case actionTypes.ADD_SEGMENT:
+            let newSegmentArray = [...state.lessonData.segments];
+            newSegmentArray.push(action.segment);
+            return {
+                ...state,
+                lessonData: {
+                    ...state.lessonData,
+                    segments: newSegmentArray
+                },
+                dialog: initialState.dialog,
+            }
+        case actionTypes.UPDATE_SEGMENT:
+            let updatedSegmentArray = [...state.lessonData.segments];
+            updatedSegmentArray[state.dialog.index] = (action.segment);
+            return {
+                ...state,
+                lessonData: {
+                    ...state.lessonData,
+                    segments: updatedSegmentArray
+                },
+                dialog: initialState.dialog,
+            }
+        case actionTypes.DELETE_SEGMENT:
+            let trimmedSegmentArray = [...state.lessonData.segments];
+            trimmedSegmentArray.splice(action.payload.index, 1);
+            return {
+                ...state,
+                lessonData: {
+                    ...state.lessonData,
+                    segments: trimmedSegmentArray
+                },
+                dialog: initialState.dialog,
+            }
+        case actionTypes.REORDER_SEGMENT:
+            let reorderedSegmentArray = [...state.lessonData.segments];
+            if (!(action.payload.index === 0 && action.payload.offset === -1) && !(action.payload.index === reorderedSegmentArray.length && action.payload.offset === 1)) {
+                const moveSegment = (array, from, to) => {
+                    array.splice(to, 0, array.splice(from, 1)[0]);
+                };
+                
+                moveSegment(reorderedSegmentArray, action.payload.index, action.payload.index + action.payload.offset);
+
                 return {
                     ...state,
                     lessonData: {
                         ...state.lessonData,
-                        segments: newSegmentArray
+                        segments: reorderedSegmentArray
                     },
-                    dialog: initialState.dialog,
                 }
-            case actionTypes.UPDATE_SEGMENT:
-                let updatedSegmentArray = [...state.lessonData.segments];
-                updatedSegmentArray[state.dialog.index] = (action.segment);
+            } else {
                 return {
-                    ...state,
-                    lessonData: {
-                        ...state.lessonData,
-                        segments: updatedSegmentArray
-                    },
-                    dialog: initialState.dialog,
+                    ...state
                 }
-            case actionTypes.DELETE_SEGMENT:
-                let trimmedSegmentArray = [...state.lessonData.segments];
-                trimmedSegmentArray.splice(action.payload.index, 1);
-                return {
-                    ...state,
-                    lessonData: {
-                        ...state.lessonData,
-                        segments: trimmedSegmentArray
-                    },
-                    dialog: initialState.dialog,
-                }
+            }
+            
         case actionTypes.UPDATE_EXERCISE:
             let updatedExerciseArray = [...state.lessonData.json.child];
             updatedExerciseArray[action.payload.index] = (action.payload.json);

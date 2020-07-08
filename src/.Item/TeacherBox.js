@@ -25,15 +25,17 @@ const TeacherBox = (props) => {
     const scoreInputKeys = ["lessonData","userInput",props.userId,props.id,"score"];
     const score = getDeepValue(props.currentLessonState,scoreInputKeys);
     const commentInputKeys = ["lessonData","userInput",props.userId,props.id,"comment"];
-    const comment = getDeepValue(props.currentLessonState,commentInputKeys);
+    const comment = (getDeepValue(props.currentLessonState,commentInputKeys) || "");
 
     return (
-        <div className={classes.root}>
+        // <div className={classes.root}>
+            <>
             <CheckBoxOutlinedIcon style={{ color: green[500] }} onClick={() => props.setUserInput(scoreInputKeys,score === 1 ? 0 : 1)} />
             <CancelOutlinedIcon style={{ color: red[500] }} onClick={() => props.setUserInput(scoreInputKeys,score === -1 ? 0 : -1)} />
             <ChatOutlinedIcon onClick={() => setCommentBoxVisible(!commentBoxVisible)} />
             {(commentBoxVisible) ? <input type="text" value={comment} onChange={(e) => props.setUserInput(commentInputKeys, e.target.value)} /> : null}
-        </div>
+            </>
+        // </div>
     );
 }
 

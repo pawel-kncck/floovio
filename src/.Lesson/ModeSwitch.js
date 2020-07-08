@@ -1,6 +1,7 @@
 import React from 'react';
 import { FormControl, InputLabel, Select, MenuItem, makeStyles } from '@material-ui/core';
-import { connect } from 'react-redux'
+import { connect } from 'react-redux';
+import { setMode } from '../.Store/lesson.actions';
 
 const useStyles = makeStyles({
     root: {

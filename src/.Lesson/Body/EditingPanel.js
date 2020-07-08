@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, makeStyles } from '@material-ui/core';
-import { setDialog, deleteExercise } from '../../.Store/lesson.actions';
+import { setDialog, deleteExercise, reorderSegment } from '../../.Store/lesson.actions';
 import { connect } from 'react-redux';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -28,8 +28,8 @@ const EditingPanel = (props) => {
 
     return (
         <div className={classes.editButtons}>
-            <Button color="primary"><ArrowUpwardIcon /></Button>
-            <Button color="primary"><ArrowDownwardIcon /></Button>
+            <Button color="primary" onClick={() => props.moveUp(props.index)}><ArrowUpwardIcon /></Button>
+            <Button color="primary" onClick={() => props.moveDown(props.index)}><ArrowDownwardIcon /></Button>
             <Button color="primary" onClick={() => handleOpenEditorInEditMode()}><EditIcon /></Button>
             <Button color="primary" onClick={() => props.deleteExercise(props.index)}><DeleteIcon /></Button>
         </div>
@@ -47,6 +47,8 @@ const mapDispatchToProps = dispatch => {
     return {
         deleteExercise: (index) => {dispatch(deleteExercise(index))},
         setDialog: (open,type,index,html,json) => {dispatch(setDialog(open,type,index,html,json))},
+        moveUp: (index) => {dispatch(reorderSegment(index, -1))},
+        moveDown: (index) => {dispatch(reorderSegment(index, 1))},
     }
 }
 

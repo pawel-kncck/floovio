@@ -8,6 +8,7 @@ action types
 export const ADD_SEGMENT = 'ADD_SEGMENT';
 export const UPDATE_SEGMENT = 'UPDATE_SEGMENT';
 export const DELETE_SEGMENT = 'DELETE_SEGMENT';
+export const REORDER_SEGMENT = 'REORDER_SEGMENT';
 export const LOAD_LESSON = 'LOAD_LESSON';
 export const SET_MODE = 'SET_MODE';
 export const FETCH_LESSON_START = 'FETCH_LESSON_START'
@@ -117,6 +118,15 @@ export function addImage(url) {
                 }
             },
             htmlString: ""
+        }
+    }
+}
+
+export const reorderSegment = (index, offset) => {
+    return {
+        type: REORDER_SEGMENT, payload: {
+            index: index,
+            offset: offset
         }
     }
 }

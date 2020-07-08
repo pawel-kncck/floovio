@@ -105,6 +105,7 @@ function parseNodes(nodes,hyphenObject) {
                         if (prop[1] !== "" && prop[0].length > 2) {
                             newNode.attr.style[prop[0]] = prop[1]
                         }
+                        return null
                     });
                 }
                 json.push(newNode);

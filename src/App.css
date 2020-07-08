@@ -39,6 +39,13 @@ body li {
   line-height: 32px;
 }
 
+
+/* IMAGE  */
+
+img {
+  width: 100%;
+}
+
 .app {
   background-color:#fff;
   font-size: 16px;

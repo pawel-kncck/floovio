@@ -41,10 +41,8 @@ const Lesson = (props) => {
                 :   null
             }
 
-            {(props.mode === 'new' || props.mode === 'edit') 
-                ? <ModeSwitch />
-                :   null
-            }
+            <ModeSwitch />
+
         </Fragment>
     );
 }

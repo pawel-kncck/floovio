@@ -52,6 +52,7 @@ const Workspace = (props) => {
 
             <aside className={classes.aside}>
                 {/* <Route path="/course/:id" component={LessonList} /> */}
+                <Route path="/course/:id" component={LessonList} />
             </aside>
 
             <article className={classes.article}>

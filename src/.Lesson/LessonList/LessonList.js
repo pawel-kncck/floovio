@@ -2,7 +2,9 @@ import React, { useEffect, useState } from 'react';
 import firebase from "../../.Database/firebase";
 import { Link, useHistory } from 'react-router-dom';
 import LessonCard from './LessonListCard';
+import { fetchCourse } from '../../.Store/course.actions';
 import { makeStyles, Button } from '@material-ui/core';
+import { connect } from 'react-redux';
 
 const useStyles = makeStyles({
     root: {
@@ -38,6 +40,10 @@ const LessonList = (props) => {
         });
     },[props])
 
+    useEffect(() => {
+        props.fetchCourse(props.match.params.id)
+    },[props])
+
     const handleNewLesson = () => {
         history.push(`/course/${props.match.params.id}/lesson/new`);
     }
@@ -62,5 +68,11 @@ const LessonList = (props) => {
 
     );
 }
- 
-export default LessonList;
+
+const mapDispatchToProps = dispatch => {
+    return {
+        fetchCourse: (id) => {dispatch(fetchCourse(id))}
+    }
+}
+
+export default connect(null,mapDispatchToProps)(LessonList);

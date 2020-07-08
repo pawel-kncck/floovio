@@ -47,7 +47,6 @@ const Lesson = (props) => {
     );
 }
 
-
 const mapStateToProps = state => {
     return {
         mode: state.lesson.lessonMode,

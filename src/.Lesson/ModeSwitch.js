@@ -1,8 +1,16 @@
 import React from 'react';
-import { FormControl, InputLabel, Select, MenuItem } from '@material-ui/core';
+import { FormControl, InputLabel, Select, MenuItem, makeStyles } from '@material-ui/core';
 import { connect } from 'react-redux'
 
+const useStyles = makeStyles({
+    root: {
+        margin: '20px 0',
+    }
+})
+
 const ModeSwitch = (props) => {
+    const classes = useStyles();
+
     const ITEM_HEIGHT = 48;
     const ITEM_PADDING_TOP = 8;
     const MenuProps = {
@@ -19,7 +27,7 @@ const ModeSwitch = (props) => {
     }
 
     return (
-        <FormControl>
+        <FormControl className={classes.root}>
             <InputLabel id="demo-mutiple-name-label">Mode</InputLabel>
             <Select
                 labelId="mode-selector-label"

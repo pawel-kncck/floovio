@@ -43,12 +43,12 @@ export function makeId(length) {
            allowed_tag = allowed_array[k];
            i = -1;
 
-           if (i != 0) { i = html.toLowerCase().indexOf('<'+allowed_tag+'>');}
-           if (i != 0) { i = html.toLowerCase().indexOf('<'+allowed_tag+' ');}
-           if (i != 0) { i = html.toLowerCase().indexOf('</'+allowed_tag)   ;}
+           if (i !== 0) { i = html.toLowerCase().indexOf('<'+allowed_tag+'>');}
+           if (i !== 0) { i = html.toLowerCase().indexOf('<'+allowed_tag+' ');}
+           if (i !== 0) { i = html.toLowerCase().indexOf('</'+allowed_tag)   ;}
 
            // Determine
-           if (i == 0) {                allowed = true;
+           if (i === 0) {                allowed = true;
                break;
            }
        }

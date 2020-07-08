@@ -2,6 +2,10 @@ import React from 'react';
 import { Dialog, DialogTitle, DialogContent, DialogActions, Button, makeStyles } from '@material-ui/core';
 import Editor from './Editor';
 import { connect } from 'react-redux';
+import { setDialog } from '../../../.Store/dialog.actions';
+import { addExercise, updateExercise } from '../../../.Store/lesson.actions';
+import OutputParser from '../../../.Utilities/OutputParser';
+
 
 const useStyles = makeStyles({
     root: {
@@ -13,22 +17,26 @@ const SegmentDialog = (props) => {
     const classes = useStyles();
 
     const handleDialogCancel = () => {
-        setOpen(false);
+        props.setDialog(false,null,0,"",{})
     }
 
     const handleCreateSegment = () => {
-        props.addExercise(outputParsed,rawHtml);
-        setOpen(false);
+        const json = OutputParser(props.html);
+        const html = props.html;
+
+        props.addExercise(json,html);
     }
 
     const handleUpdateSegment = () => {
-        props.updateExercise(outputParsed,rawHtml,activeExercise);
-        setOpen(false);
+        const json = OutputParser(props.html);
+        const html = props.html;
+
+        props.updateExercise(json, html);
     }
 
     const handleEditorChange = (editorOutput) => {
-        setParsedOutput(OutputParser(editorOutput));
-        setRawHtml(editorOutput);
+        const json = OutputParser(editorOutput);
+        props.setDialog(true,'exercise',props.index,editorOutput,json)
     }
 
     return (
@@ -38,13 +46,13 @@ const SegmentDialog = (props) => {
                     Create new exercise
                 </DialogTitle>
                 <DialogContent>
-                    <Editor transformOutput={(content) => handleEditorChange(content)} initialContent={props.data.segments[activeSegment].htmlString} />
+                    <Editor transformOutput={(content) => handleEditorChange(content)} initialContent={props.html} />
                 </DialogContent>
                 <DialogActions>
                     <Button autoFocus onClick={handleDialogCancel} color="primary">
                         Cancel
                     </Button>
-                    {(activeExercise === -1) 
+                    {(props.index === -1) 
                     ?   <Button autoFocus onClick={handleCreateSegment} color="primary" variant="contained">
                             Add new
                         </Button>
@@ -59,27 +67,18 @@ const SegmentDialog = (props) => {
 
 const mapStateToProps = state => {
     return {
-        data: state.lesson.lessonData,
-        mode: state.lesson.lessonMode,
-        open: state.dialog.open,
-        activeSegment: state.dialog.activeSegment,
-        segmentType: state.lesson.lessonData.segments[state.dialog.activeSegment].type, // image, exercise
+        index: state.lesson.dialog.index,
+        html: state.lesson.dialog.html,
+        json: state.lesson.dialog.json,
+        open: state.lesson.dialog.open,
     }
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        fetchLesson: (mode, lessonId, courseId) => {dispatch(fetchLesson(mode, lessonId, courseId))},
-        setMode: (path) => {dispatch(setMode(path))},
-        setTitle: (title) => {dispatch(setTitle(title))},
-        setLessonDate: (epoch) => {dispatch(setLessonDate(epoch))},
-        setAuthor: (author) => {dispatch(setAuthor(author))},
+        setDialog: (open,type,index,html,json) => {dispatch(setDialog(open,type,index,html,json))},
         addExercise: (json,html) => {dispatch(addExercise(json,html))},
-        updateExercise: (json,html,index) => {dispatch(updateExercise(json,html,index))},
-        deleteExercise: (index) => {dispatch(deleteExercise(index))},
-        killSpinner: () => {dispatch(killSpinner())},
-        addImage: (url) => {dispatch(addImage(url))},
-        resetLessonData: () => {dispatch(resetLessonData())}
+        updateExercise: (json,html) => {dispatch(updateExercise(json,html))},
     }
 }
  

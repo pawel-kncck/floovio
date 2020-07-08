@@ -6,7 +6,7 @@ const initialState = {
     lessonData: {
         title: "",
         author: "",
-        lessonDate: 1112470620000,
+        lessonDate: new Date().getTime(),
         userInput: {},
         segments: [],
         json: {
@@ -17,6 +17,13 @@ const initialState = {
         htmlStrings: []
     },
     lessonMode: "",
+    dialog: {
+        open: false,
+        type: "",
+        index: null,
+        html: "",
+        json: {}
+    },
     isFetching: true,
     error: null
 }
@@ -34,6 +41,18 @@ const reducer = (state = initialState, action) => {
 				lessonData: {
                     ...state.lessonData,
                     title: action.payload,
+                }
+            }
+        case actionTypes.SET_DIALOG:
+            return {
+                ...state,
+                dialog: {
+                    ...state.dialog,
+                    open: action.payload.open,
+                    type: action.payload.type,
+                    index: action.payload.index,
+                    html: action.payload.html,
+                    json: action.payload.json
                 }
             }
         case actionTypes.RESET_LESSON_DATA:
@@ -56,7 +75,6 @@ const reducer = (state = initialState, action) => {
                     ...state.lessonData,
                     author: action.payload,
                 }
-                
             }
         case actionTypes.SET_MODE:
             return {
@@ -126,19 +144,39 @@ const reducer = (state = initialState, action) => {
                     },
                 }
             }
-
-        case actionTypes.ADD_ELEMENT:
-            let updatedElementArray = [...state.lessonData.elements];
-            updatedElementArray.push(action.element);
-            // let appendedHtmlStringsArray = [...state.lessonData.htmlStrings]
-            // appendedHtmlStringsArray.push({__html: ""})
-            return {
-                ...state,
-                lessonData: {
-                    ...state.lessonData,
-                    elements: updatedElementArray
+            case actionTypes.ADD_SEGMENT:
+                let newSegmentArray = [...state.lessonData.segments];
+                newSegmentArray.push(action.segment);
+                return {
+                    ...state,
+                    lessonData: {
+                        ...state.lessonData,
+                        segments: newSegmentArray
+                    },
+                    dialog: initialState.dialog,
                 }
-            }
+            case actionTypes.UPDATE_SEGMENT:
+                let updatedSegmentArray = [...state.lessonData.segments];
+                updatedSegmentArray[state.dialog.index] = (action.segment);
+                return {
+                    ...state,
+                    lessonData: {
+                        ...state.lessonData,
+                        segments: updatedSegmentArray
+                    },
+                    dialog: initialState.dialog,
+                }
+            case actionTypes.DELETE_SEGMENT:
+                let trimmedSegmentArray = [...state.lessonData.segments];
+                trimmedSegmentArray.splice(action.payload.index, 1);
+                return {
+                    ...state,
+                    lessonData: {
+                        ...state.lessonData,
+                        segments: trimmedSegmentArray
+                    },
+                    dialog: initialState.dialog,
+                }
         case actionTypes.UPDATE_EXERCISE:
             let updatedExerciseArray = [...state.lessonData.json.child];
             updatedExerciseArray[action.payload.index] = (action.payload.json);

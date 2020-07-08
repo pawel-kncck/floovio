@@ -6,5 +6,5 @@ import dialogReducer from './dialog.reducer';
 export default combineReducers({
     lesson: lessonReducer,
     auth: authReducer,
-    dialog: dialogReducer,
+    // dialog: dialogReducer,
 })

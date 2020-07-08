@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import { Typography } from '@material-ui/core';
 import { connect } from 'react-redux';
-import CoursesList from '../Application/Courses/CoursesList';
+import CoursesList from './CoursesList';
 import Login from '../.Authentication/LoginPage';
 
 const CoursesLanding = (props) => {

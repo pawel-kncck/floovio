@@ -28,21 +28,21 @@ const Lesson = (props) => {
    
     return (
         <Fragment>
-            {(props.mode === 'new' || props.mode === 'edit') 
-                ? <ModeSwitch />
-                :   null
-            }
-            
             {(props.isFetching) 
                 ? <CircularProgress disableShrink />
                 :   <>
-                        <Header />
+                        <Header mode={mode} courseId={courseIdFromPath} lessonId={lessonIdFromPath} />
                         <Body /> 
                     </>
             }
 
             {(props.open) 
                 ? <Dialog />
+                :   null
+            }
+
+            {(props.mode === 'new' || props.mode === 'edit') 
+                ? <ModeSwitch />
                 :   null
             }
         </Fragment>
@@ -54,7 +54,7 @@ const mapStateToProps = state => {
     return {
         mode: state.lesson.lessonMode,
         isFetching: state.lesson.isFetching,
-        open: state.dialog.open,
+        open: state.lesson.dialog.open,
     }
 };
 

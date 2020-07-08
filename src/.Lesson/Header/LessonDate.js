@@ -2,10 +2,11 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { convertEpoch, convertDateStringToEpoch } from '../../.Utilities/helpers';
 import { TextField } from '@material-ui/core';
+import { setLessonDate } from '../../.Store/lesson.actions';
 
 const LessonDate = (props) => {
     return (
-        <div>
+        <>
             {
             ((props.mode === 'new') || (props.mode === 'edit'))
                 ? <form noValidate>
@@ -22,7 +23,7 @@ const LessonDate = (props) => {
                     </form>
                 : null
             }
-        </div>
+        </>
     );
 }
 

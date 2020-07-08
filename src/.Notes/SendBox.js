@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Paper, makeStyles, InputBase, Divider, IconButton } from '@material-ui/core';
 import SendIcon from '@material-ui/icons/Send';
-import { sendNote } from '../Database/db.lesson';
+import { sendNote } from '../.Database/db.lesson';
 
 const useStyles = makeStyles({
     root: {

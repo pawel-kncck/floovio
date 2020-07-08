@@ -6,7 +6,6 @@ export const mapPathToMode = (path) => {
       case LESSON_EDIT: return 'edit'
       case LESSON_SOLVE: return 'solve'
       case LESSON_CHECK: return 'check'
-      case LESSON_DEV: return 'dev'
       default: return 'error'
     };
 }

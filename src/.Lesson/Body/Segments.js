@@ -15,7 +15,6 @@ const useStyles = makeStyles({
         display: 'flex',
         justifyContent: 'center',
         border: '1px dashed #ccc',
-        margin: '10px',  
     },
     exrcContent: {
         flexGrow: '1',
@@ -28,14 +27,14 @@ const Segments = (props) => {
 
     return (
         <>
-            {props.data.elements.map((el,index) => {
+            {props.data.segments.map((el,index) => {
             return (
-                    <Paper key={index} elevation={0} className={(props.mode === 'edit') ? classes.exrcContainerEdit : classes.exrcContainer}>
+                    <Paper key={index} elevation={0} className={((props.mode === 'edit') || (props.mode === 'new')) ? classes.exrcContainerEdit : classes.exrcContainer}>
                         <div className={classes.exrcContent}>
                             {Renderer(el.json)}
                         </div>
                         {(props.mode === 'edit' || props.mode === 'new') 
-                            ?   <EditingPanel />
+                            ?   <EditingPanel index={index} />
                             :   null
                         }
                     </Paper>

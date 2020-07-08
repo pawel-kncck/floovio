@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Button, TextField, Grid, Typography, makeStyles } from '@material-ui/core';
-import firebase from '../firebase';
+import firebase from '../.Database/firebase';
 import { Redirect } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
 import * as actions from '../.Store/auth.actions';

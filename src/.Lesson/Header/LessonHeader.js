@@ -3,35 +3,17 @@ import { makeStyles } from '@material-ui/core';
 import Breadcrumbs from './Breadcrumbs';
 import Title from './LessonTitle';
 import Date from './LessonDate';
+import SaveButton from './SaveButton';
+import { connect } from 'react-redux';
 
 const useStyles = makeStyles({
     root: {
-        padding: '10px',
-        display: 'flex',
-
+        display: 'grid',
+        gridTemplateColumns: '65% auto',
+        gridTemplateRows: '50px 70px',
     },
-    leftPanel: {
-        padding: '10px',
-        flex: 1,
-        display: 'flex',
-        flexDirection: 'column'
-    },
-    rightPanel: {
-        padding: '10px',
-        display: 'flex',
-        flexDirection: 'column'
-    },
-    breadcrumbs: {
-        padding: '5px'
-    },
-    title: {
-        padding: '5px'
-    },
-    dateField: {
-        padding: '5px'
-    },
-    actionButton: {
-        padding: '5px'
+    rightItem: {
+        justifySelf: 'end',
     }
 })
 
@@ -40,24 +22,23 @@ const LessonHeader = (props) => {
 
     return (
         <div className={classes.root}>
-            <div className={classes.leftPanel}>
-                <div className={classes.breadcrumbs}>
-                    <Breadcrumbs courseName="Placeholder course name" lessonName="Placeholder lesson name" />
-                </div>
-                <div className={classes.title}>
-                    <Title />
-                </div>
+            <Breadcrumbs courseName="Placeholder course name" lessonName={props.title} />
+            <div className={classes.rightItem}>
+                <SaveButton mode={props.mode} courseId={props.courseId} lessonId={props.lessonId} />
             </div>
-            <div className={classes.rightPanel}>
-                <div>
-                    <Date />
-                </div>
-                <div>
-                    
-                </div>
+            <Title />
+            <div className={classes.rightItem}>
+                <Date />
             </div>
         </div>
     );
 }
- 
-export default LessonHeader;
+
+const mapStateToProps = state => {
+    return {
+        mode: state.lesson.lessonMode,
+        title: state.lesson.lessonData.title,
+    }
+};
+
+export default connect(mapStateToProps,null)(LessonHeader);

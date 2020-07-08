@@ -5,6 +5,9 @@ import { getLesson } from '../.Database/db.lesson';
 action types
 */
 
+export const ADD_SEGMENT = 'ADD_SEGMENT';
+export const UPDATE_SEGMENT = 'UPDATE_SEGMENT';
+export const DELETE_SEGMENT = 'DELETE_SEGMENT';
 export const LOAD_LESSON = 'LOAD_LESSON';
 export const SET_MODE = 'SET_MODE';
 export const FETCH_LESSON_START = 'FETCH_LESSON_START'
@@ -20,8 +23,8 @@ export const UPDATE_EXERCISE = 'UPDATE_EXERCISE'
 export const DELETE_EXERCISE = 'DELETE_EXERCISE'
 export const KILL_SPINNER = 'KILL_SPINNER'
 export const ADD_IMAGE = 'ADD_IMAGE'
-export const ADD_ELEMENT = 'ADD_ELEMENT'
 export const RESET_LESSON_DATA = 'RESET_LESSON_DATA'
+export const SET_DIALOG = 'SET_DIALOG'
 
 /*
 action creators
@@ -51,14 +54,24 @@ export function resetLessonData() {
     return { type: RESET_LESSON_DATA }
 }
 
+export const setDialog = (open,type,index,html,json) => {
+    return { type: SET_DIALOG, payload: {
+        open: open,
+        type: type,
+        index: index,
+        html: html,
+        json: json
+    }}
+}
+
 // export function addExercise(json,html) {
 //     return { type: ADD_EXERCISE, payload: {html: html, json: json} }
 // }
 
 export function addExercise(json, html) {
     return { 
-        type: ADD_ELEMENT, 
-        element: {
+        type: ADD_SEGMENT, 
+        segment: {
             type: 'exercise',
             json: json,
             htmlString: html,
@@ -66,22 +79,33 @@ export function addExercise(json, html) {
     }
 }
 
-export function updateExercise(json,html,index) {
-    return { type: UPDATE_EXERCISE, payload: {html: html, json: json, index: index} }
+export function updateExercise(json, html) {
+    return { 
+        type: UPDATE_SEGMENT,
+        segment: {
+            type: 'exercise',
+            json: json,
+            htmlString: html,
+        }
+    }
 }
+
+// export function updateExercise(json,html,index) {
+//     return { type: UPDATE_EXERCISE, payload: {html: html, json: json, index: index} }
+// }
 
 export function killSpinner() {
     return { type: KILL_SPINNER }
 }
 
 export function deleteExercise(index) {
-    return { type: DELETE_EXERCISE, payload: {index: index} }
+    return { type: DELETE_SEGMENT, payload: {index: index} }
 }
 
 export function addImage(url) {
     return { 
-        type: ADD_ELEMENT, 
-        element: {
+        type: ADD_SEGMENT, 
+        segment: {
             type: 'image',
             json: {
                 node: 'element',

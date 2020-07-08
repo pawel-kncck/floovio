@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import firebase from "../firebase";
+import firebase from "../../.Database/firebase";
 import { Link, useHistory } from 'react-router-dom';
 import LessonCard from './LessonListCard';
 import { makeStyles, Button } from '@material-ui/core';

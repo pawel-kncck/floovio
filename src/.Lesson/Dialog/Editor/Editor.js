@@ -30,7 +30,7 @@ class EditorComponent extends React.Component {
                     },
                     setup: (editor => {
                         editor.on('init', ((e) => {
-                            // console.log("Fired from setup function");
+                            console.log("Fired from setup function");
                             // this.testFunction();
                             // this.props.isLoaded(true);
                         }));

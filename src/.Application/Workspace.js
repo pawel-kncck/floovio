@@ -2,7 +2,7 @@ import React from 'react';
 import { Route, Switch } from 'react-router-dom'
 import * as routes from './routes';
 import { makeStyles } from '@material-ui/core';
-import LessonList from '../.Lesson/LessonList';
+import LessonList from '../.Lesson/LessonList/LessonList';
 import Lesson from '../.Lesson/Lesson';
 import Notes from '../.Notes/Notes';
 
@@ -10,7 +10,7 @@ const useStyles = makeStyles({
     main: {
         display: 'grid',
         zIndex: 100,
-        gridTemplateColumns: '268px 1fr 268px',
+        gridTemplateColumns: '26.8px 1fr 26.8px',
         width: '100%',
         gridGap: '30px',
         position: 'fixed',
@@ -51,23 +51,20 @@ const Workspace = (props) => {
         <main className={classes.main}>
 
             <aside className={classes.aside}>
-                <Route path="/course/:id" component={LessonList} />
+                {/* <Route path="/course/:id" component={LessonList} /> */}
             </aside>
 
             <article className={classes.article}>
                 <Switch>
-                    {/* <Route path="/" exact component={Courses} /> */}
-                    {/* <Route path={routes.LESSON_CREATE_NEW} exact component={CreateNewLesson} /> */}
                     <Route path={routes.LESSON_NEW} exact component={Lesson} />
                     <Route path={routes.LESSON_EDIT} exact component={Lesson} />
                     <Route path={routes.LESSON_SOLVE} exact component={Lesson} />
-                    {/* <Route path={routes.LESSON_CHECK} exact component={HyphenLesson} /> */}
-                    {/* <Route path={routes.LESSON_DEV} exact component={HyphenLesson} /> */}
+                    <Route path={routes.LESSON_CHECK} exact component={Lesson} />
                 </Switch>
             </article>
 
             <div className={classes.notes}>
-                <Route path="/course/:id" component={Notes} />
+                {/* <Route path="/course/:id" component={Notes} /> */}
             </div>
             
         </main>

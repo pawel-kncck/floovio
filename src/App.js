@@ -6,10 +6,10 @@ import Home from './.Course/CoursesLanding';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Login from './.Authentication/LoginPage';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import firebase from './firebase';
+import firebase from './.Database/firebase';
 import { connect } from 'react-redux';
 import { setUser } from './.Store/auth.actions';
-import ProtecedRoute from './Hoc/ProtectedRoute';
+import ProtecedRoute from './.Hoc/ProtectedRoute';
 import Unauthorized from './.Authentication/LogoutDestinationPage';
 import Workspace from './.Application/Workspace';
 
@@ -33,7 +33,7 @@ function App(props) {
             <Switch>
               <Route path="/" exact component={Home} />
               <Route path="/login" component={Login} />
-              {/* <ProtecedRoute path='/course' user={props.user} component={Application} /> */}
+              {/* <ProtecedRoute path='/course' user={props.user} component={Workspace} /> */}
               <Route path='/course' component={Workspace} />
               <Route path="/unauthorized" component={Unauthorized} />
             </Switch>

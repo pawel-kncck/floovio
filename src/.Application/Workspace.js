@@ -3,6 +3,7 @@ import { Route, Switch } from 'react-router-dom'
 import * as routes from './routes';
 import { makeStyles } from '@material-ui/core';
 import LessonList from '../.Lesson/LessonList/LessonList';
+import Sidebar from '../.Navigation/Sidebar';
 import Lesson from '../.Lesson/Lesson';
 import Notes from '../.Notes/Notes';
 
@@ -10,7 +11,7 @@ const useStyles = makeStyles({
     main: {
         display: 'grid',
         zIndex: 100,
-        gridTemplateColumns: '26.8px 1fr 26.8px',
+        gridTemplateColumns: 'auto 1fr 268px',
         width: '100%',
         gridGap: '30px',
         position: 'fixed',
@@ -52,7 +53,8 @@ const Workspace = (props) => {
 
             <aside className={classes.aside}>
                 {/* <Route path="/course/:id" component={LessonList} /> */}
-                <Route path="/course/:id" component={LessonList} />
+                <Sidebar />
+                {/* <Route path="/course/:id" component={LessonList} /> */}
             </aside>
 
             <article className={classes.article}>

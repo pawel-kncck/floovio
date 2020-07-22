@@ -11,14 +11,14 @@ const useStyles = makeStyles({
     main: {
         display: 'grid',
         zIndex: 100,
-        gridTemplateColumns: 'auto 1fr 268px',
+        gridTemplateColumns: 'auto 1fr',
         width: '100%',
         gridGap: '30px',
         position: 'fixed',
         backgroundColor: '#eee',
         height: '100%',
         overflowX: 'hidden',
-        overflowY: 'auto',
+        overflowY: 'hidden',
     },
     aside: {
         display: 'flex',
@@ -26,23 +26,19 @@ const useStyles = makeStyles({
         flexDirection: "column",
         zIndex: 110,
         height: '100%',
-        boxShadow: '1px 3px 3px #ccc'
+        boxShadow: '1px 3px 3px #ccc',
+        overflowX: 'hidden',
+        overflowY: 'auto',
     },
     article: {
         display: 'flex',
+        margin: 'auto',
         flexDirection: 'column',
-        backgroundColor: '#fff',
-        margin: '40px 0',
-        boxShadow: '0 1px 2px 0 rgba(60,64,67,.3)',
-        padding: '40px',
-        maxWidth: '969px',
+        backgroundColor: '#eee',
+        weight: "100%",
         height: '100vh',
         overflowY: 'auto',
     },
-    notes: {
-        zIndex: 110,
-        backgroundColor: '#fff',
-    }
 })
 
 const Workspace = (props) => {
@@ -52,9 +48,7 @@ const Workspace = (props) => {
         <main className={classes.main}>
 
             <aside className={classes.aside}>
-                {/* <Route path="/course/:id" component={LessonList} /> */}
-                <Sidebar />
-                {/* <Route path="/course/:id" component={LessonList} /> */}
+                <Route path="/course/:id" component={Sidebar} />
             </aside>
 
             <article className={classes.article}>
@@ -65,10 +59,6 @@ const Workspace = (props) => {
                     <Route path={routes.LESSON_CHECK} exact component={Lesson} />
                 </Switch>
             </article>
-
-            <div className={classes.notes}>
-                {/* <Route path="/course/:id" component={Notes} /> */}
-            </div>
             
         </main>
     );

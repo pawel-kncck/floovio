@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import firebase from "../../.Database/firebase";
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import LessonCard from './LessonListCard';
 import { fetchCourse } from '../../.Store/course.actions';
 import { makeStyles, Button } from '@material-ui/core';
@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 
 const useStyles = makeStyles({
     root: {
-        width: '268px',
+        width: '100%',
         margin: 0,
         padding: 0,
     },
@@ -31,7 +31,7 @@ const LessonList = (props) => {
 
     useEffect(() => {
         const db = firebase.firestore()
-        return db.collection("courses").doc(props.match.params.id).collection("lessons").onSnapshot((snapshot) => {
+        return db.collection("courses").doc(props.courseId).collection("lessons").onSnapshot((snapshot) => {
             const lessonsFromSnapshot = [];
             snapshot.forEach(doc => lessonsFromSnapshot.push(({...doc.data(), lessonId: doc.id})));
             lessonsFromSnapshot.sort((a,b) => b.lessonDate - a.lessonDate)
@@ -41,7 +41,7 @@ const LessonList = (props) => {
     },[props])
 
     useEffect(() => {
-        props.fetchCourse(props.match.params.id)
+        props.fetchCourse(props.courseId)
     },[props])
 
     const handleNewLesson = () => {
@@ -52,12 +52,15 @@ const LessonList = (props) => {
         <div className={classes.root}>
             <ul className={classes.listContainer}>
                 {lessons.map((el,index) => {
-
-                    // return <li key={el.lessonId}><Link to={`/course/${props.match.params.id}/lesson/${el.lessonId}`}>{el.title}</Link></li>
                     return (
-                        <Link key={el.lessonId} to={`/course/${props.match.params.id}/lesson/${el.lessonId}`} style={{ textDecoration: 'none' }}>
-                            <LessonCard lesNum={lessons.length - index} title={el.title} date={el.lessonDate} exrcNum={el.json.child.length} />
-                        </Link>
+                        <LessonCard 
+                            key={el.lessonId}
+                            lesNum={lessons.length - index} 
+                            title={el.title} 
+                            date={el.lessonDate} 
+                            courseId={props.courseId}
+                            lessonId={el.lessonId}
+                        />
                     )
                 })}    
             </ul>

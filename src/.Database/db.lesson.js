@@ -60,6 +60,17 @@ export const updateLesson = (courseId, lessonId, lessonData) => {
         })
 }
 
+export const deleteLesson = (courseId, lessonId) => {
+    const lessonRef = setLessonRef(courseId,lessonId);
+    lessonRef.delete()
+        .then((res) => {
+            console.log(res);
+        })
+        .catch((err) => {
+            console.error(err);
+        })
+}
+
 export const addNewLesson = (courseId, lessonData) => {
     const db = firebase.firestore();
     db.collection("courses").doc(courseId).collection('lessons').add(lessonData)

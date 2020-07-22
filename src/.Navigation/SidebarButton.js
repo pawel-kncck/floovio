@@ -8,6 +8,7 @@ const useStyles = makeStyles({
             cursor: 'pointer',
             backgroundColor: "#214489"
         },
+        transition: "background 0.2s",
         display: "flex",
         width: "100%",
         border: 0,

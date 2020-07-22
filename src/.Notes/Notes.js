@@ -6,13 +6,9 @@ import { connect } from 'react-redux';
 
 const useStyles = makeStyles({
     root: {
-        height: '100vh - 48px',
-        width: '268px',
+        height: '100vh - 500px',
+        width: '100%',
         zIndex: 130,
-        position: 'fixed',
-        top: '48px',
-        bottom: 0,
-        right: 0,
         backgroundColor: '#fff',
         display: 'flex',
         flexDirection: 'column',
@@ -20,12 +16,6 @@ const useStyles = makeStyles({
         boxSizing: 'border-box',
         overflowX: 'hidden',
         overflowY: 'auto',        
-    },
-    header: {
-        zIndex: 130,
-        padding: '10px',
-        fontSize: '20px',
-        color: '#555',
     },
     notesBody: {
         zIndex: 130,
@@ -38,7 +28,7 @@ const useStyles = makeStyles({
         padding: '7px',
         margin: '7px',
         minWidth: '50px',
-        maxWidth: '248px',
+        maxWidth: '90%',
         color: '#555',
         backgroundColor: '#fff',
         boxShadow: '1px 1px 3px rgba(0, 0, 0, 0.1)',
@@ -67,7 +57,7 @@ const Notes = (props) => {
     useEffect(() => {
         const db = firebase.firestore()
         console.log(props);
-        return db.collection("courses").doc(props.match.params.id).onSnapshot((snapshot) => {
+        return db.collection("courses").doc(props.courseId).onSnapshot((snapshot) => {
             console.log(snapshot.data());
             let notesArray = [];
             snapshot.data().notes.map(note => {
@@ -82,9 +72,6 @@ const Notes = (props) => {
 
     return (
         <div className={classes.root}>
-            <div className={classes.header}>
-                Notes
-            </div>
             <div className={classes.notesBody}>
                 {(notesArray.length > 0)
                     ?   notesArray.map((el,index) => {
@@ -98,7 +85,7 @@ const Notes = (props) => {
                 }
             </div>
             <div className={classes.sendBox}>
-                {(props.user) ? <SendBox courseId={props.match.params.id} user={props.user.uid}/> : null}
+                {(props.user) ? <SendBox courseId={props.courseId} user={props.user.uid}/> : null}
             </div>
         </div>
     );

@@ -58,7 +58,7 @@ const PassiveTextField = (props) => {
 const mapStateToProps = state => {
     return {
         currentLessonState: state.lesson,
-        userId: state.auth.authUser.uid,
+        userId: state.auth.userUid,
         mode: state.lesson.lessonMode
     }
 }

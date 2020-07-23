@@ -2,6 +2,7 @@ import React from 'react';
 import MenuIcon from '@material-ui/icons/Menu';
 import { NavLink } from 'react-router-dom';
 import MoreIcon from '@material-ui/icons/MoreVert';
+import * as routes from '../.Application/routes';
 import { connect } from 'react-redux';
 import { logout } from '../.Store/auth.actions';
 
@@ -20,7 +21,7 @@ const NavBar = (props) => {
             <div className="navbar-brand">Dialecton</div>
             <ul className="navbar-menu left">
                 {(props.user)
-                    ?   <li><NavLink to='/'>My courses</NavLink></li>
+                    ?   <li><NavLink to={routes.HOME}>My courses</NavLink></li>
                     :   null
                 }
             </ul>

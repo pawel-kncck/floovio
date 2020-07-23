@@ -45,7 +45,6 @@ const CoursesList = (props) => {
                             return [...result]
                         })
                         .then(res => {
-                            console.log(res);
                             setCoursesArray(res);
                         })
                         .catch(err => {

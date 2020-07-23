@@ -51,7 +51,6 @@ const Sidebar = (props) => {
         (activeView === index) 
             ? setActiveeView(-1)
             : setActiveeView(index);
-        console.log(props)
     }
 
     const handleClose = () => {

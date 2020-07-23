@@ -43,12 +43,6 @@ const useStyles = makeStyles({
 
 const Workspace = (props) => {
     const classes = useStyles();
-
-    useEffect(() => {
-        console.log("Workplace loaded")
-        console.log(props);
-        return console.log("Workplace left")
-    },[props])
     
     return (
         <main className={classes.main}>

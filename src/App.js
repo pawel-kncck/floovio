@@ -2,16 +2,17 @@ import React, { useEffect } from 'react';
 import './App.css';
 import NavBar from './.Navigation/NavBar';
 // import Application from './Application/Application'
-import Home from './.Course/CoursesLanding';
+import Courses from './.Course/CoursesLanding';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Login from './.Authentication/LoginPage';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import firebase from './.Database/firebase';
 import { connect } from 'react-redux';
-import { setUser } from './.Store/auth.actions';
+import { fetchUserData } from './.Store/auth.actions';
 import ProtecedRoute from './.Hoc/ProtectedRoute';
 import Unauthorized from './.Authentication/LogoutDestinationPage';
 import Workspace from './.Application/Workspace';
+import * as routes from './.Application/routes';
 
 
 function App(props) {
@@ -20,7 +21,7 @@ function App(props) {
   useEffect(() => {
     firebase.auth()
     .onAuthStateChanged(user => {
-      props.setUser(user)
+      props.fetchUserData(user)
     })
   }, [props,props.user]);
 
@@ -30,7 +31,7 @@ function App(props) {
           <div className="app">
             <NavBar />
             <Switch>
-              <Route path="/" exact component={Home} />
+              <Route path={routes.HOME} exact component={Courses} />
               <Route path="/login" component={Login} />
               <ProtecedRoute path='/course' user={props.user} component={Workspace} />
               {/* <Route path='/course' component={Workspace} /> */}
@@ -43,12 +44,12 @@ function App(props) {
 
 const mapStateToProps = state => {
   return {
-    user: state.auth.authUser,
+    user: state.auth.userUid,
   }
 }
 const mapDispatchToProps = dispatch => {
   return {
-    setUser: (user, id, email) => dispatch(setUser(user,id,email)),
+    fetchUserData: (user) => dispatch(fetchUserData(user)),
   }
 }
 

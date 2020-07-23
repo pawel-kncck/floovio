@@ -8,18 +8,9 @@ import { logout } from '../.Store/auth.actions';
 
 
 const NavBar = (props) => {
-    // const authUser = useContext(UserContext);
 
     const handleSignOut = () => {
-        console.log("Log out clicked!")
         props.logout();
-        // firebase.auth().signOut()
-        //     .then((u) => {
-        //         console.log("User Signed Out!")
-        //     })
-        //     .catch((err) => {
-        //         console.error(err)
-        //     })
     }
 
     return (
@@ -45,7 +36,7 @@ const NavBar = (props) => {
 
 const mapStateToProps = state => {
     return {
-        user: state.auth.authUser,
+        user: state.auth.userUid,
     }
 }
 

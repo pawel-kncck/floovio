@@ -57,7 +57,6 @@ const useStyles = makeStyles({
 
 const CourseCard = (props) => {
     const classes = useStyles();
-    console.log(props.students);
     const history = useHistory();
 
     const handleOpenCourse = () => {

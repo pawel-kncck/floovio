@@ -3,10 +3,17 @@
 import * as actions from './auth.actions';
 
 const initialState = {
-	isLogging: false,
-	authUser: null,
-    authUserId: null,
-    authUserEmail: null,
+    isLogging: false,
+    isFetching: false,
+    userUid: "",
+    userData: {
+        email: "",
+        displayName: "",
+        profilePic: "",
+        studyingCourses: [],
+        teachingCourses: [],
+        roles: [],
+    },
     error: null,
 }
 
@@ -34,6 +41,24 @@ const reducer = (state = initialState,action) => {
                 authUser: action.user,
                 authUserId: action.id,
                 authUserEmail: action.email,
+            }
+        case actions.FETCH_USER_START:
+            return {
+                ...state,
+                isFetching: true
+            }
+        case actions.FETCH_USER_SUCCESS:
+            return {
+                ...state,
+                userData: action.data,
+                userUid: action.uid,
+                isFetching: false
+            }
+        case actions.FETCH_USER_FAIL:
+            return {
+                ...state,
+                error: action.error,
+                isFetching: false
             }
 		default:
 			return state;

@@ -1,4 +1,5 @@
 import firebase from '../.Database/firebase';
+import { getUser } from '../.Database/db.auth';
 /*
 * action types
 */ 
@@ -10,6 +11,9 @@ export const LOGOUT_START = 'LOGOUT_START'
 export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS'
 export const LOGOUT_FAIL = 'LOGOUT_FAIL'
 export const SET_USER = 'SET_USER'
+export const FETCH_USER_START = 'FETCH_USER_START'
+export const FETCH_USER_FAIL = 'FETCH_USER_FAIL'
+export const FETCH_USER_SUCCESS = 'FETCH_USER_SUCCESS'
 
 
 /*
@@ -39,7 +43,6 @@ export const login = (email, password) => {
         dispatch(loginStart());
         firebase.auth().signInWithEmailAndPassword(email, password)
             .then(res => {
-                console.log(res);
                 dispatch(loginSuccess(res.data));
             })
             .catch(err => {
@@ -101,3 +104,34 @@ export const setUser = (user) => {
         ...userObject
     };
 };
+
+export const fetchUserStart = () => {return { type: FETCH_USER_START }};
+
+export const fetchUserSuccess = (userData,userUid) => {
+    return {
+        type: FETCH_USER_SUCCESS,
+        uid: userUid,
+        data: userData
+    }
+}
+
+export const fetchUserFail = error => {
+    return {
+        type: FETCH_USER_FAIL,
+        error: error
+    }
+}
+
+export const fetchUserData = (user) => {
+    return dispatch => {
+        dispatch(fetchUserStart);
+        return getUser(user.uid)
+            .then(res => {
+                dispatch(fetchUserSuccess(res.data(),user.uid));
+                return res;
+            })
+            .catch(error => {
+                dispatch(fetchUserFail(error));
+            })
+    }
+}

@@ -4,6 +4,7 @@ import firebase from '../.Database/firebase';
 import { Redirect } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
 import * as actions from '../.Store/auth.actions';
+import * as routes from '../.Application/routes';
 import { connect } from 'react-redux';
 
 const useStyles = makeStyles({
@@ -41,7 +42,7 @@ const LoginPage = (props) => {
     const handleSubmit = (event) => {
         event.preventDefault();
         props.onLogin(email, password);
-        history.push("/")
+        history.push(routes.HOME);
     };
 
     return (

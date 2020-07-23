@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Route, Switch } from 'react-router-dom'
 import * as routes from './routes';
 import { makeStyles } from '@material-ui/core';
@@ -43,6 +43,12 @@ const useStyles = makeStyles({
 
 const Workspace = (props) => {
     const classes = useStyles();
+
+    useEffect(() => {
+        console.log("Workplace loaded")
+        console.log(props);
+        return console.log("Workplace left")
+    },[props])
     
     return (
         <main className={classes.main}>

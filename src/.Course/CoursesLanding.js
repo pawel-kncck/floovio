@@ -7,14 +7,14 @@ import Login from '../.Authentication/LoginPage';
 const CoursesLanding = (props) => {
     return (
         <Fragment>
-            {props.authUser ? <CoursesList /> : <Login /> }
+            {props.user ? <CoursesList /> : <Login /> }
         </Fragment>
     );
 }
 
 const mapStateToProps = state => {
     return {
-        authUser: state.auth.authUser,
+        user: state.auth.userUid,
     }
 }
 

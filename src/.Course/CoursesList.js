@@ -36,7 +36,6 @@ const CoursesList = (props) => {
                 }
             })
             .then(response => {
-                console.log(response);
                 let result = [];
                 response.map((el) => {
                     const courseRef = db.collection('courses').doc(el);
@@ -46,6 +45,7 @@ const CoursesList = (props) => {
                             return [...result]
                         })
                         .then(res => {
+                            console.log(res);
                             setCoursesArray(res);
                         })
                         .catch(err => {
@@ -71,8 +71,7 @@ const CoursesList = (props) => {
 
 const mapStateToProps = state => {
     return {
-        authUser: state.auth.authUser,
-        userId: state.auth.authUserId,
+        userId: state.auth.userUid,
     }
 }
 

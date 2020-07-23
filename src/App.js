@@ -32,7 +32,7 @@ function App(props) {
             <Switch>
               <Route path="/" exact component={Home} />
               <Route path="/login" component={Login} />
-              {(props.user) ? <ProtecedRoute path='/course' user={props.user} component={Workspace} /> : null}
+              <ProtecedRoute path='/course' user={props.user} component={Workspace} />
               {/* <Route path='/course' component={Workspace} /> */}
               <Route path="/unauthorized" component={Unauthorized} />
             </Switch>

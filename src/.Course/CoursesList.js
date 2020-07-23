@@ -14,11 +14,6 @@ const useStyles = makeStyles({
         width: '100%',
         textDecoration: 'none',
     },
-    linkText: {
-        textDecoration: 'none',
-        margin: '30px',
-
-    }
 })
 
 const CoursesList = (props) => {
@@ -68,7 +63,7 @@ const CoursesList = (props) => {
         <div className={classes.root}>
 
             {coursesArray.map((el,index) => {
-                return <Link to={`/course/${el.id}`} className={classes.linkText}><CourseCard key={index} title={el.title} students={el.students} teachers={el.teachers} /></Link>
+                return <CourseCard key={index} courseId={el.id} title={el.title} students={el.students} teachers={el.teachers} />
             })}
         </div>
     );

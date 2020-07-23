@@ -45,7 +45,7 @@ const LessonList = (props) => {
     },[props])
 
     const handleNewLesson = () => {
-        history.push(`/course/${props.match.params.id}/lesson/new`);
+        history.push(`/course/${props.courseId}/lesson/new`);
     }
 
     return (

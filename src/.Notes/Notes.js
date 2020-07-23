@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core';
 import firebase from '../.Database/firebase';
 import SendBox from './SendBox';
 import { connect } from 'react-redux';
+import ChatItem from './ChatItem';
 
 const useStyles = makeStyles({
     root: {
@@ -23,26 +24,6 @@ const useStyles = makeStyles({
         overflowY: 'auto',
         backgroundColor: '#f5f5f5',
         padding: '10px 0',
-    },
-    noteItem: {
-        padding: '7px',
-        margin: '7px',
-        minWidth: '50px',
-        maxWidth: '90%',
-        color: '#555',
-        backgroundColor: '#fff',
-        boxShadow: '1px 1px 3px rgba(0, 0, 0, 0.1)',
-        display: 'inline-block',
-        fontSize: '13px',
-        borderRadius: '2px',
-        transition: 'box-shadow 0.3s',
-        '&:hover': {
-            boxShadow: '1px 1px 3px 2px rgba(0, 0, 0, 0.1)',
-        }
-
-    },
-    noteOuter: {
-        display: 'block',
     },
     sendBox: {
         zIndex: 130,
@@ -74,13 +55,7 @@ const Notes = (props) => {
         <div className={classes.root}>
             <div className={classes.notesBody}>
                 {(notesArray.length > 0)
-                    ?   notesArray.map((el,index) => {
-                            return (
-                                <div key={'no' + index} className={classes.noteOuter}>
-                                    <div key={'nt' + index} className={classes.noteItem}>{el.body}</div>
-                                </div>
-                                )
-                        })
+                    ?   notesArray.map((el,index) => <ChatItem key={index} body={el.body} />)
                     : null
                 }
             </div>

@@ -1,6 +1,6 @@
 import React from 'react';
-import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
-import { makeStyles } from '@material-ui/core';
+import { makeStyles, IconButton } from '@material-ui/core';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 const useStyles = makeStyles({
     root: {
@@ -10,10 +10,20 @@ const useStyles = makeStyles({
         position: "absolute",
         border: 0,
         outline: "none",
-        backgroundColor: 'rgba(0,0,0,0.2)',
+        backgroundColor: 'rgba(255, 255, 255, 0)',
+        color: 'rgba(255, 255, 255, 0)',
+        '&:hover': {
+            backgroundColor: 'rgba(255, 255, 255, 0.5)',
+            color: 'rgba(0, 0, 0, 0.5)',
+        },
+        transition: 'all 0.2s',
         borderRadius: '50%',
         fontSize: '10px',
         padding: '2px',
+    },
+    iconButton: {
+        margin: 0,
+        padding: 0,
     }
 })
 
@@ -21,7 +31,9 @@ const MessageDeleteButton = (props) => {
     const classes = useStyles();
     return (
         <button className={classes.root}>
-            <DeleteForeverIcon />
+            <IconButton className={classes.iconButton}>
+                <ExpandMoreIcon />
+            </IconButton>
         </button>
     );
 }

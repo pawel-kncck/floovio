@@ -5,8 +5,8 @@ import SidebarContainerHeader from './SidebarHeader';
 import ListIcon from '@material-ui/icons/List';
 import ChatIcon from '@material-ui/icons/ForumOutlined';
 import StudentsIcon from '@material-ui/icons/PeopleAltOutlined';
-import Chat from '../.Notes/Notes';
-import LessonList from '../.Lesson/LessonList/LessonList';
+import Chat from '../../.Notes/Notes';
+import LessonList from '../../.Lesson/LessonList/LessonList';
 
 const useStyles = makeStyles({
     root: {

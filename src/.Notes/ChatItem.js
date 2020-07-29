@@ -13,7 +13,7 @@ const useStyles = makeStyles({
         boxShadow: '1px 1px 3px rgba(0, 0, 0, 0.1)',
         display: 'inline-block',
         fontSize: '13px',
-        borderRadius: '2px',
+        borderRadius: '3px',
         transition: 'box-shadow 0.2s',
         '&:hover': {
             boxShadow: '1px 1px 3px 2px rgba(0, 0, 0, 0.1)',

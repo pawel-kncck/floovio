@@ -5,6 +5,7 @@ import NavBar from './.Navigation/NavBar';
 import Courses from './.Course/CoursesLanding';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import Login from './.Authentication/LoginPage';
+import Signup from './.Authentication/SignUpPage';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import firebase from './.Database/firebase';
 import { connect } from 'react-redux';
@@ -13,6 +14,7 @@ import ProtecedRoute from './.Hoc/ProtectedRoute';
 import Unauthorized from './.Authentication/LogoutDestinationPage';
 import Workspace from './.Application/Workspace';
 import * as routes from './.Application/routes';
+import FireFunctions from './.Lab/FireFunctions';
 
 
 function App(props) {
@@ -21,7 +23,7 @@ function App(props) {
   useEffect(() => {
     firebase.auth()
     .onAuthStateChanged(user => {
-      props.fetchUserData(user)
+      if (user) props.fetchUserData(user)
     })
   }, [props,props.user]);
 
@@ -33,6 +35,8 @@ function App(props) {
             <Switch>
               <Route path={routes.HOME} exact component={Courses} />
               <Route path="/login" component={Login} />
+              <Route path="/signup" component={Signup} />
+              <Route path="/lab" exact component={FireFunctions} />
               <ProtecedRoute path='/course' user={props.user} component={Workspace} />
               {/* <Route path='/course' component={Workspace} /> */}
               <Route path="/unauthorized" component={Unauthorized} />

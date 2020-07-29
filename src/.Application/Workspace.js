@@ -3,7 +3,7 @@ import { Route, Switch } from 'react-router-dom'
 import * as routes from './routes';
 import { makeStyles } from '@material-ui/core';
 import LessonList from '../.Lesson/LessonList/LessonList';
-import Sidebar from '../.Navigation/Sidebar';
+import Sidebar from '../.Navigation/Sidebar/Sidebar';
 import Lesson from '../.Lesson/Lesson';
 import Notes from '../.Notes/Notes';
 

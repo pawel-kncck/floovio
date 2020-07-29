@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 import firebase from '../.Database/firebase';
 import { Link } from 'react-router-dom';
 import CourseCard from './CourseCard';
-import { makeStyles } from '@material-ui/core';
+import { makeStyles, Divider, Button } from '@material-ui/core';
+import NewCourseDialog from './AddCourse/NewCourseDialog';
 
 const useStyles = makeStyles({
     root: {
@@ -14,10 +15,15 @@ const useStyles = makeStyles({
         width: '100%',
         textDecoration: 'none',
     },
+    actionButton: {
+        marginLeft: "30px",
+        marginTop: "40px"
+    }
 })
 
 const CoursesList = (props) => {
     const [coursesArray, setCoursesArray] = useState([]);
+    const [dialogOpen, setDialogOpen] = useState(false);
     const classes = useStyles();
 
     useEffect(() => {
@@ -58,13 +64,27 @@ const CoursesList = (props) => {
             })
     }, [props])
 
+    const handleDialogOpen = () => {
+        setDialogOpen(true);
+    };
+
+    const handleDialogClose = () => {
+        setDialogOpen(false);
+    };
+
     return (
+        <>
         <div className={classes.root}>
 
             {coursesArray.map((el,index) => {
                 return <CourseCard key={index} courseId={el.id} title={el.title} students={el.students} teachers={el.teachers} />
             })}
         </div>
+        <Divider />
+        <Button className={classes.actionButton} variant="contained" color="primary" onClick={handleDialogOpen}>Create new course</Button>
+        <Button className={classes.actionButton} variant="contained" color="primary">Join a course</Button>
+        <NewCourseDialog open={dialogOpen} close={handleDialogClose} userId={props.userId} />
+        </>
     );
 }
 

@@ -4,6 +4,7 @@ import 'firebase/storage';     // for storage
 import 'firebase/database';    // for realtime database
 import 'firebase/firestore';
 import 'firebase/analytics';
+import 'firebase/functions';
 
 
 const config = {
@@ -19,8 +20,9 @@ const config = {
 // Initialize Firebase
 firebase.initializeApp(config);
 const storage = firebase.storage()
-firebase.analytics();
+const functions = firebase.functions();
+
 
 export  {
-    storage, firebase as default
+    storage, functions, firebase as default
   }

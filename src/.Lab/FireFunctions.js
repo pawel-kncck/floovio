@@ -9,8 +9,8 @@ const FireFunctions = () => {
         const sayHello = firebase.functions().httpsCallable('sayHello');
 
         sayHello().then(response => {
-            setMessage(response);
-        })
+            console.log(response);
+        });
     };
 
     return (

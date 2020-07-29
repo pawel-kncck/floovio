@@ -30,11 +30,11 @@ const useStyles = makeStyles({
 const MessageDeleteButton = (props) => {
     const classes = useStyles();
     return (
-        <button className={classes.root}>
+        <div className={classes.root}>
             <IconButton className={classes.iconButton}>
                 <ExpandMoreIcon />
             </IconButton>
-        </button>
+        </div>
     );
 }
  

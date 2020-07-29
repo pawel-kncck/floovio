@@ -32,12 +32,16 @@ const NewCourseDialog = (props) => {
             level: level,
             userId: props.userId,
         }
-        const addCourse = firebase.functions().httpsCallable("addCourse");
+        const addCourse = firebase.functions().httpsCallable('addCourseWithUserId');
 
-        addCourse(data).then((res => {
-            console.log(res);
-        }));
-        
+        addCourse(data)
+            .then(response => {
+                console.log(response);
+            })
+            .catch(err => {
+                console.error(err);
+            })
+
         props.close();
     }
 

@@ -4,7 +4,7 @@ import firebase from '../.Database/firebase';
 import { Link } from 'react-router-dom';
 import CourseCard from './CourseCard';
 import { makeStyles, Divider, Button } from '@material-ui/core';
-import NewCourseDialog from './AddCourse/NewCourseDialog';
+import NewCourseDialog from './CourseActions/NewCourseDialog';
 
 const useStyles = makeStyles({
     root: {

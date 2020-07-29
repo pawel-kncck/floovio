@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles, Avatar, Button } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
+import InviteDialog from './CourseActions/InviteDialog';
 
 const useStyles = makeStyles({
     root: {
@@ -58,6 +59,10 @@ const useStyles = makeStyles({
 const CourseCard = (props) => {
     const classes = useStyles();
     const history = useHistory();
+    const [inviteOpen, setInviteOpen] = useState(false);
+
+    const teachers = props.teachers;
+    const students = props.students;
 
     const handleOpenCourse = () => {
         history.push(`/course/${props.courseId}`)
@@ -68,18 +73,27 @@ const CourseCard = (props) => {
             <div className={classes.titleContainer}>
                 {props.title}
             </div>
-            <div className={classes.teacherContainer}>
-                <div className={classes.label}>Teacher</div>
-                <div className={classes.nameContainer}><Avatar className={classes.avatar} alt={props.teachers[0].displayName} src={props.teachers[0].profilePic} />{props.teachers[0].displayName}</div>
-            </div>
-            <div className={classes.studentsContainer}>
-                <div className={classes.label}>Student</div>
-                <div className={classes.nameContainer}><Avatar className={classes.avatar} alt={props.students[0].displayName} src={props.students[0].profilePic} />{props.students[0].displayName}</div>
-            </div>
+            {(teachers.length > 0)
+                ?   <div className={classes.teacherContainer}>
+                        <div className={classes.label}>Teacher</div>
+                        <div className={classes.nameContainer}><Avatar className={classes.avatar} alt={props.teachers[0].displayName} src={props.teachers[0].profilePic} />{props.teachers[0].displayName}</div>
+                    </div>
+                :   null
+            }
+            {(students.length > 0)
+                ?   <div className={classes.studentsContainer}>
+                        <div className={classes.label}>Student</div>
+                        <div className={classes.nameContainer}><Avatar className={classes.avatar} alt={props.students[0].displayName} src={props.students[0].profilePic} />{props.students[0].displayName}</div>
+                    </div>
+                : null
+            }
+            
             <div className={classes.actionsContainer}>
                 <Button className={classes.actionButton} variant="contained" color="primary" size="small">Edit</Button>
+                <Button className={classes.actionButton} variant="contained" color="primary" size="small" onClick={() => setInviteOpen(true)}>Invite students</Button>
                 <Button className={classes.actionButton} variant="contained" color="primary" size="small" onClick={handleOpenCourse}>Open</Button>
             </div>
+            <InviteDialog open={inviteOpen} onClose={() => setInviteOpen(false)} courseId={props.courseId} />
         </div>
     );
 }

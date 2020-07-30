@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import CourseCard from './CourseCard';
 import { makeStyles, Divider, Button } from '@material-ui/core';
 import NewCourseDialog from './CourseActions/NewCourseDialog';
+import JoinDialog from './CourseActions/JoinCourseDialog';
 
 const useStyles = makeStyles({
     root: {
@@ -24,6 +25,7 @@ const useStyles = makeStyles({
 const CoursesList = (props) => {
     const [coursesArray, setCoursesArray] = useState([]);
     const [dialogOpen, setDialogOpen] = useState(false);
+    const [joinDialogOpen, setJoinDialogOpen] = useState(false);
     const classes = useStyles();
 
     useEffect(() => {
@@ -72,6 +74,15 @@ const CoursesList = (props) => {
         setDialogOpen(false);
     };
 
+    const handleJoinDialogOpen = () => {
+        setJoinDialogOpen(true);
+    };
+
+    const handleJoinDialogClose = () => {
+        setJoinDialogOpen(false);
+    };
+
+
     return (
         <>
         <div className={classes.root}>
@@ -82,8 +93,9 @@ const CoursesList = (props) => {
         </div>
         <Divider />
         <Button className={classes.actionButton} variant="contained" color="primary" onClick={handleDialogOpen}>Create new course</Button>
-        <Button className={classes.actionButton} variant="contained" color="primary">Join a course</Button>
+        <Button className={classes.actionButton} variant="contained" color="primary" onClick={handleJoinDialogOpen}>Join a course</Button>
         <NewCourseDialog open={dialogOpen} close={handleDialogClose} userId={props.userId} />
+        <JoinDialog open={joinDialogOpen} onClose={handleJoinDialogClose} />
         </>
     );
 }

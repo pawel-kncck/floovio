@@ -64,16 +64,14 @@ exports.addCourseWithUserId = functions.https.onCall((data, context) => {
 });
 
 const addCourse = (courseName,language,level,userData) => {
-    let userDataWithoutCourseLists = userData;
-    delete userDataWithoutCourseLists.studyingCourses;
-    delete userDataWithoutCourseLists.teachingCourses;
+    const clearUserData = removeCourseArraysFromUser(userData);
 
     return admin.firestore().collection('courses').add({
         title: courseName,
         language: language,
         level: level,
-        author: userData,
-        teachers: [userData],
+        author: clearUserData,
+        teachers: [clearUserData],
         students: [],
         notes: [],
     });
@@ -83,11 +81,31 @@ exports.sayHello = functions.https.onCall((data, context) => {
     return 'Hello, Pawel';
 });
 
+const removeCourseArraysFromUser = (userData) => {
+    let trimmedUserData = userData;
+    delete trimmedUserData.studyingCourses;
+    delete trimmedUserData.teachingCourses;
+
+    return trimmedUserData;
+}
+
 const getUserData = userId => {
     const userRef = admin.firestore().collection('users').doc(userId);
     const userData = userRef.get()
         .then(user => {
             return user.data();
+        })
+        .catch(err => {
+            return err;
+        })
+    return userData;
+}
+
+const getCourseData = courseId => {
+    const courseRef = admin.firestore().collection('courses').doc(courseId);
+    const userData = courseRef.get()
+        .then(course => {
+            return course.data();
         })
         .catch(err => {
             return err;
@@ -114,3 +132,63 @@ exports.addTeachingCourseToUser = functions.firestore.document('/courses/{id}')
             })
     })
 
+// JOIN COURSE
+
+exports.joinCourse = functions.https.onCall((data, context) => {
+    // data: studentId, courseId
+    var courseRef = db.collection("courses").doc(data.courseId);
+
+    courseRef.get()
+        .then(doc => {
+            if (doc.exists) {
+                addCourseToStudent(data.studentId, data.courseId);
+                addStudentToCourse(data.studentId, data.courseId);
+                return "Success: joinCourse";
+            } else {
+                // doc.data() will be undefined in this case
+                return "The invite code is invalid";
+            }
+        })
+        .catch(error => {
+            return "Error getting document:" + error;
+        });
+});
+
+const addCourseToStudent = (studentId, courseId) => {
+        getUserData(studentId)
+            .then(user => {
+                let studyingCoursesArray = user.studyingCourses;
+                studyingCoursesArray.push(courseId);
+                admin.firestore().collection('users').doc(studentId).update({
+                    studyingCourses: studyingCoursesArray,
+                });
+                return "Success: addCourseToStudent"
+            })
+            .catch(err => {
+                return err;
+            })
+    }
+
+const addStudentToCourse = (studentId, courseId) => {
+        const courseRef = admin.firestore().collection('courses').doc(courseId)
+        let listOfStudents;
+
+        getCourseData(courseId)
+            .then(course => {
+                listOfStudents = course.students;
+                return getUserData(studentId);
+            })
+            .then(student => {
+                const newStudent = removeCourseArraysFromUser(student);
+                listOfStudents.push(newStudent);
+
+                courseRef.update({
+                    students: listOfStudents,
+                });
+                
+                return `Success: ${newStudent.displayName} was added as a student to the course`
+            })
+            .catch(err => {
+                return err;
+            })
+    }

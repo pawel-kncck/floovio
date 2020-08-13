@@ -12,6 +12,7 @@ function groupMatchTest(input) {
     const inputRegex = RegExp(/\[\]/,'gum');
     const dropdownRegex = RegExp(/\[.*?\]/,'gum');
     const radioGroupRegex = RegExp(/\{.*?\}/s,'gum');
+    const imageRegex = RegExp(/&lt;img.*?&gt;/s,'gum');
     // const radioGroupRegex = RegExp(/<ul>.*?<\/ul>/s,'gum');
     // const radioRegex = RegExp(/<li>.*?<\/li>/s,'gum');
 
@@ -71,7 +72,28 @@ function groupMatchTest(input) {
         return `<hyphen id="${index}"></hyphen>`;
     })
 
-    let result = new DOMParser().parseFromString(stringDropdownReplaced, 'text/html');
+    let stringImageReplaced = stringDropdownReplaced.replace(imageRegex, (match) => {
+        let index = makeId(7);
+        let attributes = [];
+        match.substr(4,match.length-8).split(',').map((el,index) => {
+            attributes.push(el);
+            return null
+        })
+        hyphenObject[index] = {
+            node: "element",
+            tag: "hyphenimage",
+            child: null,
+            attr: {
+                id: index,
+                key: index,
+                code: attributes[1],
+                height: attributes[2],
+            }
+        }
+        return `<hyphen id="${index}"></hyphen>`;
+    })
+
+    let result = new DOMParser().parseFromString(stringImageReplaced, 'text/html');
 
     const nodes = result.body.childNodes;
     return {

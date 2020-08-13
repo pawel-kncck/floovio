@@ -4,9 +4,11 @@ import SidebarButton from './SidebarButton';
 import SidebarContainerHeader from './SidebarHeader';
 import ListIcon from '@material-ui/icons/List';
 import ChatIcon from '@material-ui/icons/ForumOutlined';
+import MediaIcon from '@material-ui/icons/PermMediaOutlined';
 import StudentsIcon from '@material-ui/icons/PeopleAltOutlined';
 import Chat from '../../.Notes/Notes';
 import LessonList from '../../.Lesson/LessonList/LessonList';
+import MediaList from '../../.Media/MediaList';
 
 const useStyles = makeStyles({
     root: {
@@ -44,7 +46,8 @@ const Sidebar = (props) => {
     const viewsArray = [
         {text: "Lessons", icon: <ListIcon />, component: <LessonList courseId={props.match.params.id} />},
         {text: "Chat", icon: <ChatIcon />, component: <Chat courseId={props.match.params.id} />},
-        {text: "Students", icon: <StudentsIcon />, component: null}
+        {text: "Media", icon: <MediaIcon />, component: <MediaList courseId={props.match.params.id} />},
+        {text: "Students", icon: <StudentsIcon />, component: null},
     ];
 
     const toggleOpen = (index) => {

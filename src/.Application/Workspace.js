@@ -5,7 +5,9 @@ import { makeStyles } from '@material-ui/core';
 import LessonList from '../.Lesson/LessonList/LessonList';
 import Sidebar from '../.Navigation/Sidebar/Sidebar';
 import Lesson from '../.Lesson/Lesson';
+import { fetchCourse } from '../.Store/course.actions';
 import Notes from '../.Notes/Notes';
+import { connect } from 'react-redux';
 
 const useStyles = makeStyles({
     main: {
@@ -43,6 +45,10 @@ const useStyles = makeStyles({
 
 const Workspace = (props) => {
     const classes = useStyles();
+
+    useEffect(() => {
+        props.fetchCourse(props.match.params.courseId)
+    },[props])
     
     return (
         <main className={classes.main}>
@@ -63,5 +69,11 @@ const Workspace = (props) => {
         </main>
     );
 }
- 
-export default Workspace;
+
+const mapDispatchToProps = dispatch => {
+    return {
+        fetchCourse: (id) => {dispatch(fetchCourse(id))}
+    }
+}
+
+export default connect(null,mapDispatchToProps)(Workspace);

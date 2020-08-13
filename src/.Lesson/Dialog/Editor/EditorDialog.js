@@ -10,6 +10,7 @@ import OutputParser from '../../../.Utilities/OutputParser';
 const useStyles = makeStyles({
     root: {
         zIndex: 200,
+        width: 979,
     }
 })
 
@@ -41,7 +42,7 @@ const SegmentDialog = (props) => {
 
     return (
         <>
-            <Dialog open={props.open}>
+            <Dialog open={props.open} className={classes.root}>
                 <DialogTitle>
                     Create new exercise
                 </DialogTitle>

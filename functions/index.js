@@ -113,6 +113,8 @@ const getCourseData = courseId => {
     return userData;
 }
 
+
+
 exports.addTeachingCourseToUser = functions.firestore.document('/courses/{id}')
     .onCreate((snap, context) => {
         const courseId = context.params.id;

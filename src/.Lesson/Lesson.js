@@ -6,7 +6,7 @@ import { mapPathToMode } from '../.Utilities/helpers';
 import Header from './Header/LessonHeader';
 import ModeSwitch from './ModeSwitch';
 import Body from './Body/LessonBody';
-import Dialog from './Dialog/SegmentDialog';
+import SegmentDialog from './Dialog/SegmentDialog';
 
 const useStyles = makeStyles({
     root: {
@@ -48,7 +48,7 @@ const Lesson = (props) => {
             }
 
             {(props.open) 
-                ? <Dialog />
+                ? <SegmentDialog />
                 :   null
             }
 

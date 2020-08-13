@@ -14,10 +14,13 @@ action creators
 
 export const fetchCourseStart = () => {return { type: FETCH_COURSE_START }};
 
-export const fetchCourseSuccess = result => {
+export const fetchCourseSuccess = (result,id) => {
     return {
         type: FETCH_COURSE_SUCCESS,
-        data: result
+        data: {
+            ...result,
+            uid: id
+        }
     }
 }
 
@@ -33,7 +36,7 @@ export const fetchCourse = (courseId) => {
         dispatch(fetchCourseStart);
         return getCourse(courseId)
             .then(res => {
-                dispatch(fetchCourseSuccess(res.data()));
+                dispatch(fetchCourseSuccess(res.data(),courseId));
                 return res;
             })
             .catch(error => {

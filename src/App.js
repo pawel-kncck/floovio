@@ -3,7 +3,7 @@ import './App.css';
 import NavBar from './.Navigation/NavBar';
 // import Application from './Application/Application'
 import Courses from './.Course/CoursesLanding';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Route, Switch, Redirect } from 'react-router-dom';
 import Login from './.Authentication/LoginPage';
 import Signup from './.Authentication/SignUpPage';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -33,12 +33,13 @@ function App(props) {
           <div className="app">
             <NavBar />
             <Switch>
+              <Route exact path="/"><Redirect to={routes.HOME} /></Route>
               <Route path={routes.HOME} exact component={Courses} />
+              <ProtecedRoute path='/course/:courseId' user={props.user} component={Workspace} />
+              
               <Route path="/login" component={Login} />
               <Route path="/signup" component={Signup} />
               <Route path="/lab" exact component={FireFunctions} />
-              <ProtecedRoute path='/course' user={props.user} component={Workspace} />
-              {/* <Route path='/course' component={Workspace} /> */}
               <Route path="/unauthorized" component={Unauthorized} />
             </Switch>
           </div>

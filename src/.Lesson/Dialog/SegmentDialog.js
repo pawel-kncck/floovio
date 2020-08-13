@@ -1,6 +1,7 @@
 import React from 'react';
 import ImageDialog from './ImageUploader/ImageDialog';
 import EditorDialog from './Editor/EditorDialog';
+import GridSizePrompt from './Editor/GridSizaPrompt';
 import { connect } from 'react-redux';
 
 
@@ -9,6 +10,8 @@ const SegmentDialog = (props) => {
     switch (props.type) {
         case 'image': return <ImageDialog />
         case 'exercise': return <EditorDialog />
+        case 'grid': return <GridSizePrompt />
+        case 'gridtemplate': return <EditorDialog />
         default: return null
     }
 }

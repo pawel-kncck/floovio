@@ -3,11 +3,13 @@ import PassiveTextField from '../.Item/PassiveTextField';
 import PassiveDropDown from '../.Item/PassiveDropDown';
 import PassiveRadioGroup from '../.Item/PassiveRadio';
 import AudioPlayer from '../.Lab/AudioPlayer';
+import ImageElement from '../.Item/ImageElement';
 
 const componentMap = {
     hyphentextfield: PassiveTextField,
     hyphenradiogroup: PassiveRadioGroup,
     hyphendropdown: PassiveDropDown,
+    hyphenimage: ImageElement,
     hyphenaudio: AudioPlayer,
 }
 

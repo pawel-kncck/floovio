@@ -6,11 +6,13 @@ import { openImageUploader, openEditor, setDialog } from '../../.Store/lesson.ac
 import ExerciseIcon from '@material-ui/icons/TocOutlined';
 import VideoIcon from '@material-ui/icons/OndemandVideoOutlined';
 import TextIcon from '@material-ui/icons/TextFieldsOutlined';
+import GridIcon from '@material-ui/icons/GridOnOutlined';
 import ImageIcon from '@material-ui/icons/ImageOutlined';
 import SpeedDial from '@material-ui/lab/SpeedDial';
 import SpeedDialIcon from '@material-ui/lab/SpeedDialIcon';
 import SpeedDialAction from '@material-ui/lab/SpeedDialAction';
 import SegmentDialog from '../Dialog/SegmentDialog';
+import { gridTemplate } from '../Dialog/EditorTemplates';
 
 
 const useStyles = makeStyles({
@@ -20,9 +22,10 @@ const useStyles = makeStyles({
 })
 
 const actions = [
-    { icon: <ExerciseIcon />, name: 'exercise', type: 'exercise' },
+    { icon: <ExerciseIcon />, name: 'exercise', type: 'exercise', html: '' },
     // { icon: <TextIcon />, name: 'Text' },
-    { icon: <ImageIcon />, name: 'image', type: 'image'},
+    { icon: <ImageIcon />, name: 'image', type: 'image', html: '' },
+    { icon: <GridIcon />, name: 'grid', type: 'grid', html: gridTemplate },
     // { icon: <VideoIcon />, name: 'Video' },
     // { icon: <FavoriteIcon />, name: 'Like' },
 ];
@@ -31,8 +34,8 @@ const AddSegment = (props) => {
     const classes = useStyles();
     const [open, setOpen] = useState(false);
     
-    const handleAddNew = (type) => {
-        props.setDialog(true, type, -1, "", {})
+    const handleAddNew = (type, html) => {
+        props.setDialog(true, type, -1, html, {})
     }
 
     return (
@@ -51,7 +54,7 @@ const AddSegment = (props) => {
                         key={action.name}
                         icon={action.icon}
                         tooltipTitle={action.name}
-                        onClick={() => handleAddNew(action.type)}
+                        onClick={() => handleAddNew(action.type, action.html)}
                     />
                 ))}
             </SpeedDial>

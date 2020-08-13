@@ -2,12 +2,11 @@ import React, { useState } from 'react';
 import { Dialog, DialogTitle, DialogContent, DialogActions, Button, Input, makeStyles } from '@material-ui/core';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 // import { firebaseImageUpload } from './db.image';
-import { storage } from '../../../.Database/firebase';
-import { v4 as uuid } from 'uuid';
-import { setDialog, addImage } from '../../../.Store/lesson.actions';
+import { storage } from '../.Database/firebase';
+import { setDialog, addImage } from '../.Store/lesson.actions';
 import PanoramaOutlinedIcon from '@material-ui/icons/PanoramaOutlined';
 import { connect } from 'react-redux';
-import { makeId } from '../../../.Utilities/Utilities';
+import { makeId } from '../.Utilities/Utilities';
 
 const useStyles = makeStyles({
     imageinput: {
@@ -42,19 +41,16 @@ const AddImage = (props) => {
     }
 
     const firebaseImageUpload = (event) => {
-        const imageId = uuid();
+        const file = event.target.files[0]
         const metadata = {
             customMetadata: {
                 code: makeId(8)
             }
         }
 
-        storage.ref(`/images/${imageId}`).put(event.target.files[0], metadata)
+        storage.ref(`/media/${props.courseId}/${file.name}`).put(file, metadata)
             .then(res => {
-                return storage.ref(`/images/${imageId}`).getDownloadURL()
-            })
-            .then(url => {
-                setImageAsUrl(url)
+                console.log("Upload successful");
             })
             .catch(err => {
                 console.error(err)
@@ -95,7 +91,7 @@ const AddImage = (props) => {
                 </Button>
                 {(props.index === -1) 
                     ?   <Button autoFocus onClick={() => props.handleSave(imageAsUrl)} color="primary" variant="contained">
-                            Add to lesson
+                            Add to media
                         </Button>
                     :   <Button autoFocus onClick={() => console.log('Save clicked')} color="primary" variant="contained">
                             Save changes
@@ -107,6 +103,7 @@ const AddImage = (props) => {
 const mapStateToProps = state => {
     return {
         index: state.lesson.dialog.index,
+        courseId: state.course.data.uid,
     }
 };
 

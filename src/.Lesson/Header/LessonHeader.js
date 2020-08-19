@@ -1,19 +1,21 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core';
-import Breadcrumbs from './Breadcrumbs';
 import Title from './LessonTitle';
 import Date from './LessonDate';
 import SaveButton from './SaveButton';
 import { connect } from 'react-redux';
+import ModeSwitch from './ModeSwitch';
 
 const useStyles = makeStyles({
     root: {
-        display: 'grid',
-        gridTemplateColumns: '65% auto',
-        gridTemplateRows: '50px 70px',
+        display: 'flex',
+        alignItems: "center"
     },
-    rightItem: {
-        justifySelf: 'end',
+    titleContainer: {
+        flexGrow: 1,
+    },
+    inputFields: {
+        margin: "0 20px"
     }
 })
 
@@ -22,13 +24,17 @@ const LessonHeader = (props) => {
 
     return (
         <div className={classes.root}>
-            <Breadcrumbs courseName="Placeholder course name" lessonName={props.title} />
-            <div className={classes.rightItem}>
-                <SaveButton mode={props.mode} courseId={props.courseId} lessonId={props.lessonId} />
+            <div className={classes.titleContainer}>
+                <Title />
             </div>
-            <Title />
-            <div className={classes.rightItem}>
+            <div className={classes.inputFields}>
+                <ModeSwitch />    
+            </div>
+            <div className={classes.inputFields}>
                 <Date />
+            </div>
+            <div className={classes.saveButtonContainer}>
+                <SaveButton mode={props.mode} courseId={props.courseId} lessonId={props.lessonId} />
             </div>
         </div>
     );

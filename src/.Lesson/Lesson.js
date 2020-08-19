@@ -4,7 +4,7 @@ import { CircularProgress, makeStyles } from '@material-ui/core';
 import { fetchLesson, setMode, killSpinner, resetLessonData } from '../.Store/lesson.actions';
 import { mapPathToMode } from '../.Utilities/helpers';
 import Header from './Header/LessonHeader';
-import ModeSwitch from './ModeSwitch';
+import ModeSwitch from './Header/ModeSwitch';
 import Body from './Body/LessonBody';
 import SegmentDialog from './Dialog/SegmentDialog';
 
@@ -46,14 +46,10 @@ const Lesson = (props) => {
                         <Body /> 
                     </>
             }
-
             {(props.open) 
                 ? <SegmentDialog />
                 :   null
             }
-
-            <ModeSwitch />
-
         </div>
     );
 }

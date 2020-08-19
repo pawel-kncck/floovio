@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Paper, makeStyles, InputBase, Divider, IconButton } from '@material-ui/core';
 import SendIcon from '@material-ui/icons/Send';
-import { sendNote } from '../.Database/db.lesson';
+import { sendMsg } from '../.Database/db.lesson';
 
 const useStyles = makeStyles({
     root: {
@@ -25,21 +25,21 @@ const useStyles = makeStyles({
 
 const SendBox = (props) => {
     const classes = useStyles();
-    const [note,setNote] = useState("");
+    const [msg,setMsg] = useState("");
 
     const handleSendClick = () => {
-        if (note !== "") {
-            sendNote(props.courseId,note,props.user);
+        if (msg !== "") {
+            sendMsg(props.courseId,msg,props.user);
         }
-        setNote("");
+        setMsg("");
     }
 
     const handlePressEnter = (event) => {
         event.preventDefault();
-        if (note !== "") {
-            sendNote(props.courseId,note,props.user);
+        if (msg !== "") {
+            sendMsg(props.courseId,msg,props.user);
         }
-        setNote("");
+        setMsg("");
     }
 
     return (
@@ -47,8 +47,8 @@ const SendBox = (props) => {
             <InputBase 
                 className={classes.input} 
                 placeholder="Enter a new note" 
-                value={note}
-                onChange={(e) => setNote(e.target.value)}
+                value={msg}
+                onChange={(e) => setMsg(e.target.value)}
                 />
             <Divider className={classes.divider} orientation='vertical' />
             <IconButton 

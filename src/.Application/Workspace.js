@@ -2,11 +2,9 @@ import React, { useEffect } from 'react';
 import { Route, Switch } from 'react-router-dom'
 import * as routes from './routes';
 import { makeStyles } from '@material-ui/core';
-import LessonList from '../.Lesson/LessonList/LessonList';
 import Sidebar from '../.Navigation/Sidebar/Sidebar';
 import Lesson from '../.Lesson/Lesson';
 import { fetchCourse } from '../.Store/course.actions';
-import Notes from '../.Notes/Notes';
 import { connect } from 'react-redux';
 
 const useStyles = makeStyles({

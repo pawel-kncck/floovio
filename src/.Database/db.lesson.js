@@ -34,12 +34,12 @@ export const updateAnswers = (courseId, lessonId, userInput) => {
 }
 
 
-export const sendNote = (courseId, note, user) => {
-    const notesRef = firebase.firestore().collection("courses").doc(courseId)
+export const sendMsg = (courseId, msg, user) => {
+    const msgRef = firebase.firestore().collection("courses").doc(courseId)
     const timestamp = new Date().getTime();
     // const lessonRef = setLessonRef(courseId,lessonId);
-    notesRef.update({
-        notes: firebase.firestore.FieldValue.arrayUnion({ body: note, user: user, epoch: timestamp })
+    msgRef.update({
+        messages: firebase.firestore.FieldValue.arrayUnion({ body: msg, user: user, epoch: timestamp })
     })
         .then((res) => {
             console.log(res);

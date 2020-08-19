@@ -6,7 +6,7 @@ import ListIcon from '@material-ui/icons/List';
 import ChatIcon from '@material-ui/icons/ForumOutlined';
 import MediaIcon from '@material-ui/icons/PermMediaOutlined';
 import StudentsIcon from '@material-ui/icons/PeopleAltOutlined';
-import Chat from '../../.Notes/Notes';
+import Chat from '../../.Messages/Messages';
 import LessonList from '../../.Lesson/LessonList/LessonList';
 import MediaViewer from '../../.Media/MediaSidebar';
 

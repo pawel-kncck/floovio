@@ -73,7 +73,10 @@ const addCourse = (courseName,language,level,userData) => {
         author: clearUserData,
         teachers: [clearUserData],
         students: [],
+        messages: [],
         notes: [],
+        media: [],
+        files: [],
     });
 };
 

@@ -1,4 +1,4 @@
-export const gridTemplate = `<table style="border-collapse: collapse; width: 100%; height: 42px;" border="1">
+export const gridTemplate = `<table style="border-collapse: collapse; height: 42px;" border="1">
                                 <tbody>
                                     <tr style="height: 21px;">
                                         <td style="width: 33%; height: 21px;"></td>

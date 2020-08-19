@@ -1,39 +1,35 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core';
 import { connect } from 'react-redux';
 import firebase from '../.Database/firebase';
 
 const useStyles = makeStyles({
     root: {
-        background: '#ddd',
-        margin: '5px',
-        width: 'auto',
+        background: '#fff',
         boxSizing: 'border-box',
     }
 })
 
 const ImageElement = (props) => {
     const classes = useStyles();
-    const [url, setUrl] = useState();
+    const [url, setUrl] = useState('');
 
-    const storageRef = firebase.storage().ref();
-    // var spaceRef = storageRef.child(`media/${props.media[props.code].name}`);
-    // var path = spaceRef.fullPath;
-    // var gsReference = storage.refFromURL('gs://test.appspot.com')
+    useEffect(() => {
+        const mediaArray = props.media;
 
-    if (props.media) {
-        storageRef.child(`media/${props.courseId}/${props.media[props.code].name}`).getDownloadURL()
-            .then(url => {
-                setUrl(url);
-            })
-            .catch(error => {
-                console.log(error)
+        if (mediaArray) {
+            mediaArray.map(element => {
+                if (element.data.id === props.code) {
+                    setUrl(element.data.url);
+                }
             });
-    }
+        }
+    },[props])
+
 
     return (
         <div className={classes.root}>
-            <img src={url} height={props.height} />
+            <img src={url} height={props.height} maxWidth="100%" />
         </div>
     );
 }
@@ -46,11 +42,5 @@ const mapStateToProps = state => {
         courseId: state.course.data.uid
     }
 }
-
-// const mapDispatchToProps = dispatch => {
-//     return {
-//         setUserInput: (keys,value) => {dispatch(setAnswerInState(keys,value))}
-//     }
-// }
 
 export default connect(mapStateToProps,null)(ImageElement);

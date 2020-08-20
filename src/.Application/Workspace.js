@@ -6,6 +6,7 @@ import Sidebar from '../.Navigation/Sidebar/Sidebar';
 import Lesson from '../.Lesson/Lesson';
 import { fetchCourse } from '../.Store/course.actions';
 import { connect } from 'react-redux';
+import Notes from '../.Notes/Notes';
 
 const useStyles = makeStyles({
     main: {
@@ -61,6 +62,7 @@ const Workspace = (props) => {
                     <Route path={routes.LESSON_EDIT} exact component={Lesson} />
                     <Route path={routes.LESSON_SOLVE} exact component={Lesson} />
                     <Route path={routes.LESSON_CHECK} exact component={Lesson} />
+                    <Route path={routes.NOTES} exact component={Notes} />
                 </Switch>
             </article>
             

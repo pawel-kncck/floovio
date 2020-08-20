@@ -5,10 +5,13 @@ import SidebarContainerHeader from './SidebarHeader';
 import ListIcon from '@material-ui/icons/List';
 import ChatIcon from '@material-ui/icons/ForumOutlined';
 import MediaIcon from '@material-ui/icons/PermMediaOutlined';
+import NoteIcon from '@material-ui/icons/Note';
 import StudentsIcon from '@material-ui/icons/PeopleAltOutlined';
 import Chat from '../../.Messages/Messages';
 import LessonList from '../../.Lesson/LessonList/LessonList';
 import MediaViewer from '../../.Media/MediaSidebar';
+import * as routes from '../../.Application/routes';
+import { NavLink } from 'react-router-dom';
 
 const useStyles = makeStyles({
     root: {
@@ -44,10 +47,11 @@ const Sidebar = (props) => {
     const [activeView, setActiveeView] = useState(-1);
 
     const viewsArray = [
-        {text: "Lessons", icon: <ListIcon />, component: <LessonList courseId={props.match.params.id} />},
-        {text: "Chat", icon: <ChatIcon />, component: <Chat courseId={props.match.params.id} />},
-        {text: "Media", icon: <MediaIcon />, component: <MediaViewer courseId={props.match.params.id} />},
-        {text: "Students", icon: <StudentsIcon />, component: null},
+        {text: "Lessons", icon: <ListIcon />, component: <LessonList courseId={props.match.params.id} />, path: null},
+        {text: "Chat", icon: <ChatIcon />, component: <Chat courseId={props.match.params.id} />, path: null},
+        {text: "Notes", icon: <NoteIcon />, component: null, path: routes.NOTES},
+        {text: "Media", icon: <MediaIcon />, component: <MediaViewer courseId={props.match.params.id} />, path: null},
+        {text: "Students", icon: <StudentsIcon />, component: null, path: null},
     ];
 
     const toggleOpen = (index) => {
@@ -64,7 +68,9 @@ const Sidebar = (props) => {
         <div className={classes.root}>
             <div className={classes.sidebar}>
                 {viewsArray.map((el,index) => (
-                    <SidebarButton key={index} text={el.text} icon={el.icon} click={() => toggleOpen(index)} active={(activeView === index)} />
+                    (el.path === null)
+                        ?   <SidebarButton key={index} text={el.text} icon={el.icon} click={() => toggleOpen(index)} active={(activeView === index)} />
+                        :   <NavLink key={index} to={routes.NOTES}><SidebarButton text={el.text} icon={el.icon} active={(activeView === index)} /></NavLink>
                 ))}
             </div>
             {(activeView !== -1) 

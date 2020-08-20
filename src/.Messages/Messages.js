@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { makeStyles } from '@material-ui/core';
 import firebase from '../.Database/firebase';
 import SendBox from './SendBox';
 import { connect } from 'react-redux';
 import ChatItem from './ChatItem';
 import useWindowDimensions from './withWindowDimentions';
+import MessagesBody from './MessagesBody';
 
 const useStyles = makeStyles({
     root: {
@@ -16,12 +17,6 @@ const useStyles = makeStyles({
         boxShadow: '-1px 2px 2px rgba(0, 0, 0, 0.2)',
         boxSizing: 'border-box', 
     },
-    notesBody: {
-        zIndex: 130,
-        overflowY: 'auto',
-        backgroundColor: '#f5f5f5',
-        padding: '10px 0',
-    },
     sendBox: {
         zIndex: 130,
         margin: '10px',
@@ -32,6 +27,7 @@ const Messages = (props) => {
     const classes = useStyles();
     const [messageList,setMessageList] = useState([]);
     const { height, width } = useWindowDimensions();
+    const messagesEndRef = useRef(null);
     
 
     useEffect(() => {
@@ -48,6 +44,12 @@ const Messages = (props) => {
         });
     },[props])
 
+    // useEffect(scrollToBottom, [messageList]);
+
+    // const scrollToBottom = () => {
+    //     messagesEndRef.current.scrollIntoView({ behavior: "smooth" })
+    // }
+
     let bodyHeight = height - 165;
 
     const divBodyStyle = {
@@ -60,12 +62,16 @@ const Messages = (props) => {
 
     return (
         <div className={classes.root}>
+            
             <div style={divBodyStyle}>
-                {(messageList.length > 0)
+                {(messageList) ? <MessagesBody messages={messageList} /> : null}
+                {/* {(messageList.length > 0)
                     ?   messageList.map((el,index) => <ChatItem key={index} body={el.body} />)
                     : null
                 }
+                <div ref={messagesEndRef} /> */}
             </div>
+            
             <div className={classes.sendBox}>
                 {(props.user) ? <SendBox courseId={props.courseId} user={props.user}/> : null}
             </div>

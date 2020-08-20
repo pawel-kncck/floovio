@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeStyles, Avatar, Button } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 import InviteDialog from './CourseActions/InviteDialog';
+import EditDialog from './CourseActions/EditCourseDialog';
 
 const useStyles = makeStyles({
     root: {
@@ -60,6 +61,7 @@ const CourseCard = (props) => {
     const classes = useStyles();
     const history = useHistory();
     const [inviteOpen, setInviteOpen] = useState(false);
+    const [editCourseOpen, setEditCourseOpen] = useState(false);
 
     const teachers = props.teachers;
     const students = props.students;
@@ -67,6 +69,14 @@ const CourseCard = (props) => {
     const handleOpenCourse = () => {
         history.push(`/course/${props.courseId}`)
     }
+
+    const handleEditDialogOpen = () => {
+        setEditCourseOpen(true);
+    };
+
+    const handleEditDialogClose = () => {
+        setEditCourseOpen(false);
+    };
 
     return (
         <div className={classes.root}>
@@ -89,11 +99,12 @@ const CourseCard = (props) => {
             }
             
             <div className={classes.actionsContainer}>
-                <Button className={classes.actionButton} variant="contained" color="primary" size="small">Edit</Button>
+                <Button className={classes.actionButton} variant="contained" color="primary" size="small" onClick={handleEditDialogOpen}>Edit</Button>
                 <Button className={classes.actionButton} variant="contained" color="primary" size="small" onClick={() => setInviteOpen(true)}>Invite students</Button>
                 <Button className={classes.actionButton} variant="contained" color="primary" size="small" onClick={handleOpenCourse}>Open</Button>
             </div>
             <InviteDialog open={inviteOpen} onClose={() => setInviteOpen(false)} courseId={props.courseId} />
+            <EditDialog open={editCourseOpen} close={handleEditDialogClose} courseId={props.courseId} />
         </div>
     );
 }

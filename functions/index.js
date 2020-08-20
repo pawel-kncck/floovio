@@ -54,8 +54,8 @@ exports.addCourseWithUserId = functions.https.onCall((data, context) => {
     const userId = data.userId;
 
     return getUserData(userId)
-            .then(res => {
-                addCourse(name,language,level,res);
+            .then(user => {
+                addCourse(name,language,level,user);
                 return "Success: addCourse"
             })
             .catch(err => {
@@ -116,7 +116,15 @@ const getCourseData = courseId => {
     return userData;
 }
 
-
+exports.fetchCourseData = functions.https.onCall(courseId => {
+    return getCourseData(courseId)
+    .then(res => {
+        return res
+    })
+    .catch(error => {
+        return error
+    })
+})
 
 exports.addTeachingCourseToUser = functions.firestore.document('/courses/{id}')
     .onCreate((snap, context) => {

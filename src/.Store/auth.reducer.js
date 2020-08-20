@@ -60,6 +60,20 @@ const reducer = (state = initialState,action) => {
                 error: action.error,
                 isFetching: false
             }
+        case actions.CLEAN_AUTH_STATE:
+            return {
+                ...state,
+                userData: null,
+                userUid: null,
+                isFetching: false
+            }
+        case actions.LOGOUT_SUCCESS:
+            return {
+                ...state,
+                userData: null,
+                userUid: null,
+                isFetching: false
+            }
 		default:
 			return state;
 	}

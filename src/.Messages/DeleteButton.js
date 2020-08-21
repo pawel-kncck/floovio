@@ -1,6 +1,7 @@
 import React from 'react';
-import { makeStyles, IconButton } from '@material-ui/core';
+import { makeStyles, IconButton, Menu, MenuItem } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import { removeMsg } from '../.Database/db.lesson';
 
 const useStyles = makeStyles({
     root: {
@@ -27,13 +28,49 @@ const useStyles = makeStyles({
     }
 })
 
-const MessageDeleteButton = (props) => {
+const ITEM_HEIGHT = 48;
+
+const MessageDeleteButton = ({ msg, courseId }) => {
     const classes = useStyles();
+    const [anchorEl, setAnchorEl] = React.useState(null);
+    const open = Boolean(anchorEl);
+
+    const handleClick = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
+
+    const handleDeleteClick = () => {
+        setAnchorEl(null);
+        removeMsg(courseId, msg);
+    };
+
     return (
         <div className={classes.root}>
-            <IconButton className={classes.iconButton}>
+            <IconButton
+                onClick={handleClick}
+                className={classes.iconButton}
+            >
                 <ExpandMoreIcon />
             </IconButton>
+            <Menu
+                id="long-menu"
+                anchorEl={anchorEl}
+                keepMounted
+                open={open}
+                onClose={handleClose}
+                PaperProps={{
+                style: {
+                    maxHeight: ITEM_HEIGHT * 4.5,
+                    width: '20ch',
+                },
+                }}
+            >
+                <MenuItem onClick={handleDeleteClick}>Delete</MenuItem>
+            </Menu>
         </div>
     );
 }

@@ -42,7 +42,7 @@ const ChatItem = (props) => {
     return (
         <div className={classes.noteOuter}>
             <div className={classes.noteItem} onMouseEnter={toggleHover} onMouseLeave={toggleHover}>
-                {(hover) ? <DeleteButton /> : null}
+                {(hover) ? <DeleteButton msg={props.msg} courseId={props.courseId} /> : null}
                 {props.body}
             </div>
         </div>

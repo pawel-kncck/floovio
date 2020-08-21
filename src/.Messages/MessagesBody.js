@@ -11,7 +11,7 @@ const useStyles = makeStyles({
   },
 })
 
-const MessagesBody = ({ messages }) => {
+const MessagesBody = ({ messages, courseId }) => {
   const messagesEndRef = useRef(null)
   const classes = useStyles();
 
@@ -24,7 +24,7 @@ const MessagesBody = ({ messages }) => {
   return (
     <div>
         {(messages.length > 0)
-            ?   messages.map((el,index) => <ChatItem key={index} body={el.body} />)
+            ?   messages.map((el,index) => <ChatItem key={index} body={el.body} msg={el} courseId={courseId} />)
             :   null
         }
         <div ref={messagesEndRef} />

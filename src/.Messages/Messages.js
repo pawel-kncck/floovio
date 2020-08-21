@@ -64,7 +64,7 @@ const Messages = (props) => {
         <div className={classes.root}>
             
             <div style={divBodyStyle}>
-                {(messageList) ? <MessagesBody messages={messageList} /> : null}
+                {(messageList) ? <MessagesBody messages={messageList} courseId={props.courseId} /> : null}
                 {/* {(messageList.length > 0)
                     ?   messageList.map((el,index) => <ChatItem key={index} body={el.body} />)
                     : null

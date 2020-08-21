@@ -49,6 +49,20 @@ export const sendMsg = (courseId, msg, user) => {
         })
 }
 
+export const removeMsg = (courseId, msg) => {
+    const msgRef = firebase.firestore().collection("courses").doc(courseId)
+
+    msgRef.update({
+        messages: firebase.firestore.FieldValue.arrayRemove(msg)
+    })
+        .then((res) => {
+            console.log(res);
+        })
+        .catch((err) => {
+            console.error(err);
+        })
+}
+
 export const updateLesson = (courseId, lessonId, lessonData) => {
     const lessonRef = setLessonRef(courseId,lessonId);
     lessonRef.update(lessonData)

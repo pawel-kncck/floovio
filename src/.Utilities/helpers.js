@@ -99,6 +99,11 @@ export const convertEpochToDateString = (epoch) => {
   return isoDate
 }
 
+export const convertEpochToDateTimeString = (epoch) => {
+  let myDate = new Date(epoch);
+  return (myDate.toLocaleString());
+}
+
 export const convertDateStringToEpoch = (datestring) => {
   let date = new Date(datestring);
   let epoch = date.getTime()

@@ -7,7 +7,13 @@ const useStyles = makeStyles({
         padding: '2px 4px',
         display: 'flex',
         alignItems: 'center',
+        marginTop: '20px',
+        marginBottom: '200px',
     },
+    textArea: {
+        background: '#fff',
+        marginBottom: '20px',
+    }
 })
 
 
@@ -34,11 +40,11 @@ const AddNote = (props) => {
         <FormGroup className={classes.root} onSubmit={(e) => handlePressEnter(e)}>
             <TextField
                 id="outlined-multiline-static"
+                className={classes.textArea}
                 label="Add a new note"
                 multiline
                 fullWidth
                 rows={4}
-                defaultValue="Default Value"
                 variant="outlined"
                 value={note}
                 onChange={(e) => setNote(e.target.value)}

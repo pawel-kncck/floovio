@@ -49,7 +49,7 @@ const Sidebar = (props) => {
     const viewsArray = [
         {text: "Lessons", icon: <ListIcon />, component: <LessonList courseId={props.match.params.id} />, path: null},
         {text: "Chat", icon: <ChatIcon />, component: <Chat courseId={props.match.params.id} />, path: null},
-        {text: "Notes", icon: <NoteIcon />, component: null, path: routes.NOTES},
+        {text: "Notes", icon: <NoteIcon />, component: null, path: `/course/${props.match.params.id}/notes`},
         {text: "Media", icon: <MediaIcon />, component: <MediaViewer courseId={props.match.params.id} />, path: null},
         {text: "Students", icon: <StudentsIcon />, component: null, path: null},
     ];
@@ -70,7 +70,7 @@ const Sidebar = (props) => {
                 {viewsArray.map((el,index) => (
                     (el.path === null)
                         ?   <SidebarButton key={index} text={el.text} icon={el.icon} click={() => toggleOpen(index)} active={(activeView === index)} />
-                        :   <NavLink key={index} to={routes.NOTES}><SidebarButton text={el.text} icon={el.icon} active={(activeView === index)} /></NavLink>
+                        :   <NavLink key={index} to={el.path}><SidebarButton text={el.text} icon={el.icon} active={(activeView === index)} /></NavLink>
                 ))}
             </div>
             {(activeView !== -1) 

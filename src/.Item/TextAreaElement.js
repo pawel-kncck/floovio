@@ -1,26 +1,32 @@
 import React from 'react';
-import { makeStyles, Select, FormControl } from '@material-ui/core';
-import { connect } from 'react-redux';
+import { makeStyles } from '@material-ui/core';
 import { getDeepValue } from '../.Utilities/helpers';
-import { setAnswerInState } from '../.Store/lesson.actions';
+import { connect } from 'react-redux';
+import { setAnswerInState } from '../.Store/lesson.actions'
 import TeacherBox from './TeacherBox';
 
 const useStyles = makeStyles({
     root: {
-        display: 'inline',
         position: 'relative',
     },
-    select: {
-        width: '150px',
+    textarea: {
+        width: '100%',
+        fontFamily: 'inherit',
+        fontSize: '16px',
     }
 })
 
-const PassiveDropDown = (props) => {
+const TextAreaElement = (props) => {
     const classes = useStyles();
     const userInputKeys = ["lessonData","userInput",props.userId,props.id,"answer"];
     const answer = (getDeepValue(props.currentLessonState,userInputKeys) || "");
     const scoreInputKeys = ["lessonData","userInput",props.userId,props.id,"score"];
     const score = getDeepValue(props.currentLessonState,scoreInputKeys);
+
+    const updateAnswerHandler = (e) => {
+        props.setUserInput(userInputKeys,e.target.value)
+        props.setUserInput(scoreInputKeys,0)
+    }
 
     const bgColor = (score) => {
         switch (score) {
@@ -30,34 +36,22 @@ const PassiveDropDown = (props) => {
             default: return 'rgba(250, 250, 250, 0.1)'
         }     
     }
-
-    const updateAnswerHandler = (e) => {
-        props.setUserInput(userInputKeys,e.target.value)
-        props.setUserInput(scoreInputKeys,0)
-    }
-
+    
     return (
-        <FormControl className={classes.root}>
-            <Select 
-                native 
-                id={props.id} 
-                className={classes.select}
-                style={{ backgroundColor: bgColor(score) }} 
-                inputProps={{
-                    name: `name${props.id}`,
-                    id: props.id,
-                }}
+        <div className={classes.root}>
+            <textarea
+                type='text' 
+                rows={4}
+                className={classes.textarea} 
+                id={props.id}
+                style={{ backgroundColor: bgColor(score) }}
                 value={answer}
-                onChange={(e) => updateAnswerHandler(e)} >
-                <option key='999' value=""></option>    
-                {props.options.map((el,index) => {
-                    return <option key={index} value={el}>{el}</option>
-                })}
-            </Select>
+                onChange={(e) => updateAnswerHandler(e)} 
+            ></textarea>
             {(props.mode === 'check') ? <TeacherBox id={props.id} /> : null}
-        </FormControl>
+        </div>
     );
-};
+}
 
 const mapStateToProps = state => {
     return {
@@ -73,4 +67,4 @@ const mapDispatchToProps = dispatch => {
     }
 }
  
-export default connect(mapStateToProps,mapDispatchToProps)(PassiveDropDown);
+export default connect(mapStateToProps,mapDispatchToProps)(TextAreaElement);

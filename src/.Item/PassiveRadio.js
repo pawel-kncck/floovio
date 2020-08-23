@@ -5,7 +5,14 @@ import { connect } from 'react-redux';
 import { setAnswerInState } from '../.Store/lesson.actions';
 import TeacherBox from './TeacherBox';
 
+const useStyles = makeStyles({
+    root: {
+        position: 'relative',
+    }
+})
+
 const PassiveRadioGroup = (props) => {
+    const classes = useStyles();
     const userInputKeys = ["lessonData","userInput",props.userId,props.id,"answer"];
     const answer = (getDeepValue(props.currentLessonState,userInputKeys) || "");
     const scoreInputKeys = ["lessonData","userInput",props.userId,props.id,"score"];
@@ -30,9 +37,9 @@ const PassiveRadioGroup = (props) => {
     }
     
     return (
-        <>
+        <div className={classes.root}>
             <RadioGroup 
-                name={props.id} 
+                name={props.id}
                 value={answer}
                 onChange={(e) => updateAnswerHandler(e)}
                 >
@@ -41,7 +48,7 @@ const PassiveRadioGroup = (props) => {
                 })}
             </RadioGroup>
             {(props.mode === 'check') ? <TeacherBox id={props.id} /> : null}
-        </>
+        </div>
     );
 }
 

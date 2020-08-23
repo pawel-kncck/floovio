@@ -99,8 +99,8 @@ const CourseCard = (props) => {
             }
             
             <div className={classes.actionsContainer}>
-                <Button className={classes.actionButton} variant="contained" color="primary" size="small" onClick={handleEditDialogOpen}>Edit</Button>
-                <Button className={classes.actionButton} variant="contained" color="primary" size="small" onClick={() => setInviteOpen(true)}>Invite students</Button>
+                <Button className={classes.actionButton} variant="outlined" color="primary" size="small" onClick={handleEditDialogOpen}>Edit</Button>
+                <Button className={classes.actionButton} variant="outlined" color="primary" size="small" onClick={() => setInviteOpen(true)}>Invite</Button>
                 <Button className={classes.actionButton} variant="contained" color="primary" size="small" onClick={handleOpenCourse}>Open</Button>
             </div>
             <InviteDialog open={inviteOpen} onClose={() => setInviteOpen(false)} courseId={props.courseId} />

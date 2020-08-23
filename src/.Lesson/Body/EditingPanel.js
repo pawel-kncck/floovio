@@ -10,8 +10,11 @@ import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 // props = index, mode
 const useStyles = makeStyles({
     root: {
-        display: 'flex',
-        flexDirection: 'column',
+        display: 'block',
+        position: 'absolute',
+        background: 'rgba(255,255,255,0.8)',
+        top: '10px',
+        right: 0,
     }
 })
 
@@ -27,7 +30,7 @@ const EditingPanel = (props) => {
     }
 
     return (
-        <div className={classes.editButtons}>
+        <div className={classes.root}>
             <Button color="primary" onClick={() => props.moveUp(props.index)}><ArrowUpwardIcon /></Button>
             <Button color="primary" onClick={() => props.moveDown(props.index)}><ArrowDownwardIcon /></Button>
             <Button color="primary" onClick={() => handleOpenEditorInEditMode()}><EditIcon /></Button>

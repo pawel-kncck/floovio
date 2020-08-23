@@ -2,6 +2,7 @@ import React from 'react';
 import PassiveTextField from '../.Item/PassiveTextField';
 import PassiveDropDown from '../.Item/PassiveDropDown';
 import PassiveRadioGroup from '../.Item/PassiveRadio';
+import TextAreaElement from '../.Item/TextAreaElement';
 import AudioPlayer from '../.Lab/AudioPlayer';
 import ImageElement from '../.Item/ImageElement';
 
@@ -10,6 +11,7 @@ const componentMap = {
     hyphenradiogroup: PassiveRadioGroup,
     hyphendropdown: PassiveDropDown,
     hyphenimage: ImageElement,
+    hyphentextarea: TextAreaElement,
     hyphenaudio: AudioPlayer,
 }
 

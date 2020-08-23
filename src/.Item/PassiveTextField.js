@@ -7,11 +7,16 @@ import TeacherBox from './TeacherBox';
 
 const useStyles = makeStyles({
     root: {
+        position: 'relative',
+        display: 'inline',
+    },
+    input: {
         borderTop: 'none',
         borderRight: 'none',
         borderBottom: '1px solid #333',
         borderLeft: 'none',
         outline: 'none',
+        position: 'relative',
         fontSize: '16px',
             '&:focus': {
                 borderBottom: '2px solid #777'
@@ -41,17 +46,17 @@ const PassiveTextField = (props) => {
     }
     
     return (
-        <>
+        <div className={classes.root}>
             <input
                 type='text' 
-                className={classes.root} 
+                className={classes.input} 
                 id={props.id}
                 style={{ backgroundColor: bgColor(score) }}
                 value={answer}
                 onChange={(e) => updateAnswerHandler(e)} 
             ></input>
             {(props.mode === 'check') ? <TeacherBox id={props.id} /> : null}
-        </>
+        </div>
     );
 }
 

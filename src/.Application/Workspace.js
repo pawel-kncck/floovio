@@ -4,7 +4,7 @@ import * as routes from './routes';
 import { makeStyles } from '@material-ui/core';
 import Sidebar from '../.Navigation/Sidebar/Sidebar';
 import Lesson from '../.Lesson/Lesson';
-import { fetchCourse } from '../.Store/course.actions';
+import { fetchCourse, setActiveStudent } from '../.Store/course.actions';
 import { connect } from 'react-redux';
 import Notes from '../.Notes/Notes';
 
@@ -72,7 +72,9 @@ const Workspace = (props) => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        fetchCourse: (id) => {dispatch(fetchCourse(id))}
+        fetchCourse: (id) => {dispatch(fetchCourse(id))},
+        setActiveStudent: (userId) => {dispatch(setActiveStudent(userId))}
+
     }
 }
 

@@ -41,9 +41,7 @@ const EditProfileDialog = (props) => {
 
     const [displayName, setDisplayName] = useState('');
     const [profilePicUrl, setProfilePicUrl] = useState('');
-    const [previewUrl, setPreviewUrl] = useState('');
     const [email, setEmail] = useState('');
-    const [pic, setPic] = useState(null);
 
     useEffect(() => {
         if (firebase.auth().currentUser) {
@@ -67,10 +65,6 @@ const EditProfileDialog = (props) => {
         
         dbFunctions.updateUserData(props.userId, userUpdatedObject)
         props.close();
-    }
-
-    const handleImageDrop = (picture) => {
-        setPic(picture);
     }
 
     const handleClick = () => {

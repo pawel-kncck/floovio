@@ -5,9 +5,10 @@ import Date from './LessonDate';
 import SaveButton from './SaveButton';
 import { connect } from 'react-redux';
 import ModeSwitch from './ModeSwitch';
+import StudentSelector from './StudentSelector';
 
 const useStyles = makeStyles({
-    root: {
+    header: {
         display: 'flex',
         alignItems: "center"
     },
@@ -23,7 +24,8 @@ const LessonHeader = (props) => {
     const classes = useStyles();
 
     return (
-        <div className={classes.root}>
+        <>
+        <div className={classes.header}>
             <div className={classes.titleContainer}>
                 <Title />
             </div>
@@ -34,9 +36,11 @@ const LessonHeader = (props) => {
                 <Date />
             </div>
             <div className={classes.saveButtonContainer}>
-                <SaveButton mode={props.mode} courseId={props.courseId} lessonId={props.lessonId} />
+                <SaveButton courseId={props.courseId} lessonId={props.lessonId} />
             </div>
         </div>
+        {(props.mode === 'check') ? <StudentSelector /> : null}
+        </>
     );
 }
 

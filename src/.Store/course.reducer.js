@@ -2,6 +2,7 @@ import * as actionTypes from './course.actions';
 
 const initialState = {
     data: {},
+    activeStudent: '',
     isFetching: false,
     error: null,
 }
@@ -17,6 +18,7 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 data: action.data,
+                activeStudent: action.data.roles.students[0],
                 isFetching: false
             }
         case actionTypes.FETCH_COURSE_FAIL:
@@ -24,6 +26,11 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 error: action.error,
                 isFetching: false
+            }
+        case actionTypes.SET_ACTIVE_STUDENT:
+            return {
+                ...state,
+                activeStudent: action.userId
             }
 		default:
 			return state;

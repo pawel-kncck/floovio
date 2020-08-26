@@ -31,9 +31,9 @@ const useStyles = makeStyles({
 const TeacherBox = (props) => {
     const classes = useStyles();
     const [commentBoxVisible,setCommentBoxVisible] = useState();
-    const scoreInputKeys = ["lessonData","userInput",props.userId,props.id,"score"];
+    const scoreInputKeys = ["lessonData","userInput",props.activeStudent,props.id,"score"];
     const score = getDeepValue(props.currentLessonState,scoreInputKeys);
-    const commentInputKeys = ["lessonData","userInput",props.userId,props.id,"comment"];
+    const commentInputKeys = ["lessonData","userInput",props.activeStudent,props.id,"comment"];
     const comment = (getDeepValue(props.currentLessonState,commentInputKeys) || "");
 
     return (
@@ -50,6 +50,7 @@ const mapStateToProps = state => {
     return {
         currentLessonState: state.lesson,
         userId: state.auth.userUid,
+        activeStudent: state.course.activeStudent,
     }
 }
 

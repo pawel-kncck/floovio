@@ -26,9 +26,9 @@ const useStyles = makeStyles({
 
 const PassiveTextField = (props) => {
     const classes = useStyles();
-    const userInputKeys = ["lessonData","userInput",props.userId,props.id,"answer"];
+    const userInputKeys = ["lessonData","userInput",props.activeStudent,props.id,"answer"];
     const answer = (getDeepValue(props.currentLessonState,userInputKeys) || "");
-    const scoreInputKeys = ["lessonData","userInput",props.userId,props.id,"score"];
+    const scoreInputKeys = ["lessonData","userInput",props.activeStudent,props.id,"score"];
     const score = getDeepValue(props.currentLessonState,scoreInputKeys);
 
     const updateAnswerHandler = (e) => {
@@ -48,7 +48,8 @@ const PassiveTextField = (props) => {
     return (
         <div className={classes.root}>
             <input
-                type='text' 
+                type='text'
+                disabled={props.userId !== props.activeStudent} 
                 className={classes.input} 
                 id={props.id}
                 style={{ backgroundColor: bgColor(score) }}
@@ -64,6 +65,7 @@ const mapStateToProps = state => {
     return {
         currentLessonState: state.lesson,
         userId: state.auth.userUid,
+        activeStudent: state.course.activeStudent,
         mode: state.lesson.lessonMode
     }
 }

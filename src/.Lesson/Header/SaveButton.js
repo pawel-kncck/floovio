@@ -10,7 +10,7 @@ const SaveButton = (props) => {
     const history = useHistory();
 
     const saveHandler = () => {
-        if (props.mode === ('solve' || 'check')) {
+        if (props.mode === ('solve') || props.mode === ('check')) {
             updateAnswers(props.courseId,props.lessonId,props.userInput)
         } else if (props.mode === 'edit') {
             updateLesson(props.courseId,props.lessonId,props.data);
@@ -49,6 +49,7 @@ const mapStateToProps = state => {
     return {
         data: state.lesson.lessonData,
         userInput: state.lesson.lessonData.userInput,
+        mode: state.lesson.lessonMode,
     }
 };
 

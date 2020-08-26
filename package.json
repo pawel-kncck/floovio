@@ -29,7 +29,8 @@
     "redux-thunk": "^2.3.0",
     "underscore": "^1.10.2",
     "uninstall": "0.0.0",
-    "uuid": "^8.2.0"
+    "uuid": "^8.2.0",
+    "webpack-node-externals": "^2.5.2"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -51,5 +52,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.7"
   }
 }

@@ -1,7 +1,7 @@
 import React from 'react';
 import MenuIcon from '@material-ui/icons/Menu';
+import MoreMenu from './MoreMenu';
 import { NavLink } from 'react-router-dom';
-import MoreIcon from '@material-ui/icons/MoreVert';
 import * as routes from '../.Application/routes';
 import { connect } from 'react-redux';
 import { logout } from '../.Store/auth.actions';
@@ -30,6 +30,7 @@ const NavBar = (props) => {
                     ?   <li><NavLink to='/login' onClick={handleSignOut}>Log out</NavLink></li>
                     :   <li><NavLink to='/login'>Log in</NavLink></li>
                 }
+                <MoreMenu />
             </ul>
         </div>
     );

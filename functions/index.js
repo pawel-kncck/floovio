@@ -5,13 +5,9 @@ const admin = require('firebase-admin');
 
 var serviceAccount = require("./serviceAccountKey.json");
 
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-  databaseURL: "https://dialetton.firebaseio.com"
-});
-
 const firebaseConfig = {
     apiKey: "AIzaSyDc_JHhvxSz3a-EJDaGJqAi3GhMI4RPsfA",
+    credential: admin.credential.cert(serviceAccount),
     authDomain: "dialetton.firebaseapp.com",
     databaseURL: "https://dialetton.firebaseio.com",
     projectId: "dialetton",
@@ -20,6 +16,8 @@ const firebaseConfig = {
     appId: "1:261646651559:web:6c6cae4254fc897e1f0b82",
     measurementId: "G-1H6XQ9B3Z4"
 };
+
+admin.initializeApp(firebaseConfig);
 
 const db = admin.firestore()
 
@@ -79,6 +77,64 @@ const addCourse = (courseName,language,level,userData) => {
         files: [],
     });
 };
+
+exports.populateUserData = functions.https.onCall(userId => {
+    const coursesRef = db.collection("courses");
+    // const userData = getUserData(userId);
+
+    // return 'response from populate';
+    
+    // return coursesRef.where("users", "array-contains", userId)
+    return coursesRef.where("users", "array-contains", userId)
+        .get()
+        .then(querySnapshot => {
+            querySnapshot.forEach(doc => {
+                // doc.data() is never undefined for query doc snapshots
+                return doc.data();
+            });
+            return null;
+        })
+        .catch(err => {
+            return err;
+        })
+
+
+    // coursesRef.where("language", "==", 'es')
+    //     .get()
+    //     .then(querySnapshot => {
+    //         return querySnapshot;
+    //     })
+    //     .catch(error => {
+    //         return error;
+    //     });
+
+        // .then(querySnapshot => {
+        //     return querySnapshot;
+        //     // querySnapshot.forEach(course => {
+        //     //     course.update({
+        //     //         usersData.[userId].displayName: userData.displayName,
+        //     //     });
+        //     // });
+        // })
+        // .catch(error => {
+        //     return error;
+        // })
+
+    // courseRef.get()
+    //     .then(doc => {
+    //         if (doc.exists) {
+    //             addCourseToStudent(data.studentId, data.courseId);
+    //             addStudentToCourse(data.studentId, data.courseId);
+    //             return "Success: joinCourse";
+    //         } else {
+    //             // doc.data() will be undefined in this case
+    //             return "The invite code is invalid";
+    //         }
+    //     })
+    //     .catch(error => {
+    //         return "Error getting document:" + error;
+    //     });
+});
 
 exports.sayHello = functions.https.onCall((data, context) => {
     return 'Hello, Pawel';
@@ -166,6 +222,8 @@ exports.joinCourse = functions.https.onCall((data, context) => {
             return "Error getting document:" + error;
         });
 });
+
+
 
 const addCourseToStudent = (studentId, courseId) => {
         getUserData(studentId)

@@ -15,6 +15,7 @@ import Unauthorized from './.Authentication/LogoutDestinationPage';
 import Workspace from './.Application/Workspace';
 import * as routes from './.Application/routes';
 import FireFunctions from './.Lab/FireFunctions';
+import BackendAdmin from './.Lab/DatabaseAdmin';
 
 
 function App(props) {
@@ -35,6 +36,7 @@ function App(props) {
             <Switch>
               <Route exact path="/"><Redirect to={routes.HOME} /></Route>
               <Route path={routes.HOME} exact component={Courses} />
+              <Route path="/backend" exact component={BackendAdmin} />
               <ProtecedRoute path='/course/:courseId' user={props.user} component={Workspace} />
               
               <Route path="/login" component={Login} />

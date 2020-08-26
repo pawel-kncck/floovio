@@ -1,44 +1,61 @@
 // Collections: courses, users, courses > lessons
 
 course = {
-    title: courseName,
-    language: language,
-    level: level,
-    author: clearUserData,
-    teachers: [clearUserData], // to be deprecated
-    students: [], // to be deprecated
+    name: '',
+    language: '',
+    level: '',
     messages: [
         {
             body:'string', 
-            userUid: 'string', 
-            epoch: 'timestamp' }
+            author: 'string', 
+            epoch: 'timestamp',
+            uuid: 'string',
+            parent: 'string',
+        }
     ],
     notes: [
         {
             body: 'strings', 
-            userUid: 'string', // name to change
+            author: 'string', // name to change
             epoch: 'timestamp', 
-            uuid: 'string'
+            uuid: 'string',
+            replies: [
+                {
+                    body:'string', 
+                    author: 'string', 
+                    epoch: 'timestamp',
+                    uuid: 'string',
+                }
+            ],
         }
     ],
     media: [],
     files: [],
-    users: [
-        {
-            uid: 'string',
+    users: [], // DUPLICATION - socundary, based od roles - useful for top level queries
+    roles: { // PRIMARY SOURCE
+        author: "",
+        teachers: [],
+        students: [],
+        editors: [],
+    },
+    usersData : { // ADDITIONAL INFO (duplication of selected fields from USERS collection)
+        uid: { // STORES INFO ABOUT DEACTIVATED USERS - cross checked with Notes, Messages and Files
             email: 'string', // DUPLICATE
             displayName: 'string', // DUPLICATE
             profilePic: 'string', // DUPLICATE
-            rolesInThisCourse: {
-                teacher: true,
-                editor: true,
-                student: true
-            }
+            role: { // DUPLICATION - socendary, based on high level roles{} - used for access rights
+                is_student: true,
+                is_teacher: true,
+                is_editor: false,
+                is_author: false,
+            },
+            status: "", // active, deactivated, blocked,
+            plan: "", // free, standard, premium - duplication 
         }
-    ]
+    }
 }
 
-user = {
+user = { // PRIMARY
     email: 'string',
     uid: 'string', // to be depracated
     displayName: 'string',
@@ -49,7 +66,31 @@ user = {
     },
     studyingCourses: [], // to be depracated
     teachingCourses: [], // to be deprecated
-    courses: [],
+    courses: [], // DUPLICATION - based on COURSES collection,
+    coursesData: {
+        uid: { // DUPLICATION - secondary, based on Courses collection
+            name: '',
+            language: '',
+            level: '',
+            roles: {
+                teachers: [],
+                students: [],
+                editors: [],
+            },
+            usersData: {
+                uid: {
+                    email: '',
+                    displayName: '',
+                    profilePic: ''
+                }
+            },
+        }
+    },
+    subscription: {
+        plan: '', // free, standers, premium
+        startDate: '',
+        endDate: '',
+    }
 }
 
 lessonData = {

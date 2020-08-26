@@ -13,7 +13,8 @@ const SaveButton = (props) => {
         if (props.mode === ('solve' || 'check')) {
             updateAnswers(props.courseId,props.lessonId,props.userInput)
         } else if (props.mode === 'edit') {
-            updateLesson(props.courseId,props.lessonId,props.data)
+            updateLesson(props.courseId,props.lessonId,props.data);
+            props.setMode('solve');
         } else if (props.mode === 'new') {
             const db = firebase.firestore();
             db.collection("courses").doc(props.courseId).collection('lessons').add({
@@ -21,7 +22,7 @@ const SaveButton = (props) => {
                 date: Date.now()
             })
                 .then((response) => {
-                    history.push(`/course/${props.courseId}/lesson/edit/${response.id}`)
+                    history.push(`/course/${props.courseId}/lesson/${response.id}`)
                 })
                 .catch((err) => {
                     console.log(err)

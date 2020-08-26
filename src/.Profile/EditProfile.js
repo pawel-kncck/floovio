@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Dialog, DialogTitle, DialogContent, DialogContentText, TextField, DialogActions, Select, MenuItem, FormGroup, makeStyles, FormControl, InputLabel, Button } from '@material-ui/core';
-import firebase from '../.Database/firebase';
+import firebase, { storage } from '../.Database/firebase';
 import { connect } from 'react-redux';
+import { makeId } from '../.Utilities/Utilities';
+import * as dbFunctions from '../.Database/BackendFunctions';
 
 const useStyles = makeStyles({
     root: {
@@ -13,7 +15,25 @@ const useStyles = makeStyles({
     formControl: {
         minWidth: 120,
         margin: "10px 0"
-      },
+    },
+    profilePic: {
+        borderRadius: '50%',
+        display: 'block',
+        height: '200px',
+        width: '200px',
+    },
+    imageButtonContainer: {
+        width: '100%',
+        display: 'flex',
+        justifyContent: 'center',
+        marginTop: '20px',
+    },
+    imageinput: {
+        display: 'none'
+    },
+    textField: {
+        margin: '10px 0'
+    }
 })
 
 const EditProfileDialog = (props) => {
@@ -21,42 +41,78 @@ const EditProfileDialog = (props) => {
 
     const [displayName, setDisplayName] = useState('');
     const [profilePicUrl, setProfilePicUrl] = useState('');
+    const [previewUrl, setPreviewUrl] = useState('');
+    const [email, setEmail] = useState('');
+    const [pic, setPic] = useState(null);
 
     useEffect(() => {
-        setDisplayName(props.userData.displayName);
-        setProfilePicUrl(props.userData.profilePic);
-    },[props])
+        if (firebase.auth().currentUser) {
+            dbFunctions.getUserDataById(firebase.auth().currentUser.uid)
+            .then(fullUserObject => {
+                setDisplayName(fullUserObject.displayName);
+                setProfilePicUrl(fullUserObject.profilePic);
+                setEmail(fullUserObject.email);
+            })
+            .catch(error => {
+                console.error(error);
+            })
+        }
+    },[firebase.auth().currentUser])
 
     const handleUpdate = () => {
-        const db = firebase.firestore();
-        const userRef = db.collection('users').doc(props.userId);
-
-        userRef.update({
+        const userUpdatedObject = {
             displayName: displayName,
-            profilePic: profilePicUrl,
-        })
-        .then(function() {
-            console.log("User data successfully updated!");
-        })
-        .catch(function(error) {
-            console.error("Error updating user data: ", error);
-        });
-
+            profilePic: profilePicUrl
+        }
+        
+        dbFunctions.updateUserData(props.userId, userUpdatedObject)
         props.close();
     }
+
+    const handleImageDrop = (picture) => {
+        setPic(picture);
+    }
+
+    const handleClick = () => {
+        document.getElementById('imageupload').click();
+    }
+
+    const firebaseImageUpload = (file) => {
+        const fileId = makeId(8);
+        const storageRef = storage.ref(`/profile_pics/${fileId}`);
+
+        storageRef.put(file)
+            .then(() => {
+                return storageRef.getDownloadURL()
+            })
+            .then(url => {
+                setProfilePicUrl(url);
+            })
+            .catch(err => {
+                console.error(err)
+            })
+    };
 
     return (
         <Dialog open={props.open} onClose={props.close}>
             <DialogTitle id="edit-profile-dialog">Edit your profile</DialogTitle>
             <DialogContent className={classes.dialogContent}>
-                {/* <DialogContentText>
-                    To create new course, please enter course name in the form below, select language and level. The course will be visible in "My Courses", but no student will have access to it.
-                </DialogContentText> */}
+                <img src={profilePicUrl} alt="profile picture" className={classes.profilePic} />
+                <div className={classes.imageButtonContainer}>
+                    <input 
+                        type="file" 
+                        id='imageupload' 
+                        name='imageupload' 
+                        accept="image/x-png,image/gif,image/jpeg"
+                        className={classes.imageinput} 
+                        onChange={(e) => firebaseImageUpload(e.target.files[0])} />
+                    <Button variant="outlined" onClick={handleClick}>Change image</Button>
+                </div>
                 <FormGroup>
                     <FormControl className={classes.formControl}>
                         <TextField
-                            autoFocus
-                            margin="dense"
+                            className={classes.textField}
+                            margin="normal"
                             id="display-name"
                             label="Display Name"
                             type="text"
@@ -64,12 +120,22 @@ const EditProfileDialog = (props) => {
                             onChange={(event) => setDisplayName(event.target.value)}
                             fullWidth
                         />
+                        <TextField
+                            disabled
+                            className={classes.textField}
+                            margin="normal"
+                            id="email"
+                            label="Email"
+                            type="email"
+                            value={email}
+                            fullWidth
+                        />
                     </FormControl>
                 </FormGroup>
             </DialogContent>
             <DialogActions>
-                <Button variant="contained" color="secondary" onClick={props.close}>Cancel</Button>
-                <Button variant="contained" color="primary" onClick={handleUpdate}>Save changes</Button>
+                <Button variant="outlined" color="primary" size="small" onClick={props.close}>Cancel</Button>
+                <Button variant="contained" color="primary" size="small" onClick={handleUpdate}>Save changes</Button>
             </DialogActions>
 
         </Dialog>

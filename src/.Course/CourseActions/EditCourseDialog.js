@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Dialog, DialogTitle, DialogContent, DialogContentText, TextField, DialogActions, Select, MenuItem, FormGroup, makeStyles, FormControl, InputLabel, Button } from '@material-ui/core';
 import firebase from '../../.Database/firebase';
 import { useHistory } from 'react-router-dom';
+import * as dbFunctions from '../../.Database/BackendFunctions';
 
 const useStyles = makeStyles({
     root: {
@@ -26,17 +27,15 @@ const EditCourseDialog = (props) => {
     const isValid = (name !== '' && level !== '' && name !== '');
 
     useEffect(() => {
-        const getCourseData = firebase.functions().httpsCallable('fetchCourseData');
-        getCourseData(props.courseId)
-        .then(res => {
-            console.log(res);
-            setLanguage(res.data.language);
-            setName(res.data.title);
-            setLevel(res.data.level);
-        })
-        .catch(error => {
-            console.log(error);
-        })
+        dbFunctions.getCourseDataById(props.courseId)
+            .then(res => {
+                setLanguage(res.language);
+                setName(res.name);
+                setLevel(res.level);
+            })
+            .catch(error => {
+                console.error(error);
+            })
     },[])
 
 
@@ -45,7 +44,7 @@ const EditCourseDialog = (props) => {
         const courseRef = db.collection('courses').doc(props.courseId);
 
         courseRef.update({
-            title: name,
+            name: name,
             language: language,
             level: level,
         })

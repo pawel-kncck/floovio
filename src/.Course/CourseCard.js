@@ -81,19 +81,19 @@ const CourseCard = (props) => {
     return (
         <div className={classes.root}>
             <div className={classes.titleContainer}>
-                {props.title}
+                {props.name}
             </div>
             {(teachers.length > 0)
                 ?   <div className={classes.teacherContainer}>
                         <div className={classes.label}>Teacher</div>
-                        <div className={classes.nameContainer}><Avatar className={classes.avatar} alt={props.teachers[0].displayName} src={props.teachers[0].profilePic} />{props.teachers[0].displayName}</div>
+                        <div className={classes.nameContainer}><Avatar className={classes.avatar} alt={props.usersData[teachers[0]].displayName} src={props.usersData[teachers[0]].profilePic} />{props.usersData[teachers[0]].displayName}</div>
                     </div>
                 :   null
             }
             {(students.length > 0)
                 ?   <div className={classes.studentsContainer}>
-                        <div className={classes.label}>Student</div>
-                        <div className={classes.nameContainer}><Avatar className={classes.avatar} alt={props.students[0].displayName} src={props.students[0].profilePic} />{props.students[0].displayName}</div>
+                        <div className={classes.label}>Students</div>
+                        <div className={classes.nameContainer}><Avatar className={classes.avatar} alt={props.usersData[students[0]].displayName} src={props.usersData[students[0]].profilePic} />{props.usersData[students[0]].displayName}</div>
                     </div>
                 : null
             }

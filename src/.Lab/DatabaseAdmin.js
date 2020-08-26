@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button, makeStyles, Grid, Paper, TextField } from '@material-ui/core';
 import firebase from '../.Database/firebase';
-import * as dbFunctions from './BackendFunctions';
+import * as dbFunctions from '../.Database/BackendFunctions';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -135,7 +135,7 @@ const BackendFunctions = () => {
                         <button disabled={courseId === ''} onClick={() => getCourseDataById(courseId)} className={classes.button}>get Course Data By Id</button>
                     </Paper>
                     <Paper className={classes.paper}>
-                        <button onClick={() => dbFunctions.addNewPropertyToAllDocuments()} className={classes.button}>addNewPropertyToAllDocuments</button>
+                        <button onClick={() => dbFunctions.removePropertyFromAllDocuments()} className={classes.button}>removePropertyFromAllDocuments</button>
                         <button 
                             disabled={(userId === '' || courseId === '')} 
                             onClick={() => dbFunctions.addUserToCourse(userId, courseId, 'editor')} 

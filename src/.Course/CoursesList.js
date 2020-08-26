@@ -1,11 +1,11 @@
-import React, { Fragment, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import firebase from '../.Database/firebase';
-import { Link } from 'react-router-dom';
 import CourseCard from './CourseCard';
 import { makeStyles, Divider, Button } from '@material-ui/core';
 import NewCourseDialog from './CourseActions/NewCourseDialog';
 import JoinDialog from './CourseActions/JoinCourseDialog';
+import * as dbFunctions from '../.Database/BackendFunctions';
 
 const useStyles = makeStyles({
     root: {
@@ -28,43 +28,22 @@ const CoursesList = (props) => {
     const [joinDialogOpen, setJoinDialogOpen] = useState(false);
     const classes = useStyles();
 
+    const user = firebase.auth().currentUser;
+
     useEffect(() => {
-        const db = firebase.firestore();
-        const userRef = db.collection('users').doc(props.userId);
-        userRef.get()
-            .then(res => {
-                if (res.data().studyingCourses && res.data().teachingCourses) {
-                    return [...res.data().studyingCourses, ...res.data().teachingCourses]
-                } else if (res.data().studyingCourses && !res.data().teachingCourses) {
-                    return [...res.data().studyingCourses]
-                } else if (!res.data().studyingCourses && res.data().teachingCourses) {
-                    return [...res.data().teachingCourses]
-                } else {
-                    return []
-                }
-            })
-            .then(response => {
-                let result = [];
-                response.map((el) => {
-                    const courseRef = db.collection('courses').doc(el);
-                    courseRef.get()
-                        .then((res) => {
-                            result.push({...res.data(),id: el});
-                            return [...result]
-                        })
-                        .then(res => {
-                            setCoursesArray(res);
-                        })
-                        .catch(err => {
-                            console.log(err);
-                        })
-                    return null
-                })
-            })
-            .catch(err => {
-                console.log(err);
-            })
-    }, [props])
+        
+        const  unsubscribe = firebase.firestore().collection("courses").where('users', 'array-contains', user.uid)
+            .onSnapshot((snapshot) => {
+                let coursesFromSnapshot = [];
+                snapshot.forEach(doc => {
+                    coursesFromSnapshot.push(({...doc.data(), id: doc.id}));
+                }); 
+                setCoursesArray(coursesFromSnapshot);
+        });
+        return () => {
+            unsubscribe();
+        }
+    },[firebase])
 
     const handleDialogOpen = () => {
         setDialogOpen(true);
@@ -86,9 +65,8 @@ const CoursesList = (props) => {
     return (
         <>
         <div className={classes.root}>
-
-            {coursesArray.map((el,index) => {
-                return <CourseCard key={index} courseId={el.id} title={el.title} students={el.students} teachers={el.teachers} />
+            {coursesArray.map((course, index) => {
+                return <CourseCard key={index} courseId={course.id} name={course.name} students={course.roles.students} teachers={course.roles.teachers} usersData={course.usersData} />
             })}
         </div>
         <Divider />

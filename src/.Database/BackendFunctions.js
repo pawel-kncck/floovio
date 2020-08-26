@@ -1,4 +1,4 @@
-import firebase from '../.Database/firebase';
+import firebase from './firebase';
 
 const db = firebase.firestore();
 
@@ -256,6 +256,21 @@ export const addNewPropertyToAllDocuments = () => {
         })
 }
 
+
+export const removePropertyFromAllDocuments = () => {
+    db.collection("courses").get()
+        .then(querySnapshot => {
+            querySnapshot.forEach(doc => {
+                db.collection("courses").doc(doc.id).update({
+                    "author.roles": firebase.firestore.FieldValue.delete(),
+                })
+            });
+        })
+        .catch(error => {
+            throw error;
+        })
+}
+
 export const addUserToCourse = (userId, courseId, role) => {
     const courseRef = getCourseRef(courseId);
     const userRef = getUserRef(userId);
@@ -300,12 +315,16 @@ export const updateUserData = (userId, updatedObject) => {
     getUserDataById(userId)
         .then(fullUserObject => {
             userRef.update(updatedObject);
-            return fullUserObject;
+            return {
+                ...fullUserObject,
+                displayName: updatedObject.displayName,
+                profilePic: updatedObject.profilePic
+            }
         })
-        .then(fullUserObject => {
-            fullUserObject.courses.map(id => {
+        .then(updatedFullUserObject => {
+            updatedFullUserObject.courses.map(id => {
                 getCourseRef(id).update({
-                    [`usersData.${userId}`]: simplifyFullUserObject(fullUserObject),
+                    [`usersData.${userId}`]: simplifyFullUserObject(updatedFullUserObject),
                 })
             })
         })
@@ -329,16 +348,10 @@ export const getUsersWithCourse = (courseId) => {
 
 export const getCoursesWithUser = (userId) => {
     let results = [];
-    return db.collection("courses").where('users', 'array-contains', userId).get()
-        .then(querySnapshot => {
+    return db.collection("courses").where('users', 'array-contains', userId)
+        .onSnapshot(querySnapshot => {
             querySnapshot.forEach(function(doc) {
-                results.push(simplifyFullCourseObject(doc.data()));
-            });
-        })
-        .then(() => {
-            return results;
-        })
-        .catch(error => {
-            throw error;
+                results.push({...simplifyFullCourseObject(doc.data()), id: doc.id});
+            })
         })
 }

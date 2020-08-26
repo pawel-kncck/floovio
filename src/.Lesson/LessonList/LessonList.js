@@ -29,13 +29,18 @@ const LessonList = (props) => {
 
     useEffect(() => {
         const db = firebase.firestore()
-        return db.collection("courses").doc(props.courseId).collection("lessons").onSnapshot((snapshot) => {
-            const lessonsFromSnapshot = [];
-            snapshot.forEach(doc => lessonsFromSnapshot.push(({...doc.data(), lessonId: doc.id})));
-            lessonsFromSnapshot.sort((a,b) => b.lessonDate - a.lessonDate)
-            setLessons(lessonsFromSnapshot);
-            // console.log(lessonsFromSnapshot);
-        });
+        const unsubscribe = db.collection("courses").doc(props.courseId).collection("lessons")
+            .onSnapshot((snapshot) => {
+                let lessonsFromSnapshot = [];
+                snapshot.forEach(doc => lessonsFromSnapshot.push(({...doc.data(), lessonId: doc.id})));
+                lessonsFromSnapshot.sort((a,b) => b.lessonDate - a.lessonDate)
+                setLessons(lessonsFromSnapshot);
+                // console.log(lessonsFromSnapshot);
+            });
+        return () => {
+            unsubscribe();
+        }
+
     },[props])
 
     const handleNewLesson = () => {

@@ -7,7 +7,7 @@ import Lesson from '../.Lesson/Lesson';
 import { fetchCourse, setActiveStudent } from '../.Store/course.actions';
 import { connect } from 'react-redux';
 import Notes from '../.Notes/Notes';
-import Timeline from '../.Timeline/Timeline';
+import Lists from '../.Lists/Timeline';
 
 const useStyles = makeStyles({
     main: {
@@ -64,7 +64,7 @@ const Workspace = (props) => {
                     <Route path={routes.LESSON_SOLVE} exact component={Lesson} />
                     <Route path={routes.LESSON_CHECK} exact component={Lesson} />
                     <Route path={routes.NOTES} exact component={Notes} />
-                    <Route path={routes.TIMELINE} exact component={Timeline} />
+                    <Route path={routes.LISTS} exact component={Lists} />
                 </Switch>
             </article>
             

@@ -6,7 +6,7 @@ import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 const ExpandListButton = ({ onToggle, collapsed }) => {
     return (
         <IconButton aria-label="expand row" size="small" onClick={onToggle}>
-            {collapsed ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+            {collapsed ? <KeyboardArrowDownIcon /> : <KeyboardArrowUpIcon />}
         </IconButton>
     );
 }

@@ -33,6 +33,31 @@ const course = {
                     deletedAt: ''
                 },
             ]
+        },
+        {
+            id: 'g72odfij',
+            name: 'Lesson 2',
+            status: 'completed',
+            items: [
+                {
+                    id: 'kd8736t4r8',
+                    name: 'Living room',
+                    type: 'image',
+                    format: 'png',
+                    url: 'https://firebasestorage.googleapis.com/v0/b/dialetton.appspot.com/o/files%2Flesson01_hero.png?alt=media&token=aeb358aa-2c45-4a45-ab7e-554bbd810698',
+                    status: 'Todo'
+                },
+                {
+                    id: 'bdj73fvie',
+                    name: 'Another funny document with important words abd moore with important words abd moore with important words abd moore ',
+                    type: 'document',
+                    format: 'pdf',
+                    url: 'https://firebasestorage.googleapis.com/v0/b/dialetton.appspot.com/o/files%2FPawel%20Kuncicki%20-%20CV.pdf?alt=media&token=f2a3da95-7669-4ab8-8eaf-2bec8affe716',
+                    status: '',
+                    lastListId: 'f3tw5y7u',
+                    deletedAt: ''
+                },
+            ]
         }
     ],
     systemLists: {

@@ -3,7 +3,7 @@ import { Typography } from '@material-ui/core';
 
 const ListName = ({ name }) => {
     return (
-        <Typography variant="h4">
+        <Typography variant="h6" color="textPrimary">
             {name}
         </Typography>
     );

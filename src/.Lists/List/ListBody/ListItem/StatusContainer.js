@@ -1,17 +1,5 @@
 import React, { useState } from 'react';
-import { FormControl, Select, Chip, MenuItem, makeStyles } from '@material-ui/core';
-
-const useStyles = makeStyles({
-  root: {
-    border: 0,
-  },
-  formControl: {
-    padding: 0
-  },
-  MuiInputBase: {
-    padding: 0
-  }
-})
+import { Select, Chip, MenuItem } from '@material-ui/core';
 
 const statusValues = ['Completed','Todo','In progress'];
 
@@ -27,17 +15,10 @@ const MenuProps = {
 };
 
 const StatusContainer = (props) => {
-    const classes = useStyles();
     const [status, setStatus] = useState(props.status);
 
     const handleChange = (event) => {
         setStatus(event.target.value);
-    }
-
-    const selectStyle = {
-      '&input': {
-        padding: 0
-      }
     }
 
     return (
@@ -49,7 +30,6 @@ const StatusContainer = (props) => {
                 onChange={handleChange}
                 MenuProps={MenuProps}
                 renderValue={selected => <Chip label={selected} />}
-                style={selectStyle}
             >{statusValues.map((value) => (
                 <MenuItem key={value} value={value} >
                   {value}

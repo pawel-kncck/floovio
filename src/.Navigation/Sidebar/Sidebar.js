@@ -46,7 +46,7 @@ const useStyles = makeStyles({
 
 const Sidebar = (props) => {
     const classes = useStyles();
-    const [activeView, setActiveeView] = useState(0);
+    const [activeView, setActiveeView] = useState(-1);
 
     const isEditor = (props.roles) ? props.roles.editors.includes(firebase.auth().currentUser.uid) : null;
 
@@ -55,6 +55,7 @@ const Sidebar = (props) => {
 
     const viewsArray = [
         {text: "Lessons", icon: <ListIcon />, component: <LessonList courseId={props.match.params.id} />, path: null},
+        {text: "Lists", icon: <ListIcon />, component: null, path: `/course/${props.match.params.id}/lists`},
         {text: "Chat", icon: <ChatIcon />, component: <Chat courseId={props.match.params.id} />, path: null},
         {text: "Notes", icon: <NoteIcon />, component: null, path: `/course/${props.match.params.id}/notes`},
         (isEditor) ? {text: "Media", icon: <MediaIcon />, component: <MediaViewer courseId={props.match.params.id} />, path: null} : null,

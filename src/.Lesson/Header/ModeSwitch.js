@@ -40,8 +40,8 @@ const ModeSwitch = (props) => {
                 MenuProps={MenuProps}
             >
                 <MenuItem key='10' value='solve'>Student</MenuItem>
-                <MenuItem key='20' value='check'>Teacher</MenuItem>
-                <MenuItem key='30' value='edit'>Editor</MenuItem>
+                {(props.userRole === 'editor') || (props.userRole === 'teacher') ? <MenuItem key='20' value='check'>Teacher</MenuItem> : null }
+                {(props.userRole === 'editor') ? <MenuItem key='30' value='edit'>Editor</MenuItem> : null}
             </Select>
         </FormControl>
     );

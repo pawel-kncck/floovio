@@ -278,7 +278,7 @@ export const addUserToCourse = (userId, courseId, role) => {
     let courseName;
     let article = (role === 'editor') ? 'an' : 'a';
 
-    getBasicUserDataById(userId)
+    return getBasicUserDataById(userId)
         .then(basicUserData => {
             const roleArray = findRoleArray(role);
             courseRef.update({

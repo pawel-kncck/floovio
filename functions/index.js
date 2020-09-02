@@ -26,15 +26,26 @@ exports.test = functions.https.onRequest((req, res) => {
 })
 
 exports.newUserSignup = functions.auth.user().onCreate(user => {
+    const createDate = new Date();
+
     return admin.firestore().collection('users').doc(user.uid).set({
         email: user.email,
         uid: user.uid,
+        createdAt: createDate,
         displayName: '',
         profilePic: '',
-        roles: ['student','teacher'],
-        studyingCourses: [],
-        teachingCourses: [],
+        globalRoles: {
+            student: true,
+            teacher: false,
+            admin: false,
+        },
         courses: [],
+        coursesData: {},
+        subscription: {
+            plan: 'premium',
+            startDate: createDate,
+            endDate: null,
+        }
     });
 });
 

@@ -66,7 +66,7 @@ const CoursesList = (props) => {
         <>
         <div className={classes.root}>
             {coursesArray.map((course, index) => {
-                return <CourseCard key={index} courseId={course.id} name={course.name} students={course.roles.students} teachers={course.roles.teachers} usersData={course.usersData} />
+                return <CourseCard key={index} courseId={course.id} name={course.name} students={course.roles.students} editors={course.roles.editors} teachers={course.roles.teachers} usersData={course.usersData} currentUser={user} />
             })}
         </div>
         <Divider />

@@ -65,6 +65,9 @@ const CourseCard = (props) => {
 
     const teachers = props.teachers;
     const students = props.students;
+    const editors = props.editors;
+
+    const currentUserIsEditor = props.editors.includes(props.currentUser.uid)
 
     const handleOpenCourse = () => {
         history.push(`/course/${props.courseId}`)
@@ -99,8 +102,12 @@ const CourseCard = (props) => {
             }
             
             <div className={classes.actionsContainer}>
-                <Button className={classes.actionButton} variant="outlined" color="primary" size="small" onClick={handleEditDialogOpen}>Edit</Button>
-                <Button className={classes.actionButton} variant="outlined" color="primary" size="small" onClick={() => setInviteOpen(true)}>Invite</Button>
+                {(currentUserIsEditor)
+                    ?   <>
+                            <Button className={classes.actionButton} variant="outlined" color="primary" size="small" onClick={handleEditDialogOpen}>Edit</Button>
+                            <Button className={classes.actionButton} variant="outlined" color="primary" size="small" onClick={() => setInviteOpen(true)}>Invite</Button>
+                        </>
+                    : null}
                 <Button className={classes.actionButton} variant="contained" color="primary" size="small" onClick={handleOpenCourse}>Open</Button>
             </div>
             <InviteDialog open={inviteOpen} onClose={() => setInviteOpen(false)} courseId={props.courseId} />

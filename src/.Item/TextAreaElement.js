@@ -18,9 +18,9 @@ const useStyles = makeStyles({
 
 const TextAreaElement = (props) => {
     const classes = useStyles();
-    const userInputKeys = ["lessonData","userInput",props.userId,props.id,"answer"];
+    const userInputKeys = ["lessonData","userInput",props.activeStudent,props.id,"answer"];
     const answer = (getDeepValue(props.currentLessonState,userInputKeys) || "");
-    const scoreInputKeys = ["lessonData","userInput",props.userId,props.id,"score"];
+    const scoreInputKeys = ["lessonData","userInput",props.activeStudent,props.id,"score"];
     const score = getDeepValue(props.currentLessonState,scoreInputKeys);
 
     const updateAnswerHandler = (e) => {
@@ -41,6 +41,7 @@ const TextAreaElement = (props) => {
         <div className={classes.root}>
             <textarea
                 type='text' 
+                disabled={props.userId !== props.activeStudent} 
                 rows={4}
                 className={classes.textarea} 
                 id={props.id}
@@ -57,6 +58,7 @@ const mapStateToProps = state => {
     return {
         currentLessonState: state.lesson,
         userId: state.auth.userUid,
+        activeStudent: state.course.activeStudent,
         mode: state.lesson.lessonMode
     }
 }

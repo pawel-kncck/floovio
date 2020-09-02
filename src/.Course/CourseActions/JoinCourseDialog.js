@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Dialog, DialogTitle, DialogContent, DialogContentText, TextField, DialogActions, Select, MenuItem, FormGroup, makeStyles, FormControl, InputLabel, Button } from '@material-ui/core';
 import firebase from '../../.Database/firebase';
+import * as dbFunctions from '../../.Database/BackendFunctions';
 
 const useStyles = makeStyles({
     root: {
@@ -19,19 +20,30 @@ const JoinCourseDialog = (props) => {
 
     //props open, close
     const handleJoinCourse = () => {
-        const joinCourse = firebase.functions().httpsCallable('joinCourse');
-        const data = {
-            studentId: firebase.auth().currentUser.uid,
-            courseId: code
-        }
-        
-        joinCourse(data)
-            .then(response => {
-                console.log(response);
+        const userId = firebase.auth().currentUser.uid;
+        const courseId = code;
+        const role = 'student';
+
+        const courseRef = firebase.firestore().collection("courses").doc(courseId);
+
+        courseRef.get()
+            .then(doc => {
+                if (doc.exists) {
+                    dbFunctions.addUserToCourse(userId, courseId, role)
+                    .then(res => {
+                        console.log(res);
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    })
+                } else {
+                    console.log("Invalid code!")
+                }
             })
             .catch(err => {
                 console.error(err);
             })
+            
         handleClose();
     }
 

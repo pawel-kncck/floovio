@@ -13,9 +13,9 @@ const useStyles = makeStyles({
 
 const PassiveRadioGroup = (props) => {
     const classes = useStyles();
-    const userInputKeys = ["lessonData","userInput",props.userId,props.id,"answer"];
+    const userInputKeys = ["lessonData","userInput",props.activeStudent,props.id,"answer"];
     const answer = (getDeepValue(props.currentLessonState,userInputKeys) || "");
-    const scoreInputKeys = ["lessonData","userInput",props.userId,props.id,"score"];
+    const scoreInputKeys = ["lessonData","userInput",props.activeStudent,props.id,"score"];
     const score = getDeepValue(props.currentLessonState,scoreInputKeys);
 
     const bgColor = () => {
@@ -40,6 +40,7 @@ const PassiveRadioGroup = (props) => {
         <div className={classes.root}>
             <RadioGroup 
                 name={props.id}
+                disabled={props.userId !== props.activeStudent} 
                 value={answer}
                 onChange={(e) => updateAnswerHandler(e)}
                 >
@@ -56,6 +57,7 @@ const mapStateToProps = state => {
     return {
         currentLessonState: state.lesson,
         userId: state.auth.userUid,
+        activeStudent: state.course.activeStudent,
         mode: state.lesson.lessonMode
     }
 }

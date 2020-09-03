@@ -8,6 +8,7 @@ import { fetchCourse, setActiveStudent } from '../.Store/course.actions';
 import { connect } from 'react-redux';
 import Notes from '../.Notes/Notes';
 import Lists from '../.Lists/Timeline';
+import firebase from '../.Database/firebase';
 
 const useStyles = makeStyles({
     main: {
@@ -47,8 +48,15 @@ const Workspace = (props) => {
     const classes = useStyles();
 
     useEffect(() => {
-        props.fetchCourse(props.match.params.courseId)
-    },[props])
+        const  unsubscribe = firebase.firestore().collection("courses").doc(props.match.params.courseId)
+            .onSnapshot((snapshot) => {
+                props.fetchCourse(props.match.params.courseId)
+        });
+        return () => {
+            unsubscribe();
+        }
+    },[firebase])
+
     
     return (
         <main className={classes.main}>

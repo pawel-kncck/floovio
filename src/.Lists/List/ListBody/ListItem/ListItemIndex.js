@@ -19,7 +19,7 @@ const useStyles = makeStyles({
     }
 })
 
-const ListItem = ({ itemData, courseId, index }) => {
+const ListItem = ({ itemId, listId, courseId, itemData }) => {
     const classes = useStyles();
 
     return (
@@ -30,7 +30,7 @@ const ListItem = ({ itemData, courseId, index }) => {
             <TableCell className={classes.cell}>
                 <TypeIcon type={itemData.type} />
             </TableCell>
-            <TableCell component='th' style={{ whiteSpace: 'nowrap', maxWidth: '300px', overflow: 'hidden' }} className={classes.cell}>
+            <TableCell component='th' style={{ whiteSpace: 'nowrap', width: '300px', overflow: 'hidden' }} className={classes.cell}>
                 <ItemName name={itemData.name} />
             </TableCell>
             <TableCell className={classes.cell}>
@@ -40,10 +40,10 @@ const ListItem = ({ itemData, courseId, index }) => {
                 {(itemData.status) ? <StatusContainer status={itemData.status} /> : null}
             </TableCell>
             <TableCell className={classes.cell}>
-                <PositionButtons index={index} />
+                <PositionButtons />
             </TableCell>
             <TableCell className={classes.cell}>
-                <ItemOptions itemData={itemData} courseId={courseId} />
+                <ItemOptions itemId={itemId} listId={listId} courseId={courseId} itemData={itemData} />
             </TableCell>
         </TableRow>
     );

@@ -50,9 +50,6 @@ const Sidebar = (props) => {
 
     const isEditor = (props.roles) ? props.roles.editors.includes(firebase.auth().currentUser.uid) : null;
 
-    console.log(props.roles);
-    console.log(isEditor);
-
     const viewsArray = [
         {text: "Lessons", icon: <ListIcon />, component: <LessonList courseId={props.match.params.id} />, path: null},
         {text: "Lists", icon: <ListIcon />, component: null, path: `/course/${props.match.params.id}/lists`},

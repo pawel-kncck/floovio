@@ -1,7 +1,41 @@
+import firebase from '../.Database/firebase';
+import { v4 as uuid } from 'uuid';
+
+const db = firebase.firestore();
+const coursesRef = db.collection('courses');
+
 // ITEM CRUD
 
 const createNewItem = (listId, courseId) => {
     // func
+}
+
+export const createNewLinkItem = (listId, courseId, user, name, url, type) => {
+    const courseRef = coursesRef.doc(courseId);
+    const id = uuid();
+    const currentDate = new Date();
+    const currentUser = user;
+
+    const newLinkItemData = {
+        id: id,
+        name: name,
+        type: type,
+        format: '',
+        source: '',
+        url: url,
+        createdAt: currentDate,
+        createdBy: currentUser.uid
+    }
+
+    return courseRef.update({
+                [`lists.${listId}.items.${id}`]: newLinkItemData
+            })
+            .then(() => {
+                return 'New item added successfully';
+            })
+            .catch(error => {
+                throw error;
+            })
 }
 
 const getItem = (itemId, courseId) => {
@@ -20,17 +54,43 @@ const moveItemsToBin = (itemId, listId, courseId) => {
     // save deletedAt and lastListId
 }
 
-const deleteItem = (itemId, courseId) => {
-    // func - better to use ids instead of list position, when more users are in the course
+export const deleteItem = (itemId, listId, courseId) => {
+    const courseRef = coursesRef.doc(courseId);
+
+    return courseRef.update({
+        [`lists.${listId}.items.${itemId}`]: firebase.firestore.FieldValue.delete()
+            })
+            .then(response => {
+                return response;
+            })
+            .catch(error => {
+                throw error;
+            })
 }
 
 // LIST CRUD
 
-const createNewList = (courseId) => {
-    // check if lists: [] exists
-    // if doesn't exist create new one
-    // create id and name
-    // push into lists[]
+export const createNewList = (courseId, name, user) => {
+    const courseRef = coursesRef.doc(courseId);
+    const id = uuid();
+    const currentDate = new Date();
+    const currentUser = user;
+
+    const newListData = {
+        name: name,
+        createdAt: currentDate,
+        createdBy: currentUser.uid,
+    }
+
+    return courseRef.get()
+        .then(() => {
+            courseRef.update({
+                [`lists.${id}`]: newListData
+            });
+        })
+        .catch(err => {
+            throw err;
+        })
 }
 
 const getList = (listId, courseId) => {
@@ -43,9 +103,18 @@ const updateListAttributes = (listId, courseId, listData) => {
     // use update to update or add only properites in itemData (eg. name, status)
 }
 
-const deleteList = (listId, courseId, deleteAllItems) => {
-    // deleteAllItems is boolean - if true, remove list with all references, if false - move items to unassignedItems[]
-    // remove
+export const deleteList = (listId, courseId) => {
+    const courseRef = coursesRef.doc(courseId);
+
+    return courseRef.update({
+        [`lists.${listId}`]: firebase.firestore.FieldValue.delete()
+            })
+            .then(response => {
+                return response;
+            })
+            .catch(error => {
+                throw error;
+            })
 }
 
 // DUPLICATION

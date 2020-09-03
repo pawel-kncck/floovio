@@ -28,8 +28,8 @@ const ListHeader = (props) => {
                 <div><ExpandListButton onToggle={props.onCollapse} collapsed={props.collapsed} /></div>
                 <div className={classes.name}><ListName name={props.listData.name} /></div>
                 <div></div>
-                <div><NewItemButton listData={props.listData} /></div>
-                <div><ListOptions listData={props.listData} courseId={props.courseId} /></div>
+                <div><NewItemButton listId={props.listId} listData={props.listData} courseId={props.courseId} user={props.user} /></div>
+                <div><ListOptions listId={props.listId} listData={props.listData} courseId={props.courseId} /></div>
             </div>
     );
 }

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import { IconButton, Menu, MenuItem } from '@material-ui/core';
+import { deleteItem } from '../../../BackendFunctions';
 
 const ListOptions = (props) => {
     const [anchorEl, setAnchorEl] = useState(null);
@@ -26,10 +27,10 @@ const ListOptions = (props) => {
             open={open}
             onClose={handleClose}
         >
-            <MenuItem onClick={handleClose}>Edit</MenuItem>
-            <MenuItem onClick={handleClose}>Duplicate</MenuItem>
-            <MenuItem onClick={handleClose}>Move to another list</MenuItem>
-            <MenuItem onClick={handleClose}>Delete</MenuItem>
+            <MenuItem disabled onClick={handleClose}>Edit</MenuItem>
+            <MenuItem disabled onClick={handleClose}>Duplicate</MenuItem>
+            <MenuItem disabled onClick={handleClose}>Move to another list</MenuItem>
+            <MenuItem onClick={() => deleteItem(props.itemId, props.listId, props.courseId)}>Delete</MenuItem>
         </Menu>
         </>
     );

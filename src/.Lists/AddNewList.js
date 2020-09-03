@@ -5,7 +5,8 @@ import NewListDialog from './NewListDialog';
 const useStyles = makeStyles({
     root: {
         display: 'flex',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        marginBottom: '100px',
     }
 })
 

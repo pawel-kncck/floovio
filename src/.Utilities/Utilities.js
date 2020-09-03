@@ -8,6 +8,21 @@ export function makeId(length) {
     return result;
  }
 
+export const makeCustomId = () => {
+  let result = '';
+  const letters = 'abcdefghijklmnopqrstuvwxyz';
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+
+  for (let i = 0; i < 8; i++) {
+    if (i === 0) {
+      result += letters.charAt(Math.floor(Math.random() * letters.length));
+    } else {
+      result += characters.charAt(Math.floor(Math.random() * characters.length));
+    }
+  }
+  return result;
+}
+
  export function stripTags (str, allowed_tags) {
    var key = '', allowed = false;
    var matches = [];    var allowed_array = [];

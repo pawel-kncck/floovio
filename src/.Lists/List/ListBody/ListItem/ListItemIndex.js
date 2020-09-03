@@ -30,7 +30,7 @@ const ListItem = ({ itemId, listId, courseId, itemData }) => {
             <TableCell className={classes.cell}>
                 <TypeIcon type={itemData.type} />
             </TableCell>
-            <TableCell component='th' style={{ whiteSpace: 'nowrap', width: '300px', overflow: 'hidden' }} className={classes.cell}>
+            <TableCell component='th' style={{ whiteSpace: 'nowrap', width: '300px', maxWidth: '300px', overflow: 'hidden' }} className={classes.cell}>
                 <ItemName name={itemData.name} />
             </TableCell>
             <TableCell className={classes.cell}>

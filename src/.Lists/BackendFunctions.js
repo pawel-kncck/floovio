@@ -31,7 +31,38 @@ export const createNewLinkItem = (listId, courseId, user, name, url, type) => {
                 [`lists.${listId}.items.${id}`]: newLinkItemData
             })
             .then(() => {
-                return 'New item added successfully';
+                return `Item added to ${listId}`;
+            })
+            .catch(error => {
+                throw error;
+            })
+}
+
+
+export const createNewFileItem = (listIdFromInput, courseId, user, url, fileName, fileType, fileSize) => {
+    const courseRef = coursesRef.doc(courseId);
+    const id = uuid();
+    const currentDate = new Date();
+    const currentUser = user;
+    const type = (fileType.split('/')[0] === 'image') ? 'image' : 'other';
+
+    const newFileItemData = {
+        id: id,
+        name: fileName,
+        type: type,
+        format: fileType.split('/')[1] || '',
+        source: '',
+        url: url,
+        size: fileSize,
+        createdAt: currentDate,
+        createdBy: currentUser.uid
+    }
+
+    return courseRef.update({
+                [`lists.${listIdFromInput}.items.${id}`]: newFileItemData
+            })
+            .then(() => {
+                return `File added to ${listIdFromInput}`;
             })
             .catch(error => {
                 throw error;

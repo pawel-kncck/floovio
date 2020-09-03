@@ -6,7 +6,7 @@ import ListActions from './ListActions/ListActionsIndex';
 
 const useStyles = makeStyles({
     root: {
-        width: '600px',
+        // width: '600px',
 
     },
     table: {

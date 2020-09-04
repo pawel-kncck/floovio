@@ -5,8 +5,11 @@ import NewLinkDialog from './NewLinkDialog';
 import firebase, { storage } from '../../../.Database/firebase';
 import { makeCustomId } from '../../../.Utilities/Utilities';
 import { createNewFileItem } from '../../BackendFunctions';
+import FloovioDialog from '../../../.Exercise/Editor/FloovioDialog';
+import { createFloovio } from '../../../.Store/floovio.actions';
+import { connect } from 'react-redux';
 
-const ListOptions = ({ listId, courseId, user, listData }) => {
+const ListOptions = ({ listId, courseId, user, listData, ...props }) => {
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
     const [newLinkDialogOpen, setNewLinkDialogOpen] = useState(false);
@@ -28,8 +31,14 @@ const ListOptions = ({ listId, courseId, user, listData }) => {
         setAnchorEl(null);
     }
 
+    const handleExerciseDialogOpen = () => {
+        props.createExercise(listId);
+        setAnchorEl(null);
+    }
+
     const handleUploadClick = () => {
         document.getElementById(`fileupload-${listId}`).click();
+        setAnchorEl(null);
     }
 
     const firebaseImageUpload = (file) => {
@@ -70,7 +79,7 @@ const ListOptions = ({ listId, courseId, user, listData }) => {
             open={open}
             onClose={handleClose}
         >
-            <MenuItem disabled onClick={handleClose}>New exercise</MenuItem>
+            <MenuItem onClick={handleExerciseDialogOpen}>New exercise</MenuItem>
             <MenuItem onClick={handleNewLinkDialogOpen}>Add link</MenuItem>
             <input 
                         type="file" 
@@ -80,8 +89,21 @@ const ListOptions = ({ listId, courseId, user, listData }) => {
             <MenuItem onClick={handleUploadClick}>Upload new file</MenuItem>
         </Menu>
         <NewLinkDialog open={newLinkDialogOpen} close={handleNewLinkDialogClose} listData={listData} listId={listId} courseId={courseId} user={user} />
+        <FloovioDialog courseId={courseId} user={user} />
         </>
     );
 }
+
+const mapStateToProps = state => {
+    return {
+        open: state.floovio.open,
+    }
+};
+
+const mapDispatchToProps = dispatch => {
+    return {
+        createExercise: (value) => {dispatch(createFloovio(value))},
+    }
+}
  
-export default ListOptions;
+export default connect(mapStateToProps,mapDispatchToProps)(ListOptions);

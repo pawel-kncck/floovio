@@ -38,13 +38,41 @@ export const createNewLinkItem = (listId, courseId, user, name, url, type) => {
             })
 }
 
+export const createNewExerciseItem = (listId, courseId, user, name, url) => {
+    const courseRef = coursesRef.doc(courseId);
+    const id = uuid();
+    const currentDate = new Date();
+    const currentUser = user;
+
+    const newExerciseItemData = {
+        id: id,
+        name: name,
+        type: 'exercise',
+        format: '',
+        source: '',
+        url: url,
+        createdAt: currentDate,
+        createdBy: currentUser.uid
+    }
+
+    return courseRef.update({
+                [`lists.${listId}.items.${id}`]: newExerciseItemData
+            })
+            .then(() => {
+                return `Item added to ${listId}`;
+            })
+            .catch(error => {
+                throw error;
+            })
+}
+
 
 export const createNewFileItem = (listIdFromInput, courseId, user, url, fileName, fileType, fileSize) => {
     const courseRef = coursesRef.doc(courseId);
     const id = uuid();
     const currentDate = new Date();
     const currentUser = user;
-    const type = (fileType.split('/')[0] === 'image') ? 'image' : 'other';
+    const type = (fileType.split('/')[0] === 'image') ? 'image' : (fileType.split('/')[1] === 'pdf') ? 'pdf' : 'other';
 
     const newFileItemData = {
         id: id,
@@ -69,8 +97,35 @@ export const createNewFileItem = (listIdFromInput, courseId, user, url, fileName
             })
 }
 
+export const saveNewExercise = (courseId, user, exerciseData) => {
+    const currentDate = new Date();
+
+    return coursesRef.doc(courseId).collection('exercises').add({
+        ...exerciseData,
+        owners: [user.uid],
+        createdAt: currentDate,
+        createdBy: user.uid,
+        saved: true,
+        status: 'published',
+    })
+    .then(response => response)
+    .catch(error => {throw error})
+}
+
 const getItem = (itemId, courseId) => {
     // func - better to use ids instead of list position, when more users are in the course
+}
+
+export const getExercise = (path) => {
+    const docRef = db.doc(path);
+
+    return docRef.get()
+        .then(doc => {
+            return doc.data()
+        })
+        .catch(err => {
+            throw err;
+        })
 }
 
 const updateItem = (itemId, courseId, itemData) => {

@@ -66,7 +66,7 @@ const OpenItemButton = ({ itemData }) => {
         </IconButton>
         {(imageViewerOpen) ? <ImageViewer url={itemData.url} open={imageViewerOpen} close={handleImageViewerClose} /> : null}
         {(pdfViewerOpen) ? <PdfViewer url={itemData.url} open={pdfViewerOpen} close={handlePdfViewerClose} /> : null}
-        {(exerciseViewerOpen) ? <ExerciseViewer open={exerciseViewerOpen} close={setExerciseViewerClose} json={exerciseJson} /> : null}
+        {(exerciseViewerOpen) ? <ExerciseViewer open={exerciseViewerOpen} close={setExerciseViewerClose} itemData={itemData} /> : null}
         </>
     );
 }

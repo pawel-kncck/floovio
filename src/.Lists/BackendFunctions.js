@@ -104,9 +104,21 @@ export const saveNewExercise = (courseId, user, exerciseData) => {
         ...exerciseData,
         owners: [user.uid],
         createdAt: currentDate,
+        lastUpdatedAt: currentDate,
         createdBy: user.uid,
         saved: true,
         status: 'published',
+    })
+    .then(response => response)
+    .catch(error => {throw error})
+}
+
+export const updateAnswersInExercise = (path, exerciseData) => {
+    const currentDate = new Date();
+
+    return db.doc(path).update({
+        userInput: exerciseData.userInput,
+        lastUpdatedAt: currentDate,
     })
     .then(response => response)
     .catch(error => {throw error})
@@ -172,6 +184,20 @@ export const createNewList = (courseId, name, user) => {
         .then(() => {
             courseRef.update({
                 [`lists.${id}`]: newListData
+            });
+        })
+        .catch(err => {
+            throw err;
+        })
+}
+
+export const renameList = (listId, courseId, name) => {
+    const courseRef = coursesRef.doc(courseId);
+
+    return courseRef.get()
+        .then(() => {
+            courseRef.update({
+                [`lists.${listId}.name`]: name
             });
         })
         .catch(err => {

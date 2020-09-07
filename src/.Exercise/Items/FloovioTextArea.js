@@ -58,21 +58,19 @@ const FloovioTextArea = (props) => {
     );
 }
 
-// const mapStateToProps = state => {
-//     return {
-//         currentLessonState: state.lesson,
-//         userId: state.auth.userUid,
-//         activeStudent: state.course.activeStudent,
-//         mode: state.lesson.lessonMode
-//     }
-// }
+const mapStateToProps = state => {
+    return {
+        currentLessonState: state.lesson,
+        userId: state.auth.userUid,
+        activeStudent: state.course.activeStudent,
+        mode: state.lesson.lessonMode
+    }
+}
 
-// const mapDispatchToProps = dispatch => {
-//     return {
-//         setUserInput: (keys,value) => {dispatch(setAnswerInState(keys,value))}
-//     }
-// }
+const mapDispatchToProps = dispatch => {
+    return {
+        // setUserInput: (keys,value) => {dispatch(setAnswerInState(keys,value))}
+    }
+}
  
-// export default connect(mapStateToProps,mapDispatchToProps)(TextAreaElement);
-
-export default FloovioTextArea;
+export default connect(mapStateToProps,mapDispatchToProps)(FloovioTextArea);

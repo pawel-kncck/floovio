@@ -14,7 +14,9 @@ action types
 // export const FETCH_LESSON_START = 'FETCH_LESSON_START'
 // export const FETCH_LESSON_SUCCESS = 'FETCH_LESSON_SUCCESS'
 // export const FETCH_LESSON_FAIL = 'FETCH_LESSON_FAIL'
-// export const SET_ANSWER_IN_STATE = 'SET_ANSWER_IN_STATE'
+export const SET_FLOOVIO_ANSWER_IN_STATE = 'SET_FLOOVIO_ANSWER_IN_STATE'
+export const SET_FLOOVIO_IN_STATE = 'SET_FLOOVIO_IN_STATE'
+export const RESET_FLOOVIO = 'RESET_FLOOVIO'
 // export const SET_TITLE = 'SET_TITLE'
 // export const SET_LESSON_DATE = 'SET_LESSON_DATE'
 // export const SET_AUTHOR = 'SET_AUTHOR'
@@ -55,6 +57,13 @@ export function updateName(name) {
     }
 }
 
+export function setFloovioInState(floovioObject) {
+    return { 
+        type: SET_FLOOVIO_IN_STATE,
+        payload: floovioObject
+    }
+}
+
 export function updateFloovio(json, html) {
     return { 
         type: UPDATE_FLOOVIO,
@@ -64,6 +73,14 @@ export function updateFloovio(json, html) {
         }
     }
 }
+
+export const setAnswerInState = (keys, value) => {
+    return {
+        type: SET_FLOOVIO_ANSWER_IN_STATE,
+        keys: keys,
+        value: value
+    }    
+};
 
 // export const loadLesson = (data) => {
 //     return { 
@@ -188,13 +205,5 @@ export function updateFloovio(json, html) {
 //     return {
 //         type: SET_MODE,
 //         mode: mode
-//     }    
-// };
-
-// export const setAnswerInState = (keys,value) => {
-//     return {
-//         type: SET_ANSWER_IN_STATE,
-//         keys: keys,
-//         value: value
 //     }    
 // };

@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core';
-// import { getDeepValue } from '../.Utilities/helpers';
+import { getDeepValue } from '../../.Utilities/helpers';
 import { connect } from 'react-redux';
-// import { setAnswerInState } from '../.Store/lesson.actions'
+import { setAnswerInState } from '../../.Store/floovio.actions';
 // import TeacherBox from './TeacherBox';
 
 const useStyles = makeStyles({
@@ -26,17 +26,18 @@ const useStyles = makeStyles({
 
 const FloovioTextField = (props) => {
     const classes = useStyles();
-    const [value, setValue] = useState();
+    const [value, setValue] = useState('');
 
-    // const userInputKeys = ["lessonData","userInput",props.activeStudent,props.id,"answer"];
-    // const answer = (getDeepValue(props.currentLessonState,userInputKeys) || "");
+    const userInputKeys = ["userInput",props.id,"answer"];
+    // const userInputKeys = ["userInput",props.activeStudent,props.id,"answer"];
+    const answer = (getDeepValue(props.currentExerciseState, userInputKeys) || "");
     // const scoreInputKeys = ["lessonData","userInput",props.activeStudent,props.id,"score"];
     // const score = getDeepValue(props.currentLessonState,scoreInputKeys);
 
-    // const updateAnswerHandler = (e) => {
-    //     props.setUserInput(userInputKeys,e.target.value)
-    //     props.setUserInput(scoreInputKeys,0)
-    // }
+    const updateAnswerHandler = (e) => {
+        props.setUserInput(userInputKeys, e.target.value)
+        // props.setUserInput(scoreInputKeys,0)
+    }
 
     const bgColor = (score) => {
         switch (score) {
@@ -55,31 +56,28 @@ const FloovioTextField = (props) => {
                 className={classes.input} 
                 id={props.id}
                 // style={{ backgroundColor: bgColor(score) }}
-                value={value}
-                onChange={(e) => setValue(e.target.value)} 
-                // value={answer}
-                // onChange={(e) => updateAnswerHandler(e)} 
+                // value={value}
+                // onChange={(e) => setValue(e.target.value)} 
+                value={answer}
+                onChange={(e) => updateAnswerHandler(e)} 
             ></input>
             {/* {(props.mode === 'check') ? <TeacherBox id={props.id} /> : null} */}
         </div>
     );
 }
 
-// const mapStateToProps = state => {
-//     return {
-//         currentLessonState: state.lesson,
-//         userId: state.auth.userUid,
-//         activeStudent: state.course.activeStudent,
-//         mode: state.lesson.lessonMode
-//     }
-// }
+const mapStateToProps = state => {
+    return {
+        currentExerciseState: state.floovio,
+        userId: state.auth.userUid,
+        activeStudent: state.course.activeStudent,
+    }
+}
 
-// const mapDispatchToProps = dispatch => {
-//     return {
-//         setUserInput: (keys,value) => {dispatch(setAnswerInState(keys,value))}
-//     }
-// }
+const mapDispatchToProps = dispatch => {
+    return {
+        setUserInput: (keys, value) => {dispatch(setAnswerInState(keys, value))}
+    }
+}
  
-// export default connect(mapStateToProps,mapDispatchToProps)(PassiveTextField);
-
-export default FloovioTextField;
+export default connect(mapStateToProps,mapDispatchToProps)(FloovioTextField);

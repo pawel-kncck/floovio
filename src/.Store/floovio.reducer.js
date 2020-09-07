@@ -26,7 +26,6 @@ const reducer = (state = initialState, action) => {
                     json: {},
                     html: '',
                 },
-                answers: {}
             }
         case actionTypes.UPDATE_FLOOVIO:
             return {
@@ -43,14 +42,14 @@ const reducer = (state = initialState, action) => {
             }
         case actionTypes.CANCEL_FLOOVIO:
             return {
-                open: false,
+                ...initialState,
                 name: ''
             }
-		// case actionTypes.LOAD_LESSON:
-		// 	return {
-        //         ...state,
-        //         lessonData: action.data
-        //     }
+		case actionTypes.SET_FLOOVIO_IN_STATE:
+			return {
+                ...state,
+                ...action.payload
+            }
 		// case actionTypes.SET_TITLE:
 		// 	return {
 		// 		...state,
@@ -119,9 +118,9 @@ const reducer = (state = initialState, action) => {
         //         ...state,
         //         isFetching: false
         //     }
-        // case actionTypes.SET_ANSWER_IN_STATE:
-        //     const initState = deepCopyFunction(state)
-        //     return createNestedObject(initState, action.keys, action.value)
+        case actionTypes.SET_FLOOVIO_ANSWER_IN_STATE:
+            const unmutatedStateCopy = deepCopyFunction(state)
+            return createNestedObject(unmutatedStateCopy, action.keys, action.value)
 
         // case actionTypes.ADD_EXERCISE:
         //     let newExerciseArray = [...state.lessonData.json.child];

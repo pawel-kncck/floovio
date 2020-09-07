@@ -28,6 +28,7 @@ const Messages = (props) => {
     const [messageList,setMessageList] = useState([]);
     const { height, width } = useWindowDimensions();
     const messagesEndRef = useRef(null);
+    const currentUser = firebase.auth().currentUser;
     
 
     useEffect(() => {
@@ -64,7 +65,7 @@ const Messages = (props) => {
         <div className={classes.root}>
             
             <div style={divBodyStyle}>
-                {(messageList) ? <MessagesBody messages={messageList} courseId={props.courseId} /> : null}
+                {(messageList) ? <MessagesBody messages={messageList} courseId={props.courseId} currentUser={currentUser} /> : null}
                 {/* {(messageList.length > 0)
                     ?   messageList.map((el,index) => <ChatItem key={index} body={el.body} />)
                     : null

@@ -27,7 +27,7 @@ const useStyles = makeStyles({
         flexDirection: "column",
     },
     sideContainer: {
-        width: "280px",
+        width: "330px",
         display: "flex",
         flexDirection: "column",
         backgroundColor: "#fff",

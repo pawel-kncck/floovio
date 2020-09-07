@@ -8,7 +8,7 @@ import NoteItem from './NoteItem/NoteItem';
 
 const useStyles = makeStyles({
     testroot: {
-        width: '500px',
+        width: '650px',
         height: '100vh',
         overflowY: 'auto',
         margin: '0 20px',
@@ -37,7 +37,7 @@ const Notes = (props) => {
 
     return (
         <div className={classes.testroot}>
-            <h1>Notes</h1>
+            <h1 style={{ color: '#333' }}>Notes</h1>
             <div>
                 {(notesList.length > 0)
                     ?   notesList.map((el,index) => {

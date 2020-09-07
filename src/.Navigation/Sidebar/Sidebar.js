@@ -22,6 +22,7 @@ const useStyles = makeStyles({
     },
     sidebar: {
         width: "80px",
+        paddingTop: '30px',
         backgroundColor: "#142952",
         display: "flex",
         flexDirection: "column",
@@ -51,7 +52,7 @@ const Sidebar = (props) => {
     const isEditor = (props.roles) ? props.roles.editors.includes(firebase.auth().currentUser.uid) : null;
 
     const viewsArray = [
-        {text: "Lessons", icon: <ListIcon />, component: <LessonList courseId={props.match.params.id} />, path: null},
+        // {text: "Lessons", icon: <ListIcon />, component: <LessonList courseId={props.match.params.id} />, path: null},
         {text: "Lists", icon: <ListIcon />, component: null, path: `/course/${props.match.params.id}/lists`},
         {text: "Chat", icon: <ChatIcon />, component: <Chat courseId={props.match.params.id} />, path: null},
         {text: "Notes", icon: <NoteIcon />, component: null, path: `/course/${props.match.params.id}/notes`},

@@ -4,7 +4,6 @@ import { sendNote } from '../.Database/db.course';
 
 const useStyles = makeStyles({
     root: {
-        padding: '2px 4px',
         display: 'flex',
         alignItems: 'center',
         marginTop: '20px',

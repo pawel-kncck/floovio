@@ -5,10 +5,11 @@ import { red } from '@material-ui/core/colors';
 import { convertEpochToDateTimeString } from '../../.Utilities/helpers';
 import Linkify from 'react-linkify';
 import MoreMenu from './NoteOptionsMenu';
+import Notes from '../Notes';
 
 const useStyles = makeStyles((theme) => ({
     root: {
-      maxWidth: '500px',
+      maxWidth: '650px',
       margin: '10px 0'
     },
     avatar: {
@@ -16,10 +17,11 @@ const useStyles = makeStyles((theme) => ({
     },
   }));
 
-const NoteItem = ({ note, teachers, students, courseId, index }) => {
+const NoteItem = ({ note, courseId, index, usersData }) => {
     const classes = useStyles();
-    const usersCombined = (teachers && students) ? [...teachers, ...students] : null;
     const date = convertEpochToDateTimeString(note.epoch);
+    const profilePic = usersData ? usersData[`${note.user}`].profilePic : null;
+    const displayName = usersData ? usersData[`${note.user}`].displayName : null;
     const [email, setEmail] = useState();
 
     const componentDecorator = (href, text, key) => (
@@ -28,32 +30,28 @@ const NoteItem = ({ note, teachers, students, courseId, index }) => {
         </a>
     );
 
-    useEffect(() => {
-        let email = '';
-        if (teachers) {
-            teachers.map(el => {
-                if (el.uid === note.user) {
-                    email = el.email
-                }
-            })
-        }
-        setEmail(email);
-    },[teachers])
-
-    console.log(usersCombined);
+    // useEffect(() => {
+    //     let email = '';
+    //     if (teachers) {
+    //         teachers.map(el => {
+    //             if (el.uid === note.user) {
+    //                 email = el.email
+    //             }
+    //         })
+    //     }
+    //     setEmail(email);
+    // },[teachers])
 
     return (
         <Card className={classes.root}>
             <CardHeader
                 avatar={
-                    <Avatar aria-label="profile-pic" className={classes.avatar}>
-                    CL
-                    </Avatar>
+                    <Avatar aria-label="profile-pic" className={classes.avatar} src={profilePic} />
                 }
                 action={
                   <MoreMenu courseId={courseId} index={index} note={note} />
                 }
-                title={email}
+                title={displayName}
                 subheader={date}
             />
       <CardContent>
@@ -69,8 +67,7 @@ const NoteItem = ({ note, teachers, students, courseId, index }) => {
 
 const mapStateToProps = state => {
     return {
-        teachers: state.course.data.teachers,
-        students: state.course.data.studens,
+        usersData: state.course.data.usersData,
     }
 }
  

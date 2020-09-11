@@ -15,15 +15,19 @@ import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import firebase from '../../.Database/firebase';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
     root: {
         height: "100vh",
         display: "flex",
+        '& a': {
+            textDecoration: 'none',
+        },
+        boxShadow: theme.shadows[3]
     },
     sidebar: {
         width: "80px",
-        paddingTop: '30px',
-        backgroundColor: "#142952",
+        paddingTop: '20px',
+        backgroundColor: theme.palette.secondary.main,
         display: "flex",
         flexDirection: "column",
     },
@@ -32,7 +36,7 @@ const useStyles = makeStyles({
         display: "flex",
         flexDirection: "column",
         backgroundColor: "#fff",
-        boxShadow: "0px 1px 1px #ccc",
+        boxShadow: theme.shadows[3]
     },
     header: {
         display: "flex",
@@ -43,7 +47,7 @@ const useStyles = makeStyles({
     title: {
         flexGrow: 1
     }
-})
+}));
 
 const Sidebar = (props) => {
     const classes = useStyles();

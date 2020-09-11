@@ -4,6 +4,8 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import { createStore, applyMiddleware, compose } from 'redux';
+import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
+import { deepPurple, orange } from '@material-ui/core/colors';
 import ReduxThunk from 'redux-thunk';
 import { Provider } from 'react-redux';
 import rootReducer from './.Store/rootReducer';
@@ -20,13 +22,33 @@ const enhancer = composeEnhancers(
   // other store enhancers if any
 );
 
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      dark: deepPurple[900],
+      main: deepPurple[700],
+      light: deepPurple[400],
+    },
+    secondary: {
+      light: orange[300],
+      main: orange[500],
+      dark: orange[700],
+    },
+    common: {
+      offWhite: '#fafafa',
+    }
+  },
+});
+
 const  store  =  createStore(rootReducer, enhancer);
 
 ReactDOM.render(
   // <React.StrictMode>
+  <ThemeProvider theme={theme}>
     <Provider store={store}>
       <App />
-    </Provider>,
+    </Provider>
+  </ThemeProvider>,
   // </React.StrictMode>,
   document.getElementById('root')
 );

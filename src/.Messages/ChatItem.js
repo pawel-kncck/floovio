@@ -2,20 +2,20 @@ import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core';
 import DeleteButton from './DeleteButton';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
     activeUserMsg: {
         margin: '7px',
         padding: '12px',
         minWidth: '70px',
         maxWidth: '80%',
-        color: '#fafafa',
-        backgroundColor: '#3f51b5',
-        boxShadow: '1px 1px 3px rgba(0, 0, 0, 0.1)',
+        color: theme.palette.common.offWhite,
+        backgroundColor: theme.palette.primary.dark,
+        boxShadow: theme.shadows[3],
         fontSize: '13px',
-        borderRadius: '3px',
+        borderRadius: '10px',
         transition: 'box-shadow 0.2s',
         '&:hover': {
-            boxShadow: '1px 1px 3px 2px rgba(0, 0, 0, 0.1)',
+            boxShadow: theme.shadows[6],
         },
         position: "relative",
     },
@@ -25,7 +25,7 @@ const useStyles = makeStyles({
         minWidth: '70px',
         maxWidth: '80%',
         color: '#555',
-        backgroundColor: '#fff',
+        backgroundColor: theme.palette.common.white,
         boxShadow: '1px 1px 3px rgba(0, 0, 0, 0.1)',
         fontSize: '13px',
         borderRadius: '3px',
@@ -51,7 +51,7 @@ const useStyles = makeStyles({
         left: 0,
         position: "absolute", 
     }
-})
+}));
 
 const ChatItem = (props) => {
     const classes = useStyles();

@@ -34,13 +34,13 @@ const ListItem = ({ itemId, listId, courseId, itemData }) => {
                 <ItemName name={itemData.name} />
             </TableCell>
             <TableCell className={classes.cell}>
-                {(itemData.format) ? <FormatTag type={itemData.format} /> : null}
+                {/* {(itemData.format) ? <FormatTag type={itemData.format} /> : null} */}
             </TableCell>
             <TableCell className={classes.cell}>
-                {(itemData.status) ? <StatusContainer status={itemData.status} /> : null}
+                {/* {(itemData.status) ? <StatusContainer status={itemData.status} /> : null} */}
             </TableCell>
             <TableCell className={classes.cell}>
-                <PositionButtons />
+                {/* <PositionButtons /> */}
             </TableCell>
             <TableCell className={classes.cell}>
                 <ItemOptions itemId={itemId} listId={listId} courseId={courseId} itemData={itemData} />

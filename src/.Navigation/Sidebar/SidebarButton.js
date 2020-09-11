@@ -1,12 +1,12 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
     root: {
-        backgroundColor: props => (props.active) ? "#214489" : "#142952",
+        backgroundColor: props => (props.active) ? theme.palette.secondary.main : theme.palette.secondary.main,
         '&:hover': {
             cursor: 'pointer',
-            backgroundColor: "#214489"
+            backgroundColor: theme.palette.secondary.light,
         },
         transition: "background 0.2s",
         display: "flex",
@@ -27,18 +27,17 @@ const useStyles = makeStyles({
         flexDirection: "column",
         alignItems: "center",
         margin: "10px 0",
-        color: "#fff",
+        color: theme.palette.grey[900],
     },
     icon: {
         flexGrow: 1,
-        fontSize: "24px",
+        fontSize: "28px",
         margin: 0,
     },
     text: {
-        fontSize: "12px",
         margin: 0,
     }
-})
+}));
 
 const SidebarButton = (props) => {
     const classes = useStyles(props);

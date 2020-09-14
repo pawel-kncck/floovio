@@ -27,3 +27,4 @@ yarn-error.log*
 
 *.log
 functions/serviceAccountKey.json
+/functions/dialetton-firebase-adminsdk-qmb1i-dbbd6e868f.json

@@ -3,18 +3,18 @@ const admin = require('firebase-admin');
 
 // https://www.youtube.com/watch?v=m_u6P5k0vP0
 
-var serviceAccount = require("./serviceAccountKey.json");
+var serviceAccount = require("./dialetton-firebase-adminsdk-servaccountkey.json");
 
 const firebaseConfig = {
-    apiKey: "AIzaSyDc_JHhvxSz3a-EJDaGJqAi3GhMI4RPsfA",
+    apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
     credential: admin.credential.cert(serviceAccount),
-    authDomain: "dialetton.firebaseapp.com",
-    databaseURL: "https://dialetton.firebaseio.com",
-    projectId: "dialetton",
-    storageBucket: "dialetton.appspot.com",
-    messagingSenderId: "261646651559",
-    appId: "1:261646651559:web:6c6cae4254fc897e1f0b82",
-    measurementId: "G-1H6XQ9B3Z4"
+    authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
+    databaseURL: process.env.REACT_APP_FIREBASE_DATABASE_URL,
+    projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+    storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
+    messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
+    appId: process.env.REACT_APP_FIREBASE_APP_ID,
+    measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID
 };
 
 admin.initializeApp(firebaseConfig);

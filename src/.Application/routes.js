@@ -5,4 +5,5 @@ export const LESSON_SOLVE = '/course/:courseId/lesson/:lessonId';
 export const LESSON_CHECK = '/course/:courseId/lesson/check/:lessonId';
 export const NOTES = '/course/:courseId/notes';
 export const LISTS = '/course/:courseId/lists';
+export const MEDIA = '/course/:courseId/media';
 

@@ -60,7 +60,8 @@ const Sidebar = (props) => {
         {text: "Lists", icon: <ListIcon />, component: null, path: `/course/${props.match.params.id}/lists`},
         {text: "Chat", icon: <ChatIcon />, component: <Chat courseId={props.match.params.id} />, path: null},
         {text: "Notes", icon: <NoteIcon />, component: null, path: `/course/${props.match.params.id}/notes`},
-        (isEditor) ? {text: "Media", icon: <MediaIcon />, component: <MediaViewer courseId={props.match.params.id} />, path: null} : null,
+        {text: "Media", icon: <MediaIcon />, component: null, path: `/course/${props.match.params.id}/media`},
+        // (isEditor) ? {text: "Media", icon: <MediaIcon />, component: <MediaViewer courseId={props.match.params.id} />, path: null} : null,
         // {text: "Students", icon: <StudentsIcon />, component: null, path: null},
     ];
 

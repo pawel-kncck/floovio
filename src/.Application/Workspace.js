@@ -8,6 +8,7 @@ import { fetchCourse, setActiveStudent } from '../.Store/course.actions';
 import { connect } from 'react-redux';
 import Notes from '../.Notes/Notes';
 import Lists from '../.Lists/Timeline';
+import Media from '../.Media/MediaSidebar';
 import firebase from '../.Database/firebase';
 
 const useStyles = makeStyles({
@@ -73,6 +74,7 @@ const Workspace = (props) => {
                     <Route path={routes.LESSON_CHECK} exact component={Lesson} />
                     <Route path={routes.NOTES} exact component={Notes} />
                     <Route path={routes.LISTS} exact component={Lists} />
+                    <Route path={routes.MEDIA} exact component={Media} />
                 </Switch>
             </article>
             

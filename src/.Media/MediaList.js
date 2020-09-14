@@ -29,10 +29,10 @@ const MediaSidebar = (props) => {
         <List className={classes.root}>
             {mediaList.map((file, index) => {
                 return (
-                    <>
-                        <MediaListItem key={index} url={file.data.url} name={file.data.name} code={file.data.id} />
-                        <Divider />
-                    </>
+                    <div key={index}>
+                        <MediaListItem url={file.data.url} name={file.data.name} code={file.data.id} />
+                        <Divider/>
+                    </div>
                 )
             })}
         </List>

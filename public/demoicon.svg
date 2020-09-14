@@ -1,11 +1,10 @@
-
 <svg height="300" width="300" xmlns="http://www.w3.org/2000/svg">
-    <rect fill="#fafafa" height="100%" width="100%"/>
+<rect fill="#fafafa" height="100%" width="100%"/>
 
-    <rect fill="#4527a0" x='70' y='50' rx="10" ry="10" height="200" width="30"/>
-    <rect fill="#4527a0" x='70' y='50' rx="10" ry="10" height="30" width="160"/>
-    <rect fill="#4527a0" x='70' y='140' rx="10" ry="10" height="30" width="50"/>
+<style>
+    .small { font: bold 280px sans-serif; }
+</style>
 
-    <circle cx="140" cy="155" fill="#4527a0" r="15"/>
-    <circle cx="175" cy="155" fill="#4527a0" r="15"/>
+<text x="50" y="250" class="small" fill="#4527a0">D</text>
+
 </svg>

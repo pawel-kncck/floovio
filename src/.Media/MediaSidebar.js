@@ -5,7 +5,7 @@ import { fetchCourse } from '../.Store/course.actions';
 import { makeStyles, Button, List, Divider } from '@material-ui/core';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import { connect } from 'react-redux';
-import { makeId } from '../.Utilities/Utilities';
+import { makeCustomId } from '../.Utilities/Utilities';
 import { addMedia } from '../.Database/db.media';
 import MediaListItem from './MediaListItem';
 import MediaList from './MediaList';
@@ -32,57 +32,90 @@ const useStyles = makeStyles({
 
 const MediaSidebar = (props) => {
     const classes = useStyles();
-    const [selectedFile, setSelectedFile] = useState();
+    const courseIdFromPath = props.match.params.courseId || null;
 
-    const firebaseImageUpload = () => {
-        const fileId = makeId(8);
-        const file = selectedFile;
-        const storageRef = storage.ref(`/media/${props.courseId}/${file.name}`);
+    const handleClick = () => {
+        document.getElementById('imageupload').click();
+    }
+
+    const firebaseImageUploadB = (file) => {
+        const fileId = makeCustomId();
+        const fileName = file.name;
+        const storageRef = storage.ref(`/media/${courseIdFromPath}/${fileId}`);
 
         const metadata = {
             customMetadata: {
                 code: fileId,
+                name: fileName
             }
         }
 
         storageRef.put(file, metadata)
-            .then(res => {
+            .then(() => {
                 return storageRef.getDownloadURL()
             })
             .then(url => {
                 const fileMetadata = {
                     url: url,
                     id: fileId,
-                    name: file.name
+                    name: fileName
                 }
-                console.log(fileMetadata);
-                console.log("CourseID: " + props.courseId);
-                console.log("User: " + props.user);
-                addMedia(props.courseId, fileMetadata, props.user)
+                addMedia(courseIdFromPath, fileMetadata, props.user)
             })
             .catch(err => {
                 console.error(err)
             })
     };
 
+    // const firebaseImageUpload = () => {
+    //     const fileId = makeId(8);
+    //     const file = selectedFile;
+    //     const storageRef = storage.ref(`/media/${courseIdFromPath}/${file.name}`);
+
+    //     const metadata = {
+    //         customMetadata: {
+    //             code: fileId,
+    //         }
+    //     }
+
+    //     storageRef.put(file, metadata)
+    //         .then(res => {
+    //             return storageRef.getDownloadURL()
+    //         })
+    //         .then(url => {
+    //             const fileMetadata = {
+    //                 url: url,
+    //                 id: fileId,
+    //                 name: file.name
+    //             }
+    //             console.log(fileMetadata);
+    //             console.log("CourseID: " + courseIdFromPath);
+    //             console.log("User: " + props.user);
+    //             addMedia(courseIdFromPath, fileMetadata, props.user)
+    //         })
+    //         .catch(err => {
+    //             console.error(err)
+    //         })
+    // };
+
     return (
         <div className={classes.root}>
-            <MediaList courseId={props.courseId} />
+            <MediaList courseId={courseIdFromPath} />
             <div className={classes.buttomContainer}>
                 <input 
                     type="file" 
                     id='imageupload' 
                     name='imageupload' 
                     accept="image/x-png,image/gif,image/jpeg"
-                    // className={classes.imageinput} 
-                    onChange={(e) => setSelectedFile(e.target.files[0])} />
+                    style={{ display: 'none' }}
+                    onChange={(e) => firebaseImageUploadB(e.target.files[0])} />
                 <Button 
                     className={classes.button} 
                     startIcon={<CloudUploadIcon />}
                     color="primary" 
                     variant="contained" 
                     size="small" 
-                    onClick={firebaseImageUpload}
+                    onClick={handleClick}
                     >Upload</Button>
             </div>
         </div>

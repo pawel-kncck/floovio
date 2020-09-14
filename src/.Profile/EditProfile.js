@@ -38,7 +38,6 @@ const useStyles = makeStyles({
 
 const EditProfileDialog = (props) => {
     const classes = useStyles();
-
     const [displayName, setDisplayName] = useState('');
     const [profilePicUrl, setProfilePicUrl] = useState('');
     const [email, setEmail] = useState('');

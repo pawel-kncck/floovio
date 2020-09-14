@@ -28,3 +28,4 @@ yarn-error.log*
 functions/firebase-debug.log
 functions/serviceAccountKey.json
 functions/dialetton-firebase-adminsdk-servaccountkey.json
+Dialetton.code-workspace

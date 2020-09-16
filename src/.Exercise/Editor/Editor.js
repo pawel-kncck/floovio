@@ -35,7 +35,7 @@ const FloovioEditor = (props) => {
 
 const mapStateToProps = state => {
     return {
-        html: state.floovio.html,
+        html: state.floovio.content.html,
     }
 };
 

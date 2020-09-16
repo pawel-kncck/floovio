@@ -4,7 +4,7 @@ import Editor from './Editor';
 import { connect } from 'react-redux';
 import MediaListDialog from '../../.Lesson/Dialog/Editor/MediaListDialog';
 import { cancelFloovio, updateName } from '../../.Store/floovio.actions'
-import { saveNewExercise, createNewExerciseItem } from '../../.Lists/BackendFunctions'
+import { saveNewExercise, createNewExerciseItem, updateExercise, renameItem } from '../../.Lists/BackendFunctions'
 
 
 const useStyles = makeStyles({
@@ -32,7 +32,7 @@ const FloovioDialog = (props) => {
         setMediaDialogOpen(true);
     };
 
-    const handleSave = () => {
+    const handleCreate = () => {
         const exerciseData = {
             name: props.name,
             content: props.content
@@ -42,7 +42,23 @@ const FloovioDialog = (props) => {
             .then(res => {
                 createNewExerciseItem(props.activeListId, props.courseId, props.user, props.name, res.path);
             })
-            // .then(() => {props.handleClose()})
+            .then(() => {props.handleClose()})
+            .catch(err => {
+                console.error(err);
+            })
+    };
+
+    const handleUpdate = () => {
+        const exerciseData = {
+            name: props.name,
+            content: props.content
+        }
+
+        updateExercise(props.path, exerciseData)
+            .then(res => {
+                renameItem(props.activePath.courseId, props.activePath.listId, props.activePath.itemId, props.name);
+            })
+            .then(() => {props.handleClose()})
             .catch(err => {
                 console.error(err);
             })
@@ -67,9 +83,15 @@ const FloovioDialog = (props) => {
                         <Button autoFocus onClick={props.handleClose} color="primary">
                             Cancel
                         </Button>
-                        <Button disabled={!isValid} onClick={handleSave} color="primary" variant="contained">
-                            Save
-                        </Button>
+                        {(props.path) 
+                            ?   <Button disabled={!isValid} onClick={handleUpdate} color="primary" variant="contained">
+                                    Save changes    
+                                </Button>
+                            :   <Button disabled={!isValid} onClick={handleCreate} color="primary" variant="contained">
+                                    Create
+                                </Button>
+                            }
+                        
                     </div>
                 </DialogActions>
                 <MediaListDialog
@@ -85,9 +107,11 @@ const FloovioDialog = (props) => {
 const mapStateToProps = state => {
     return {
         open: state.floovio.open,
+        path: state.floovio.path,
         activeListId: state.floovio.listId,
         name: state.floovio.name,
         content: state.floovio.content,
+        activePath: state.course.activePath,
     }
 };
 

@@ -31,7 +31,9 @@ export const RESET_FLOOVIO = 'RESET_FLOOVIO'
 export const CREATE_FLOOVIO = 'CREATE_FLOOVIO';
 export const UPDATE_FLOOVIO = 'UPDATE_FLOOVIO';
 export const CANCEL_FLOOVIO = 'CANCEL_FLOOVIO';
+export const OPEN_FLOOVIO = 'OPEN_FLOOVIO';
 export const UPDATE_NAME = 'UPDATE_NAME';
+export const SET_PATH = 'SET_PATH';
 
 /*
 action creators
@@ -50,6 +52,10 @@ export const cancelFloovio = () => {
     return { type: CANCEL_FLOOVIO }
 }
 
+export const openFloovio = () => {
+    return { type: OPEN_FLOOVIO }
+}
+
 export function updateName(name) {
     return { 
         type: UPDATE_NAME,
@@ -61,6 +67,14 @@ export function setFloovioInState(floovioObject) {
     return { 
         type: SET_FLOOVIO_IN_STATE,
         payload: floovioObject
+    }
+}
+
+
+export function setPath(path) {
+    return { 
+        type: SET_PATH,
+        payload: path
     }
 }
 

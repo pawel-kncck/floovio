@@ -32,6 +32,16 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 activeStudent: action.userId
             }
+        case actionTypes.SET_ACTIVE_PATH:
+            return {
+                ...state,
+                activePath: action.payload
+            }
+        case actionTypes.RESET_ACTIVE_PATH:
+            return {
+                ...state,
+                activePath: ''
+            }
 		default:
 			return state;
 	}

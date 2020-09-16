@@ -124,6 +124,27 @@ export const updateAnswersInExercise = (path, exerciseData) => {
     .catch(error => {throw error})
 }
 
+export const renameItem = (courseId, listId, itemId, name) => {
+    const courseRef = db.collection('courses').doc(courseId)
+
+    return courseRef.update({
+        [`lists.${listId}.items.${itemId}.name`]: name
+    })
+    .then(response => response)
+    .catch(error => {throw error})
+}
+
+export const updateExercise = (path, exerciseData) => {
+    const currentDate = new Date();
+
+    return db.doc(path).update({
+        ...exerciseData,
+        lastUpdatedAt: currentDate,
+    })
+    .then(response => response)
+    .catch(error => {throw error})
+}
+
 const getItem = (itemId, courseId) => {
     // func - better to use ids instead of list position, when more users are in the course
 }
@@ -138,6 +159,11 @@ export const getExercise = (path) => {
         .catch(err => {
             throw err;
         })
+}
+
+const getExerciseIdFromPath = (path) => {
+    let exerciseId;
+
 }
 
 const updateItem = (itemId, courseId, itemData) => {

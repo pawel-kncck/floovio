@@ -40,6 +40,11 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 name: action.payload,
             }
+        case actionTypes.OPEN_FLOOVIO:
+            return {
+                ...state,
+                open: true,
+            }
         case actionTypes.CANCEL_FLOOVIO:
             return {
                 ...initialState,
@@ -49,6 +54,11 @@ const reducer = (state = initialState, action) => {
 			return {
                 ...state,
                 ...action.payload
+            }
+		case actionTypes.SET_PATH:
+			return {
+                ...state,
+                path: action.payload
             }
 		// case actionTypes.SET_TITLE:
 		// 	return {

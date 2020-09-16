@@ -112,7 +112,7 @@ const NavBar = (props) => {
         <div className={classes.root}>
             <div className={classes.navIcon}></div>
             {/* <MenuIcon /> */}
-            <div className={classes.navbarBrand}>Floovio</div>
+            <div className={classes.navbarBrand}>{process.env.REACT_APP_TITLE}</div>
             <ul className={classes.navbarMenu} style={{ flexGrow: 1 }} >
                 {(props.user)
                     ?   <li><NavLink to={routes.HOME}>My courses</NavLink></li>

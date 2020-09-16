@@ -239,7 +239,40 @@ const duplicateItem = (itemId, sourceListId, sourceCourseId, taregtListId, targe
     // return new id
 }
 
-const duplicateList = (listId, sourceCourseId, taregtListId, targetCourseId) => {
+export const duplicateList = (sourselistId, sourceCourseId, targetCourseId) => {
+    const sourseCourseRef = coursesRef.doc(sourceCourseId);
+    const targetCourseRef = coursesRef.doc(targetCourseId);
+    const newListId = uuid();
+    const currentDate = new Date();
+
+    return sourseCourseRef.get()
+        .then(doc => {
+            return doc.data().lists[sourselistId]
+        })
+        .then(sourceList => {
+            // duplicate items with new ids
+            let copiedItems = {};
+            Object.entries(sourceList.items).map(([key, value]) => {
+                const newId = uuid();
+                copiedItems[newId] = value;
+            })
+            const targetList = {
+                ...sourceList,
+                items: copiedItems,
+                createdAt: currentDate,
+            }
+            return targetList;
+        })
+        .then(targetList => {
+            targetCourseRef.update({
+                [`lists.${newListId}`]: targetList
+            });
+        })
+        .catch(err => {
+            throw err;
+        })
+
+
     // use targetCourseId for "duplicate to another course"
     // if sourceCourseId === targetCourseId add (1) to name, or increment - use another function for it
     // create new listId

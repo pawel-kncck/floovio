@@ -5,6 +5,6 @@
     .small { font: bold 280px sans-serif; }
 </style>
 
-<text x="50" y="250" class="small" fill="#4527a0">D</text>
+<text x="50" y="250" class="small" fill="#4527a0">F</text>
 
 </svg>

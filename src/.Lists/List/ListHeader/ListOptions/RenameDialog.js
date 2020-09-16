@@ -11,7 +11,7 @@ const RenameDialog = (props) => {
     }
 
     return (
-        <Dialog open={open} onClose={props.close}>
+        <Dialog open={true} onClose={props.close}>
             <DialogTitle>Change list name</DialogTitle>
             <DialogContent>
                 <TextField

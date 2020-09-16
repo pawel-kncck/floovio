@@ -25,7 +25,7 @@ const AddNewList = ({ courseId, user }) => {
     return (
         <>
             <div className={classes.root}>
-                <Button color="primary" variant='contained' fullWidth={false} onClick={handleClick}>Add new list</Button>
+                <Button color="primary" variant='contained' fullWidth={false} onClick={handleClick}>Add new lesson</Button>
             </div>
             <NewListDialog open={open} close={handleClose} courseId={courseId} user={user} />
         </>

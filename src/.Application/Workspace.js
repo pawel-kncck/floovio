@@ -58,7 +58,13 @@ const Workspace = (props) => {
         }
     },[firebase])
 
-    
+    useEffect(() => {
+        const appName = process.env.REACT_APP_TITLE;
+        const currentCourseName = props.courseName;
+
+        document.title = appName + ( (currentCourseName) ? ' | ' + currentCourseName : '' )
+    },[props.courseName])
+
     return (
         <main className={classes.main}>
 
@@ -82,6 +88,12 @@ const Workspace = (props) => {
     );
 }
 
+const mapStateToProps = state => {
+    return {
+        courseName: state.course.data.name,
+    }
+}
+
 const mapDispatchToProps = dispatch => {
     return {
         fetchCourse: (id) => {dispatch(fetchCourse(id))},
@@ -90,4 +102,4 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
-export default connect(null,mapDispatchToProps)(Workspace);
+export default connect(mapStateToProps,mapDispatchToProps)(Workspace);

@@ -36,6 +36,7 @@ const CoursesList = (props) => {
     const [dialogOpen, setDialogOpen] = useState(false);
     const [joinDialogOpen, setJoinDialogOpen] = useState(false);
     const classes = useStyles();
+    const isTeacher = props.userData.globalRoles.teacher;
 
     const user = firebase.auth().currentUser;
 
@@ -93,18 +94,18 @@ const CoursesList = (props) => {
                 {(coursesArray.length === 0)
                     ?   <div className={classes.noCoursesContainer}>   
                             <Typography variant='h4' color='textPrimary' align='center'>
-                                {(props.isTeacher) ? `You don't have any courses yet.` : `You don't have any courses yet.` }
+                                {(isTeacher) ? `You don't have any courses yet.` : `You don't have any courses yet.` }
                             </Typography>
                             <img className={classes.image} src='https://firebasestorage.googleapis.com/v0/b/dialetton.appspot.com/o/static%2Fpngguru.com.png?alt=media&token=469e6100-3740-48d3-b475-976077db353d' alt='woman shrugging emoji' height='200px' />
                             <Typography variant='h5' color='textPrimary' align='center'>
-                                {(props.isTeacher) ? `Click on the button below, to create a course` : `Click on the button below, to join a course with an invite code. You should get the invite code from your teacher.` }
+                                {(isTeacher) ? `Click on the button below, to create a course` : `Click on the button below, to join a course with an invite code. You should get the invite code from your teacher.` }
                             </Typography> 
                         </div>
                     : null
                 }
             </div>
             <Divider />
-            {props.isTeacher ? <Button className={classes.actionButton} variant="contained" color="primary" onClick={handleDialogOpen}>Create new course</Button> : null}
+            {isTeacher ? <Button className={classes.actionButton} variant="contained" color="primary" onClick={handleDialogOpen}>Create new course</Button> : null}
             <Button className={classes.actionButton} variant="contained" color="primary" onClick={handleJoinDialogOpen}>Join a course</Button>
             <NewCourseDialog open={dialogOpen} close={handleDialogClose} userId={props.userId} />
             <JoinDialog open={joinDialogOpen} onClose={handleJoinDialogClose} />

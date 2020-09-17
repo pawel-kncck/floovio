@@ -3,9 +3,22 @@ import firebase from '../.Database/firebase';
 import List from './List/ListIndex';
 import AddNewList from './AddNewList';
 import { connect } from 'react-redux';
-import { Typography } from '@material-ui/core';
+import { Typography, makeStyles } from '@material-ui/core';
+
+const useStyles = makeStyles({
+    noCoursesContainer: {
+        maxWidth: '700px',
+        margin: 'auto',
+        textAlign: 'center'
+    },
+    image: {
+        marginTop: '30px',
+        marginBottom: '30px'
+    }
+})
 
 const Timeline = (props) => {
+    const classes = useStyles();
     const courseIdFromPath = props.match.params.courseId || null;
     const currentUser = firebase.auth().currentUser;
     const allPropsLoaded = (Boolean(currentUser) && Boolean(courseIdFromPath))
@@ -20,7 +33,15 @@ const Timeline = (props) => {
                         .map(([key, listData]) => {
                                 return <List key={key} listId={key} listData={listData} courseId={courseIdFromPath} user={currentUser} />
                             })
-                :   <Typography variant='h4' color='textPrimary' style={{ margin: '30px', textAlign: 'center' }}>You don't have any lists yet.<br></br> Go ahead and create your first list!</Typography>
+                :   <div className={classes.noCoursesContainer}>   
+                        <Typography variant='h4' color='textPrimary' align='center'>
+                            You don't have any lessons yet
+                        </Typography>
+                        <img className={classes.image} src='https://firebasestorage.googleapis.com/v0/b/dialetton.appspot.com/o/static%2Fpngguru.com.png?alt=media&token=469e6100-3740-48d3-b475-976077db353d' alt='woman shrugging emoji' height='200px' />
+                        <Typography variant='h5' color='textPrimary' align='center'>
+                            Go ahead and create your first lesson!
+                        </Typography> 
+                    </div>
             }
             { allPropsLoaded ? <AddNewList courseId={courseIdFromPath} user={currentUser} /> : null }
         </>

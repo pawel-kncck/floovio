@@ -70,7 +70,7 @@ const CourseCard = (props) => {
     const currentUserIsEditor = props.editors.includes(props.currentUser.uid)
 
     const handleOpenCourse = () => {
-        history.push(`/course/${props.courseId}/lists`)
+        history.push(`/course/${props.courseId}/lessons`)
     }
 
     const handleEditDialogOpen = () => {

@@ -42,6 +42,12 @@ const useStyles = makeStyles({
     unlockButtonContainer: {
         display: 'block',
         margin: '10px 0'
+    },
+    chip: {
+        marginRight: '5px'
+    },
+    divider: {
+        margin: '20px 0'
     }
 })
 
@@ -147,15 +153,15 @@ const EditProfileDialog = (props) => {
                         />
                     </FormControl>
                 </FormGroup>
-                <Divider />
+                <Divider className={classes.divider} />
                 <Typography>Roles</Typography>
                 <div className={classes.rolesContainer}>
                     {roles.map(role => {
-                        return <Chip key={role} label={role} />
+                        return <Chip className={classes.chip} key={role} label={role} />
                     })}
                 </div>
                 <div className={classes.unlockButtonContainer}>
-                    <Button size='small' variant='outlined' onClick={() => setUnlockDialogOpen(true)}>Unlock teacher access</Button>
+                    {(props.userData.globalRoles.teacher) ? null : <Button size='small' variant='outlined' onClick={() => setUnlockDialogOpen(true)}>Unlock teacher access</Button>}
                 </div>
                 <Divider />
             </DialogContent>

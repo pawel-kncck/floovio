@@ -25,7 +25,9 @@ const CopyDialog = ({ close, listId, courseId }) => {
 
     const handleCopyList = () => {
         duplicateList(listId, courseId, selectedCourseId)
-            .then(res => { console.log(res) })
+            .then(res => { 
+                close();
+            })
             .catch(err => { console.error(err) })
     }
 

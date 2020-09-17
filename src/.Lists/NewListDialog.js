@@ -28,13 +28,13 @@ const NewListDialog = (props) => {
 
     return (
         <Dialog open={props.open} onClose={props.close}>
-            <DialogTitle>Create new list</DialogTitle>
+            <DialogTitle>Create new lesson</DialogTitle>
             <DialogContent style={{ marginBottom: '30px' }}>
                 <TextField
-                    id='list-name'
+                    id='lesson-name'
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    label='List name'
+                    label='Lesson name'
                 />
                 {error ? <Typography color='error'>{error}</Typography> : null }
 

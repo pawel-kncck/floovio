@@ -12,13 +12,13 @@ const RenameDialog = (props) => {
 
     return (
         <Dialog open={true} onClose={props.close}>
-            <DialogTitle>Change list name</DialogTitle>
+            <DialogTitle>Change lesson name</DialogTitle>
             <DialogContent>
                 <TextField
                     fullWidth
                     value={name}
                     onChange={(event) => setName(event.target.value)}
-                    label="List name"
+                    label="Lesson name"
                 />
             </DialogContent>
             <DialogActions>

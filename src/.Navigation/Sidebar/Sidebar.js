@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { makeStyles, Divider, Slide } from '@material-ui/core';
 import SidebarButton from './SidebarButton';
 import SidebarContainerHeader from './SidebarHeader';
-import ListIcon from '@material-ui/icons/List';
+import LessonIcon from '@material-ui/icons/List';
 import ChatIcon from '@material-ui/icons/ForumOutlined';
 import MediaIcon from '@material-ui/icons/PermMediaOutlined';
 import NoteIcon from '@material-ui/icons/Note';
@@ -57,7 +57,7 @@ const Sidebar = (props) => {
 
     const viewsArray = [
         // {text: "Lessons", icon: <ListIcon />, component: <LessonList courseId={props.match.params.id} />, path: null},
-        {text: "Lists", icon: <ListIcon />, component: null, path: `/course/${props.match.params.id}/lists`},
+        {text: "Lessons", icon: <LessonIcon />, component: null, path: `/course/${props.match.params.id}/lessons`},
         {text: "Chat", icon: <ChatIcon />, component: <Chat courseId={props.match.params.id} />, path: null},
         {text: "Notes", icon: <NoteIcon />, component: null, path: `/course/${props.match.params.id}/notes`},
         {text: "Media", icon: <MediaIcon />, component: null, path: `/course/${props.match.params.id}/media`},

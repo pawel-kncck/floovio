@@ -4,7 +4,7 @@ import { Dialog, DialogContent, TextField, DialogActions, Button } from '@materi
 
 const ImageViewer = ({ url, open, close }) => {
     return (
-        <Dialog open={open} onClose={close}>
+        <Dialog open={open} onClose={close} maxWidth='900px'>
             <DialogContent>
                 <img src={url} alt='image viewer' />
             </DialogContent>

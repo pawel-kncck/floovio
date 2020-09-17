@@ -15,7 +15,7 @@ const DeleteConformation = ({ close, listId, courseId }) => {
                 Do you want to permanently delete this lesson?
             </DialogTitle>
             <DialogContent>
-                This lesson will be permanently deleted. Are you you want to continue?
+                This lesson will be permanently deleted. Are you sure you want to continue?
             </DialogContent>
             <DialogActions>
                 <Button color='primary' variant='contained' onClick={close}>Go back</Button>

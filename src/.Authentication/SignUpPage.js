@@ -27,12 +27,12 @@ const LoginPage = () => {
     const history = useHistory();
     const [redirecting, setRedirecting] = useState(false);
 
-    const isValid = (validateEmail(email) && email !== '' && password.length > 5 && password === confPassword)
-
     const validateEmail = (email) => {
         const re = /\S+@\S+\.\S+/;
         return re.test(email);
     }
+
+    const isValid = (validateEmail(email) && email !== '' && password.length > 5 && password === confPassword)
 
     const handleAlertClose = (event, reason) => {
         if (reason === 'clickaway') {
@@ -44,7 +44,7 @@ const LoginPage = () => {
 
     const resetAllInputs = () => {
         setEmail('');
-        setConfEmail('');
+        setConfPassword('');
         setPassword('');
     }
 

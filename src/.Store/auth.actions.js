@@ -128,7 +128,7 @@ export const fetchUserData = (user) => {
         dispatch(fetchUserStart);
         return getUser(user.uid)
             .then(res => {
-                dispatch(fetchUserSuccess(res.data(),user.uid));
+                dispatch(fetchUserSuccess(res.data(), user.uid));
                 return res;
             })
             .catch(error => {

@@ -36,7 +36,8 @@ function App(props) {
             <NavBar />
             <Switch>
               <Route exact path="/"><Redirect to={routes.HOME} /></Route>
-              <Route path={routes.HOME} exact component={Courses} />
+
+              <ProtecedRoute path={routes.HOME} user={props.user} component={Courses} />
               <Route path="/backend" exact component={BackendAdmin} />
               <ProtecedRoute path='/course/:courseId' user={props.user} component={Workspace} />
               

@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Dialog, DialogTitle, DialogContent, DialogContentText, TextField, DialogActions, Select, MenuItem, FormGroup, makeStyles, FormControl, InputLabel, Button } from '@material-ui/core';
+import { Dialog, DialogTitle, DialogContent, DialogContentText, TextField, DialogActions, Select, MenuItem, FormGroup, makeStyles, FormControl, InputLabel, Button, Chip, Divider, Typography } from '@material-ui/core';
 import firebase, { storage } from '../.Database/firebase';
 import { connect } from 'react-redux';
 import { makeId } from '../.Utilities/Utilities';
 import * as dbFunctions from '../.Database/BackendFunctions';
+import UnlockDialog from './TeacherUnlockDialog';
 
 const useStyles = makeStyles({
     root: {
@@ -33,6 +34,14 @@ const useStyles = makeStyles({
     },
     textField: {
         margin: '10px 0'
+    },
+    rolesContainer: {
+        display: 'block',
+        margin: '10px 0'
+    },
+    unlockButtonContainer: {
+        display: 'block',
+        margin: '10px 0'
     }
 })
 
@@ -41,20 +50,30 @@ const EditProfileDialog = (props) => {
     const [displayName, setDisplayName] = useState('');
     const [profilePicUrl, setProfilePicUrl] = useState('');
     const [email, setEmail] = useState('');
+    const [roles, setRoles] = useState([]);
+    const [unlockDialoOpen, setUnlockDialogOpen] = useState(false);
+    const currentUser = firebase.auth().currentUser;
 
     useEffect(() => {
-        if (firebase.auth().currentUser) {
-            dbFunctions.getUserDataById(firebase.auth().currentUser.uid)
+        if (currentUser) {
+            dbFunctions.getUserDataById(currentUser.uid)
             .then(fullUserObject => {
+                let rolesArray = [];
                 setDisplayName(fullUserObject.displayName);
                 setProfilePicUrl(fullUserObject.profilePic);
                 setEmail(fullUserObject.email);
+                Object.entries(fullUserObject.globalRoles).map(([key, value]) => {
+                    if (value) rolesArray.push(key)
+                })
+                setRoles(rolesArray);
+                return rolesArray
             })
+            .then(res => { console.log(res) })
             .catch(error => {
                 console.error(error);
             })
         }
-    },[firebase.auth().currentUser])
+    },[currentUser])
 
     const handleUpdate = () => {
         const userUpdatedObject = {
@@ -69,6 +88,8 @@ const EditProfileDialog = (props) => {
     const handleClick = () => {
         document.getElementById('imageupload').click();
     }
+
+    console.log(roles);
 
     const firebaseImageUpload = (file) => {
         const fileId = makeId(8);
@@ -87,9 +108,10 @@ const EditProfileDialog = (props) => {
     };
 
     return (
+        <>
         <Dialog open={props.open} onClose={props.close}>
             <DialogTitle id="edit-profile-dialog">Edit your profile</DialogTitle>
-            <DialogContent className={classes.dialogContent}>
+            <DialogContent>
                 <img src={profilePicUrl} alt="profile picture" className={classes.profilePic} />
                 <div className={classes.imageButtonContainer}>
                     <input 
@@ -125,6 +147,17 @@ const EditProfileDialog = (props) => {
                         />
                     </FormControl>
                 </FormGroup>
+                <Divider />
+                <Typography>Roles</Typography>
+                <div className={classes.rolesContainer}>
+                    {roles.map(role => {
+                        return <Chip key={role} label={role} />
+                    })}
+                </div>
+                <div className={classes.unlockButtonContainer}>
+                    <Button size='small' variant='outlined' onClick={() => setUnlockDialogOpen(true)}>Unlock teacher access</Button>
+                </div>
+                <Divider />
             </DialogContent>
             <DialogActions>
                 <Button variant="outlined" color="primary" size="small" onClick={props.close}>Cancel</Button>
@@ -132,6 +165,9 @@ const EditProfileDialog = (props) => {
             </DialogActions>
 
         </Dialog>
+        {unlockDialoOpen ? <UnlockDialog close={() => setUnlockDialogOpen(false)} user={currentUser.uid} /> : null}
+        </>
+    
     );
 }
 

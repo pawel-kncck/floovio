@@ -21,8 +21,8 @@ const config = {
 firebase.initializeApp(config);
 
 const storage = firebase.storage();
-const functions = firebase.functions().useFunctionsEmulator('http://localhost:5000');
-// const functions = firebase.functions();
+// const functions = firebase.functions().useFunctionsEmulator('http://localhost:5000');
+const functions = firebase.functions();
 
 export  {
     storage, functions, firebase as default

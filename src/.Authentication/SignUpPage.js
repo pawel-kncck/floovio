@@ -19,14 +19,20 @@ const useStyles = makeStyles({
 
 const LoginPage = () => {
     const [email, setEmail] = useState('');
-    const [confEmail, setConfEmail] = useState('');
+    const [confPassword, setConfPassword] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const [alertOpen, setAlertOpen] = useState();
     const classes = useStyles();
     const history = useHistory();
+    const [redirecting, setRedirecting] = useState(false);
 
-    const isValid = (confEmail === email && email !== '' && password.length > 5)
+    const isValid = (validateEmail(email) && email !== '' && password.length > 5 && password === confPassword)
+
+    const validateEmail = (email) => {
+        const re = /\S+@\S+\.\S+/;
+        return re.test(email);
+    }
 
     const handleAlertClose = (event, reason) => {
         if (reason === 'clickaway') {
@@ -64,8 +70,8 @@ const LoginPage = () => {
                 <Typography variant="h1" className={classes.title}>Sign up</Typography>
                 <form onSubmit={handleSubmit}>
                     <TextField type="email" id="email" name="email" label="Email" className={classes.textField} value={email} fullWidth onChange={(e) => setEmail(e.target.value)}></TextField>
-                    <TextField type="email" id="c-email" name="c-email" label="Confirm email" className={classes.textField} value={confEmail} fullWidth onChange={(e) => setConfEmail(e.target.value)}></TextField>
                     <TextField type="password" id="password" name="password" label="Password" className={classes.textField} fullWidth value={password} onChange={(e) => setPassword(e.target.value)}></TextField>
+                    <TextField type="password" id="c-password" name="c-password" label="Confirm password" className={classes.textField} value={confPassword} fullWidth onChange={(e) => setConfPassword(e.target.value)}></TextField>
                     <Button type="submit" disabled={!isValid} variant="contained" color="primary" className={classes.button}>Create account</Button> 
                 </form>
                 <ErrorAlert message={error.message} open={alertOpen} onClose={handleAlertClose} />

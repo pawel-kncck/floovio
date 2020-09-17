@@ -13,6 +13,12 @@ const initialState = {
         studyingCourses: [],
         teachingCourses: [],
         roles: [],
+        globalRoles: {
+            student: true,
+            teacher: false,
+            editor: false,
+            admin: false,
+        }
     },
     error: null,
 }

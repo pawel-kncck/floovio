@@ -21,6 +21,7 @@ const PasswordResetDialog = (props) => {
         auth.sendPasswordResetEmail(emailAddress)
             .then(() => {
                 console.log("Reset email sent")
+                props.close();
             })
             .catch(error => {
                 console.error(error);

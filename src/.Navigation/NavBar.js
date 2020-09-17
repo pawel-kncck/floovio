@@ -124,7 +124,7 @@ const NavBar = (props) => {
                     ?   <li><NavLink to='/login' onClick={handleSignOut}>Log out</NavLink></li>
                     :   <li><NavLink to='/login'>Log in</NavLink></li>
                 }
-                <MoreMenu />
+                {(props.user) ? <MoreMenu /> : null}
             </ul>
         </div>
     );

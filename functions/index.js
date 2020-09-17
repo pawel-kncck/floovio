@@ -37,6 +37,7 @@ exports.newUserSignup = functions.auth.user().onCreate(user => {
         globalRoles: {
             student: true,
             teacher: false,
+            editor: false,
             admin: false,
         },
         courses: [],
@@ -76,12 +77,21 @@ const addCourse = (courseName,language,level,userData) => {
     const clearUserData = removeCourseArraysFromUser(userData);
 
     return admin.firestore().collection('courses').add({
-        title: courseName,
+        name: courseName,
         language: language,
         level: level,
         author: clearUserData,
-        teachers: [clearUserData],
-        students: [],
+        users: [userData.uid],
+        roles: {
+            author: userData.uid,
+            teachers: [userData.uid],
+            editors: [userData.uid],
+            students: []
+        },
+        usersData: {
+            [`${userData.uid}`]: clearUserData
+        },
+        lists: {},
         messages: [],
         notes: [],
         media: [],

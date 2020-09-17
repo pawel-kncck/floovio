@@ -299,6 +299,25 @@ export const addUserToCourse = (userId, courseId, role) => {
         })
 }
 
+export const unlockTeacher = (userUid) => {
+    const userRef = getUserRef(userUid);
+
+    return userRef.update({
+            ['globalRoles.teacher']: true
+        })
+        .then(response => response)
+        .catch(error => { throw error })
+}
+
+export const isTeacherCodeValid = (code) => {
+    const codes = ['xf6ty87i','a47d5yhf','n68gd64f'];
+    if (codes.includes(code)) {
+        return true
+    } else {
+        return false
+    }
+}
+
 const findRoleArray = (role) => {
     if (role === 'teacher') {
         return 'teachers'

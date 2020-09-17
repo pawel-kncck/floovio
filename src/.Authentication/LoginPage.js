@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Button, TextField, Grid, Typography, makeStyles } from '@material-ui/core';
 import firebase from '../.Database/firebase';
-import { Redirect } from 'react-router-dom';
+import { Redirect, NavLink } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
 import * as actions from '../.Store/auth.actions';
 import * as routes from '../.Application/routes';
@@ -13,7 +13,7 @@ const useStyles = makeStyles({
         margin: '0'
     },
     button: {
-        margin: '20px 0 0 0'
+        margin: '20px 0 20px 0'
     },
     title: {
         textAlign: 'center',
@@ -83,6 +83,9 @@ const LoginPage = (props) => {
                 <TextField type="password" id="password" name="password" label="Password" className={classes.textField} fullWidth onChange={(e) => setPassword(e.target.value)}></TextField>
                 <div className={classes.forgotPasswordLink}><span className={classes.forgotText} onClick={handleForgetPasswordClick}>Forgot password?</span></div>
                 <Button type="submit" variant="contained" color="primary" disabled={isInvalid} className={classes.button}>Sign in</Button>
+                <Typography color='textPrimary' variant='body2'>
+                    Don't have an account yet? <NavLink to='/signup'>Go to sign up page!</NavLink>
+                </Typography>
             </form>
         </div>
         <PasswordResetDialog open={resetDialogOpen} close={handleResetDialogClose} />

@@ -31,18 +31,7 @@ course = {
     ],
     media: [],
     files: [],
-    timeline: [
-        {
-            id: 'uuid',
-            group: 'Lesson 1',
-            name: 'name',
-            description: 'string',
-            type: '', // file, link, exercise
-            url: '',
-            status: '',
-
-        }
-    ],
+    lists: {},
     users: [], // DUPLICATION - socundary, based od roles - useful for top level queries
     roles: { // PRIMARY SOURCE
         author: "",
@@ -55,12 +44,6 @@ course = {
             email: 'string', // DUPLICATE
             displayName: 'string', // DUPLICATE
             profilePic: 'string', // DUPLICATE
-            role: { // DUPLICATION - socendary, based on high level roles{} - used for access rights
-                is_student: true,
-                is_teacher: true,
-                is_editor: false,
-                is_author: false,
-            },
             status: "", // active, deactivated, blocked,
             plan: "", // free, standard, premium - duplication 
         }

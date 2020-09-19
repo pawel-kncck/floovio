@@ -74,7 +74,7 @@ const EditProfileDialog = (props) => {
                 setRoles(rolesArray);
                 return rolesArray
             })
-            .then(res => { console.log(res) })
+            .then(res => res)
             .catch(error => {
                 console.error(error);
             })
@@ -94,8 +94,6 @@ const EditProfileDialog = (props) => {
     const handleClick = () => {
         document.getElementById('imageupload').click();
     }
-
-    console.log(roles);
 
     const firebaseImageUpload = (file) => {
         const fileId = makeId(8);

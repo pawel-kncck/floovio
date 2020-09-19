@@ -6,6 +6,7 @@ import LessonIcon from '@material-ui/icons/List';
 import ChatIcon from '@material-ui/icons/ForumOutlined';
 import MediaIcon from '@material-ui/icons/PermMediaOutlined';
 import NoteIcon from '@material-ui/icons/Note';
+import SettingsIcon from '@material-ui/icons/Settings';
 import StudentsIcon from '@material-ui/icons/PeopleAltOutlined';
 import Chat from '../../.Messages/Messages';
 import LessonList from '../../.Lesson/LessonList/LessonList';
@@ -14,6 +15,7 @@ import * as routes from '../../.Application/routes';
 import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 import firebase from '../../.Database/firebase';
+import ChatBox from './ChatBox';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -46,55 +48,44 @@ const useStyles = makeStyles(theme => ({
     },
     title: {
         flexGrow: 1
+    },
+    buttonsTop: {
+        flexGrow: 1
+    },
+    buttonsBottom: {
+        marginBottom: '60px',
     }
 }));
 
 const Sidebar = (props) => {
     const classes = useStyles();
-    const [activeView, setActiveeView] = useState(-1);
+    const [chatOpen, setChatOpen] = useState(false);
+    const courseId = props.match.params.id;
 
     const isEditor = (props.roles) ? props.roles.editors.includes(firebase.auth().currentUser.uid) : null;
 
-    const viewsArray = [
-        // {text: "Lessons", icon: <ListIcon />, component: <LessonList courseId={props.match.params.id} />, path: null},
-        {text: "Lessons", icon: <LessonIcon />, component: null, path: `/course/${props.match.params.id}/lessons`},
-        {text: "Chat", icon: <ChatIcon />, component: <Chat courseId={props.match.params.id} />, path: null},
-        {text: "Notes", icon: <NoteIcon />, component: null, path: `/course/${props.match.params.id}/notes`},
-        {text: "Media", icon: <MediaIcon />, component: null, path: `/course/${props.match.params.id}/media`},
-        // (isEditor) ? {text: "Media", icon: <MediaIcon />, component: <MediaViewer courseId={props.match.params.id} />, path: null} : null,
-        // {text: "Students", icon: <StudentsIcon />, component: null, path: null},
-    ];
-
-    const toggleOpen = (index) => {
-        (activeView === index) 
-            ? setActiveeView(-1)
-            : setActiveeView(index);
+    const toggleChatOpen = () => {
+        setChatOpen(!chatOpen);
     }
 
     const handleClose = () => {
-        setActiveeView(-1)
+        setChatOpen(false);
     }
 
     return (
         <div className={classes.root}>
             <div className={classes.sidebar}>
-                {viewsArray.map((el,index) => (
-                    (el !== null) 
-                    ?   (el.path === null)
-                            ?   <SidebarButton key={index} text={el.text} icon={el.icon} click={() => toggleOpen(index)} active={(activeView === index)} />
-                            :   <NavLink key={index} to={el.path}><SidebarButton text={el.text} icon={el.icon} active={(activeView === index)} /></NavLink>
-                    : null
-                ))}
+                <div className={classes.buttonsTop}>
+                    <NavLink to={`/course/${courseId}/lessons`}><SidebarButton text='Lessons' icon={<LessonIcon />} active={false} /></NavLink>
+                    <NavLink to={`/course/${courseId}/notes`}><SidebarButton text='Notes' icon={<NoteIcon />} active={false} /></NavLink>
+                    <SidebarButton text='Chat' icon={<ChatIcon />} click={() => toggleChatOpen()} active={chatOpen} />
+                </div>
+                <div className={classes.buttonsBottom}>
+                    <NavLink to={`/course/${courseId}/media`}><SidebarButton text='Media' icon={<MediaIcon />} active={false} /></NavLink>
+                    <NavLink to={`/course/${courseId}/settings`}><SidebarButton text='Settings' icon={<SettingsIcon />} active={false} /></NavLink>
+                </div>
             </div>
-            {(activeView !== -1) 
-                ?   <div className={classes.sideContainer}>
-                        <SidebarContainerHeader title={viewsArray[activeView].text} onWrap={handleClose} />
-                        <Divider />
-                        <div className={classes.content}>
-                            {viewsArray[activeView].component}
-                        </div>
-                    </div> 
-                : null}
+            {(chatOpen) ? <ChatBox courseId={courseId} onWrap={handleClose} /> : null}
         </div>
         
     );

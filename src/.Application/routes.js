@@ -6,4 +6,5 @@ export const LESSON_CHECK = '/course/:courseId/lesson/check/:lessonId';
 export const NOTES = '/course/:courseId/notes';
 export const LESSONS = '/course/:courseId/lessons';
 export const MEDIA = '/course/:courseId/media';
+export const SETTINGS = '/course/:courseId/settings';
 

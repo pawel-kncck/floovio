@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Dialog, DialogTitle, DialogContent, DialogContentText, TextField, DialogActions, Select, MenuItem, FormGroup, makeStyles, FormControl, InputLabel, Button } from '@material-ui/core';
 import firebase from '../../.Database/firebase';
+import { languages, levels } from '../../.Utilities/maps';
 
 const useStyles = makeStyles({
     root: {
@@ -73,9 +74,9 @@ const NewCourseDialog = (props) => {
                             value={language}
                             onChange={(event) => setLanguage(event.target.value)}
                             >
-                            <MenuItem value={'es'}>Spanish</MenuItem>
-                            <MenuItem value={'en'}>English</MenuItem>
-                            <MenuItem value={'nl'}>Dutch</MenuItem>
+                                {Object.entries(languages).map(([languageCode, languageName]) => {
+                                    return <MenuItem key={languageCode} value={languageCode}>{languageName}</MenuItem>
+                                })}
                         </Select>
                     </FormControl>
                     <FormControl className={classes.formControl}>
@@ -86,12 +87,9 @@ const NewCourseDialog = (props) => {
                             value={level}
                             onChange={(event) => setLevel(event.target.value)}
                             >
-                            <MenuItem value={"A1"}>A1 Beginner</MenuItem>
-                            <MenuItem value={"A2"}>A2 Elementary</MenuItem>
-                            <MenuItem value={"B1"}>B1 Intermediate</MenuItem>
-                            <MenuItem value={"B2"}>B2 Upper Intermediate</MenuItem>
-                            <MenuItem value={"C1"}>C1 Advanced</MenuItem>
-                            <MenuItem value={"C2"}>C2 Expert</MenuItem>
+                                {Object.entries(levels).map(([levelCode, levelName]) => {
+                                    return <MenuItem key={levelCode} value={levelCode}>{languageCode} {levelName}</MenuItem>
+                                })}
                         </Select>
                     </FormControl>
                 </FormGroup>

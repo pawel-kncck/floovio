@@ -19,8 +19,6 @@ import BackendAdmin from './.Lab/DatabaseAdmin';
 
 
 function App(props) {
-  // const [authUser, setAuthUser] = useState(null);
-  console.log(process.env);
 
   useEffect(() => {
     firebase.auth()

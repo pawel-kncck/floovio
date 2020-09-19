@@ -1,11 +1,13 @@
 import React from 'react'; 
 import { Dialog, DialogTitle, DialogContent, DialogActions, Button } from '@material-ui/core';
 import WarningIcon from '@material-ui/icons/Warning';
+import { removeUserRoleInCourse } from '../../.Database/BackendFunctions';
 
 const StudentDeleteConformation = ({ close, courseId, studentId }) => {
 
     const handleDelete = () => {
         console.log(`Delete student ${studentId} from course ${courseId}`);
+        removeUserRoleInCourse(courseId, studentId, 'student');
         close();
     }
 

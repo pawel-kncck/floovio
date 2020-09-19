@@ -284,3 +284,48 @@ const addStudentToCourse = (studentId, courseId) => {
                 return err;
             })
     }
+
+exports.updateUsersArrayInCourse = functions.https.onCall((data, context) => {
+    // data: courseId
+    var courseRef = db.collection("courses").doc(data.courseId);
+
+    courseRef.update({
+        testUsersArray: ['one','two','three']
+    })
+    .then(res => {
+        return `Success`
+    })
+    .catch(err => {
+        return err;
+    })
+
+    // courseRef.get()
+    //     .then(doc => {
+    //         let currentUsersObject = {};
+    //         Object.entries(doc.data().roles).map(([role, usersList]) => {
+    //             usersList.map(user => {
+    //                 currentUsersObject = {
+    //                     ...currentUsersObject,
+    //                     user: true
+    //                 }
+    //             })
+    //         })
+    //         return currentUsersObject;
+    //     })
+    //     .then(usersObject => {
+    //         let usersArray = [];
+    //         Object.keys(usersObject).map(key => {
+    //             usersArray.push(key);
+    //         })
+    //         return usersArray;
+    //     })
+    //     .then(usersArray => {
+    //         courseRef.update({
+    //             testUsers: usersArray
+    //         })
+    //         return 'Success: Test users array updated'
+    //     })
+    //     .catch(error => {
+    //         return "Error getting document:" + error;
+    //     });
+});

@@ -220,7 +220,20 @@ export const addUserRoleInCourse = (courseId, userId, role) => { // roles: teach
 }
 
 export const removeUserRoleInCourse = (courseId, userId, role) => { // roles: teacher, student, editor, owner
-    // func
+    const courseRef = getCourseRef(courseId);
+    const updateUsersArray = firebase.functions().httpsCallable('updateUsersArrayInCourse');
+
+    courseRef.update({
+        [`roles.${role}s`]: firebase.firestore.FieldValue.arrayRemove(userId)
+    })
+    .then((res) => {
+        updateUsersArray({courseId: courseId})
+            .then(res => res)
+            .catch(err => { throw err })
+    })
+    .catch((err) => {
+        console.error(err);
+    })
 }
 
 // MULTI-STEP FUNCTIONS

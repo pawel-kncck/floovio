@@ -88,7 +88,7 @@ const NewCourseDialog = (props) => {
                             onChange={(event) => setLevel(event.target.value)}
                             >
                                 {Object.entries(levels).map(([levelCode, levelName]) => {
-                                    return <MenuItem key={levelCode} value={levelCode}>{languageCode} {levelName}</MenuItem>
+                                    return <MenuItem key={levelCode} value={levelCode}>{levelCode} {levelName}</MenuItem>
                                 })}
                         </Select>
                     </FormControl>

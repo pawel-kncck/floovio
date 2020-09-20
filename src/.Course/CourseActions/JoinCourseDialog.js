@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Dialog, DialogTitle, DialogContent, DialogContentText, TextField, DialogActions, Select, MenuItem, FormGroup, makeStyles, FormControl, InputLabel, Button } from '@material-ui/core';
 import firebase from '../../.Database/firebase';
 import * as dbFunctions from '../../.Database/BackendFunctions';
+import ErrorAlert from '../../.Alerts/ErrorAlert';
 
 const useStyles = makeStyles({
     root: {
@@ -15,6 +16,8 @@ const useStyles = makeStyles({
 const JoinCourseDialog = (props) => {
     const classes = useStyles();
     const [code, setCode] = useState('');
+    const [error, setError] = useState('');
+    const [alertOpen, setAlertOpen] = useState(false);
 
     const isValid = (code !== '')
 
@@ -37,11 +40,11 @@ const JoinCourseDialog = (props) => {
                         console.log(err);
                     })
                 } else {
-                    console.log("Invalid code!")
+                    handleAlertOpen("Invalid code!");
                 }
             })
             .catch(err => {
-                console.error(err);
+                handleAlertOpen(err.message);
             })
             
         handleClose();
@@ -52,7 +55,18 @@ const JoinCourseDialog = (props) => {
         setCode('');
     }
 
+    const handleAlertOpen = (error) => {
+        setAlertOpen(true);
+        setError(error);
+    }
+
+    const handleAlertClose = () => {
+        setAlertOpen(false);
+        setError('');
+    }
+
     return (
+        <>
         <Dialog open={props.open} onClose={handleClose} className={classes.root}>
             <DialogTitle id="add-new-course-dialog">Join a course</DialogTitle>
             <DialogContent className={classes.dialogContent}>
@@ -78,8 +92,9 @@ const JoinCourseDialog = (props) => {
                 <Button variant="outlined" color="primary" onClick={handleClose}>Cancel</Button>
                 <Button variant="contained" color="primary" disabled={!isValid} onClick={handleJoinCourse}>Join</Button>
             </DialogActions>
-
         </Dialog>
+        <ErrorAlert message={error} open={alertOpen} onClose={handleAlertClose} />
+        </>
     );
 }
  

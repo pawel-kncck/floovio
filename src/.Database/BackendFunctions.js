@@ -291,7 +291,14 @@ export const addUserToCourse = (userId, courseId, role) => {
     let courseName;
     let article = (role === 'editor') ? 'an' : 'a';
 
-    return getBasicUserDataById(userId)
+    return courseRef.get()
+        .then(doc => {
+            if (doc.data().roles.students.length === 0) {
+                return getBasicUserDataById(userId)
+            } else {
+                throw new Error("Join request rejected. Maximum number of participants exceeded.")
+            }
+        })
         .then(basicUserData => {
             const roleArray = findRoleArray(role);
             courseRef.update({
@@ -308,7 +315,7 @@ export const addUserToCourse = (userId, courseId, role) => {
             return `User ${userEmail} successfully added to course "${courseName}" as ${article} ${role}.`
         })
         .catch(err => {
-            return err;
+            throw new Error(err);
         })
 }
 

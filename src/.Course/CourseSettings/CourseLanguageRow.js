@@ -5,7 +5,7 @@ import { languages, levels } from '../../.Utilities/maps';
 import firebase from '../../.Database/firebase';
 
 
-const CourseNameRow = ({ courseId, courseData }) => {
+const CourseNameRow = ({ courseId, courseData, canUserEdit }) => {
     const [editible, setEditible] = useState(false);
     const [language, setLanguage] = useState('');
 
@@ -55,7 +55,7 @@ const CourseNameRow = ({ courseId, courseData }) => {
                                 <CancelIcon />
                             </IconButton>
                         </>
-                    :   <IconButton onClick={() => setEditible(true)}>
+                    :   <IconButton onClick={() => setEditible(true)} disabled={!canUserEdit}>
                             <EditIcon />
                         </IconButton>
                 }

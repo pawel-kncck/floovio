@@ -86,7 +86,7 @@ const ListOptions = ({ listId, courseId, user, listData, ...props }) => {
                         id={`fileupload-${listId}`}
                         style={{ display: 'none' }}
                         onChange={(e) => firebaseImageUpload(e.target.files[0])} />
-            <MenuItem onClick={handleUploadClick}>Upload new file</MenuItem>
+            <MenuItem onClick={handleUploadClick}>Upload new file (max. 2MB)</MenuItem>
         </Menu>
         <NewLinkDialog open={newLinkDialogOpen} close={handleNewLinkDialogClose} listData={listData} listId={listId} courseId={courseId} user={user} />
         <FloovioDialog courseId={courseId} user={user} />

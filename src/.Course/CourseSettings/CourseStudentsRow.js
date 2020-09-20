@@ -5,7 +5,7 @@ import { languages, levels } from '../../.Utilities/maps';
 import firebase from '../../.Database/firebase';
 
 
-const CourseStudentsRow = ({ courseId, courseData, ...props }) => {
+const CourseStudentsRow = ({ courseId, courseData, canUserEdit, ...props }) => {
     const students = courseData.roles ? courseData.roles.students : [];
 
     const handleDelete = (student) => {
@@ -22,6 +22,7 @@ const CourseStudentsRow = ({ courseId, courseData, ...props }) => {
                     return (
                         <Chip
                             key={studentId}
+                            disabled={!canUserEdit}
                             avatar={<Avatar alt='profile pic' src={courseData.usersData[studentId].profilePic} />}
                             label={courseData.usersData[studentId].displayName}
                             onDelete={() => handleDelete(studentId)}

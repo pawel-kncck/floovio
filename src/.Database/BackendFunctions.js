@@ -315,7 +315,7 @@ export const addUserToCourse = (userId, courseId, role) => {
             return `User ${userEmail} successfully added to course "${courseName}" as ${article} ${role}.`
         })
         .catch(err => {
-            throw new Error(err);
+            throw err;
         })
 }
 

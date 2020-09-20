@@ -26,6 +26,7 @@ const CourseSettings = (props) => {
   const courseId = props.match.params.courseId;
   const [student, setStudent] = useState(null);
   const [deleteStudentOpen, setDeleteStudentOpen] = useState(false);
+  const userIsTeacher = (props.courseData.roles) ? props.courseData.roles.teachers.includes(props.activeUser) : false;
 
   const handleStudentDeletePromptClose = () => {
     setDeleteStudentOpen(false);
@@ -40,13 +41,14 @@ const CourseSettings = (props) => {
   return (
     <>
     <Typography className={classes.heading} variant='h5' color='textPrimary'>Settings</Typography>
+    {userIsTeacher ? 'This user is a teacher' : null}
 
     <TableContainer className={classes.tableContainer} component={Paper}>
       <Table className={classes.table} aria-label="course data">
         <TableBody>
-          <CourseNameRow courseId={courseId} courseData={props.courseData} />
-          <CourseLanguageRow courseId={courseId} courseData={props.courseData} />
-          <CourseLevelRow courseId={courseId} courseData={props.courseData} />
+          <CourseNameRow courseId={courseId} courseData={props.courseData} canUserEdit={userIsTeacher} />
+          <CourseLanguageRow courseId={courseId} courseData={props.courseData} canUserEdit={userIsTeacher} />
+          <CourseLevelRow courseId={courseId} courseData={props.courseData} canUserEdit={userIsTeacher} />
         </TableBody>
       </Table>
     </TableContainer>
@@ -54,8 +56,8 @@ const CourseSettings = (props) => {
     <TableContainer className={classes.tableContainer} component={Paper}>
       <Table className={classes.table} aria-label="course users">
         <TableBody>
-          <CourseTeachersRow courseId={courseId} courseData={props.courseData} />
-          <CourseStudentsRow courseId={courseId} courseData={props.courseData} handleDeleteConfirmation={handleStudentDeletePromptOpen} />
+          <CourseTeachersRow courseId={courseId} courseData={props.courseData} canUserEdit={userIsTeacher} />
+          <CourseStudentsRow courseId={courseId} courseData={props.courseData} handleDeleteConfirmation={handleStudentDeletePromptOpen} canUserEdit={userIsTeacher} />
         </TableBody>
       </Table>
     </TableContainer>
@@ -69,7 +71,8 @@ const CourseSettings = (props) => {
 
 const mapStateToProps = state => {
     return {
-        courseData: state.course.data
+        courseData: state.course.data,
+        activeUser: state.auth.userUid
     }
 }
  

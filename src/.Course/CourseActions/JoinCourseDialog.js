@@ -37,7 +37,7 @@ const JoinCourseDialog = (props) => {
                         console.log(res);
                     })
                     .catch(err => {
-                        console.log(err);
+                        handleAlertOpen(err.message);
                     })
                 } else {
                     handleAlertOpen("Invalid code!");

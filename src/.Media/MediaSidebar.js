@@ -23,10 +23,10 @@ const useStyles = makeStyles({
     buttomContainer: {
         display: 'flex',
         flexDirection: 'column',
+        alignItems: 'center',
     },
     button: {
-        margin: '10px 0',
-        width: 'auto',
+        margin: '10px 0'
     }
 })
 

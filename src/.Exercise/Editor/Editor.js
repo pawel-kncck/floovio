@@ -15,9 +15,11 @@ const FloovioEditor = (props) => {
                 height: 450,
                 width: 979,
                 skin: "material-outline",
-                statusbar: false,
-                plugins: 'lists template paste',
+                statusbar: true,
+                plugins: 'table lists template paste',
                 menubar: 'edit insert',
+                table_grid: false,
+                table_toolbar: '',
                 toolbar: "undo redo | bold italic underline strikethrough | numlist bullist | outdent indent | forecolor removeformat | alignleft aligncenter alignright alignjustify | formatselect | template",
                 templates: [
                     {title: 'Image', description: '<img,8chrcode,200>'},

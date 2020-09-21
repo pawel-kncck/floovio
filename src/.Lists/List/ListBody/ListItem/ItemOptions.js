@@ -5,9 +5,11 @@ import { deleteItem, getExercise } from '../../../BackendFunctions';
 import { updateName, updateFloovio, openFloovio, setPath } from '../../../../.Store/floovio.actions';
 import { setActivePath } from '../../../../.Store/course.actions';
 import { connect } from 'react-redux';
+import DeleteConfirmation from './DeleteConfirmation';
 
 const ItemOptions = ({ itemId, listId, courseId, itemData, ...props }) => {
     const [anchorEl, setAnchorEl] = useState(null);
+    const [deleteConfOpen, setDeleteConfOpen] = useState(false);
     const open = Boolean(anchorEl);
 
     const handleClick = (event) => {
@@ -16,6 +18,15 @@ const ItemOptions = ({ itemId, listId, courseId, itemData, ...props }) => {
     
     const handleClose = () => {
         setAnchorEl(null);
+    };
+
+    const handleDeleteConfOpen = () => {
+        setDeleteConfOpen(true);
+        setAnchorEl(null);
+    };
+
+    const handleDeleteConfClose = () => {
+        setDeleteConfOpen(false);
     };
 
     const handleEditExercise = () => {
@@ -43,7 +54,8 @@ const ItemOptions = ({ itemId, listId, courseId, itemData, ...props }) => {
             onClose={handleClose}
         >
             {(itemData.type === 'exercise') ? <MenuItem onClick={handleEditExercise}>Edit exercise</MenuItem> : null}
-            <MenuItem onClick={() => deleteItem(itemId, listId, courseId)}>Delete</MenuItem>
+            <MenuItem onClick={handleDeleteConfOpen}>Delete</MenuItem>
+            {deleteConfOpen ? <DeleteConfirmation itemId={itemId} listId={listId} courseId={courseId} close={handleDeleteConfClose} /> : null}
             {/* <MenuItem disabled onClick={handleClose}>Duplicate</MenuItem> */}
             {/* <MenuItem disabled onClick={handleClose}>Move to another list</MenuItem> */}
         </Menu>

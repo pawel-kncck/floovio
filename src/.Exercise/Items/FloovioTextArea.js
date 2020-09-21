@@ -26,6 +26,7 @@ const FloovioTextArea = (props) => {
     const answer = (getDeepValue(props.currentExerciseState,userInputKeys) || "");
     // const scoreInputKeys = ["lessonData","userInput",props.activeStudent,props.id,"score"];
     // const score = getDeepValue(props.currentLessonState,scoreInputKeys);
+    const rows = (props.rows && props.rows < 21) ? props.rows : 21
 
     const updateAnswerHandler = (e) => {
         props.setUserInput(userInputKeys,e.target.value)
@@ -46,7 +47,7 @@ const FloovioTextArea = (props) => {
             <textarea
                 type='text' 
                 // disabled={props.userId !== props.activeStudent} 
-                rows={4}
+                rows={rows}
                 className={classes.textarea} 
                 id={props.id}
                 // style={{ backgroundColor: bgColor(score) }}

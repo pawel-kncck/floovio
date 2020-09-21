@@ -2,12 +2,10 @@ import React, { useState } from 'react';
 import { makeStyles, Table, Collapse, TableBody, TableCell, TableRow } from '@material-ui/core';
 import ListHeader from './ListHeader/ListHeaderIndex';
 import ListBody from './ListBody/ListBodyIndex';
-import ListActions from './ListActions/ListActionsIndex';
 
 const useStyles = makeStyles({
     root: {
-        // width: '600px',
-
+        width: '750px',
     },
     table: {
         marginTop: 0,

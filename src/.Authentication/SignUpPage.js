@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button, TextField, Grid, Typography, makeStyles } from '@material-ui/core';
 import ErrorAlert from '../.Alerts/ErrorAlert';
 import firebase from '../.Database/firebase';
@@ -33,6 +33,11 @@ const LoginPage = () => {
     }
 
     const isValid = (validateEmail(email) && email !== '' && password.length > 5 && password === confPassword)
+
+    useEffect(() => {
+        const appName = process.env.REACT_APP_TITLE;
+        document.title = appName + ' | Sign up';
+    },[])
 
     const handleAlertClose = (event, reason) => {
         if (reason === 'clickaway') {

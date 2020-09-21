@@ -6,12 +6,12 @@ import { setFloovioInState, cancelFloovio } from '../../../.Store/floovio.action
 import { updateAnswersInExercise } from '../../BackendFunctions';
 import { connect } from 'react-redux';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
     root: {
-        // maxWidth: '900px',
-        padding: '20px'
+        padding: '20px',
+        fontSize: theme.typography.body1
     }
-})
+}))
 
 const ExerciseViewer = ({ open, close, itemData, json, setExercise, resetExercise, exerciseData }) => {
     const isValid = true;
@@ -37,7 +37,7 @@ const ExerciseViewer = ({ open, close, itemData, json, setExercise, resetExercis
     }
 
     return (
-        <Dialog open={open} onClose={close} className={classes.root}>
+        <Dialog open={open} onClose={close} className={classes.root} fullWidth maxWidth='md'>
             <DialogContent>
                 {json ? ExcerciseRender(json) : null}
             </DialogContent>

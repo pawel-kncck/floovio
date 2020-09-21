@@ -5,11 +5,14 @@ import { connect } from 'react-redux';
 import { setAnswerInState } from '../../.Store/floovio.actions';
 // import TeacherBox from './TeacherBox';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
     root: {
         position: 'relative',
+    },
+    radioLabel: {
+        fontSize: theme.typography.body2,
     }
-})
+}))
 
 const FloovioRadioGroup = (props) => {
     const classes = useStyles();
@@ -55,7 +58,7 @@ const FloovioRadioGroup = (props) => {
                 onChange={(e) => updateAnswerHandler(e)}
                 >
                 {props.options.map((el,index) => {
-                    return <FormControlLabel style={labelStyle} key={'fcl' + index} value={el} control={<Radio />} label={el} />
+                    return <FormControlLabel className={classes.radioLabel} key={'fcl' + index} value={el} control={<Radio />} label={el} />
                 })}
             </RadioGroup>
             {/* {(props.mode === 'check') ? <TeacherBox id={props.id} /> : null} */}

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button, TextField, Grid, Typography, makeStyles } from '@material-ui/core';
 import firebase from '../.Database/firebase';
 import { Redirect, NavLink } from 'react-router-dom';
@@ -59,6 +59,11 @@ const LoginPage = (props) => {
     const isInvalid = (email === '' || password === '');
 
     const history = useHistory();
+
+    useEffect(() => {
+        const appName = process.env.REACT_APP_TITLE;
+        document.title = appName + ' | Login';
+    },[])
 
     const handleSubmit = (event) => {
         event.preventDefault();

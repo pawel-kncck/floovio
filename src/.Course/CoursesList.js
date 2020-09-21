@@ -68,6 +68,11 @@ const CoursesList = (props) => {
         }
     },[firebase])
 
+    useEffect(() => {
+        const appName = process.env.REACT_APP_TITLE;
+        document.title = appName + ' | My courses';
+    },[])
+
     const handleDialogOpen = () => {
         setDialogOpen(true);
     };

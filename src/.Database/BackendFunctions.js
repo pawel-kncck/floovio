@@ -221,13 +221,12 @@ export const addUserRoleInCourse = (courseId, userId, role) => { // roles: teach
 
 export const removeUserRoleInCourse = (courseId, userId, role) => { // roles: teacher, student, editor, owner
     const courseRef = getCourseRef(courseId);
-    const updateUsersArray = firebase.functions().httpsCallable('updateUsersArrayInCourse');
 
     courseRef.update({
         [`roles.${role}s`]: firebase.firestore.FieldValue.arrayRemove(userId)
     })
     .then((res) => {
-        updateUsersArray({courseId: courseId})
+        updateUsersArrayInCourse(courseId)
             .then(res => res)
             .catch(err => { throw err })
     })
@@ -346,6 +345,38 @@ const findRoleArray = (role) => {
     } else {
         return 'students'
     }
+}
+
+const updateUsersArrayInCourse = (courseId) => {
+    const courseRef = getCourseRef(courseId);
+
+    courseRef.get()
+        .then(doc => {
+            return doc.data().roles
+        })
+        .then(roles => {
+            let uniqueIds = [];
+            roles.teachers.forEach(id => {
+                if (!uniqueIds.includes(id)) uniqueIds.push(id);
+            })
+            roles.students.forEach(id => {
+                if (!uniqueIds.includes(id)) uniqueIds.push(id);
+            })
+            roles.editors.forEach(id => {
+                if (!uniqueIds.includes(id)) uniqueIds.push(id);
+            })
+            return uniqueIds
+        })
+        .then(newUsersArray => {
+            courseRef.update({
+                users: newUsersArray
+            })
+            .then(res => res)
+            .catch(err => { throw err})
+        })
+        .catch(err => {
+            throw err
+        })
 }
 
 export const updateUserData = (userId, updatedObject) => {

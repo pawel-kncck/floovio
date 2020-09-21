@@ -15,6 +15,7 @@ const useStyles = makeStyles({
     },
     cell: {
         borderBottom: 'none',
+        padding: 0
     }
 
 })

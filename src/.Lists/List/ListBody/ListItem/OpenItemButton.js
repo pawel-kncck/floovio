@@ -38,7 +38,6 @@ const OpenItemButton = ({ itemData }) => {
     }
 
     const handleClick = (type) => {
-        console.log(`Open icon clicked on item ${itemData.name}`)
         if (type === 'image') {
             setImageViewerOpen(true);
         } else if (type === 'exercise') {
@@ -46,7 +45,6 @@ const OpenItemButton = ({ itemData }) => {
                 .then(res => {
                     setExerciseJson(res.content.json);
                     setExerciseViewerOpen(true);
-                    console.log(res);
                 })
                 .catch(err => {
                     console.error(err)

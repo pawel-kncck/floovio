@@ -1,13 +1,21 @@
 import React, { useEffect } from 'react';
-import { Dialog, DialogContent, DialogActions, Button } from '@material-ui/core';
+import { Dialog, DialogContent, DialogActions, Button, makeStyles } from '@material-ui/core';
 import firebase from '../../../.Database/firebase';
 import ExcerciseRender from '../../../.Exercise/functions/render';
 import { setFloovioInState, cancelFloovio } from '../../../.Store/floovio.actions';
 import { updateAnswersInExercise } from '../../BackendFunctions';
 import { connect } from 'react-redux';
 
+const useStyles = makeStyles({
+    root: {
+        // maxWidth: '900px',
+        padding: '20px'
+    }
+})
+
 const ExerciseViewer = ({ open, close, itemData, json, setExercise, resetExercise, exerciseData }) => {
     const isValid = true;
+    const classes = useStyles();
 
     useEffect(() => {
         const  unsubscribe = firebase.firestore().doc(itemData.url)
@@ -23,14 +31,13 @@ const ExerciseViewer = ({ open, close, itemData, json, setExercise, resetExercis
     const handleSave = () => {
         updateAnswersInExercise(itemData.url, exerciseData)
             .then(res => { 
-                console.log("Exercise saved. Server response: " + res)
                 close();
             })
             .catch(err => { console.error(res)})
     }
 
     return (
-        <Dialog open={open} onClose={close}>
+        <Dialog open={open} onClose={close} className={classes.root}>
             <DialogContent>
                 {json ? ExcerciseRender(json) : null}
             </DialogContent>

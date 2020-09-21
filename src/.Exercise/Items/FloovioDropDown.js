@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { makeStyles, Select, FormControl } from '@material-ui/core';
 import { connect } from 'react-redux';
-// import { getDeepValue } from '../.Utilities/helpers';
-// import { setAnswerInState } from '../.Store/lesson.actions';
+import { getDeepValue } from '../../.Utilities/helpers';
+import { setAnswerInState } from '../../.Store/floovio.actions';
 // import TeacherBox from './TeacherBox';
 
 const useStyles = makeStyles({
@@ -20,7 +20,8 @@ const FloovioDropDown = (props) => {
     const [value, setValue] = useState();
 
     // const userInputKeys = ["lessonData","userInput",props.activeStudent,props.id,"answer"];
-    // const answer = (getDeepValue(props.currentLessonState,userInputKeys) || "");
+    const userInputKeys = ["userInput",props.id,"answer"];
+    const answer = (getDeepValue(props.currentExerciseState,userInputKeys) || "");
     // const scoreInputKeys = ["lessonData","userInput",props.activeStudent,props.id,"score"];
     // const score = getDeepValue(props.currentLessonState,scoreInputKeys);
 
@@ -33,10 +34,10 @@ const FloovioDropDown = (props) => {
         }     
     }
 
-    // const updateAnswerHandler = (e) => {
-    //     props.setUserInput(userInputKeys,e.target.value)
-    //     props.setUserInput(scoreInputKeys,0)
-    // }
+    const updateAnswerHandler = (e) => {
+        props.setUserInput(userInputKeys,e.target.value)
+        // props.setUserInput(scoreInputKeys,0)
+    }
 
     return (
         <FormControl className={classes.root}>
@@ -50,10 +51,8 @@ const FloovioDropDown = (props) => {
                     name: `name${props.id}`,
                     id: props.id,
                 }}
-                // value={answer}
-                // onChange={(e) => updateAnswerHandler(e)} >
-                value={value}
-                onChange={(e) => setValue(e)} >
+                value={answer}
+                onChange={(e) => updateAnswerHandler(e)} >
                 <option key='999' value=""></option>    
                 {props.options.map((el,index) => {
                     return <option key={index} value={el}>{el}</option>
@@ -64,21 +63,18 @@ const FloovioDropDown = (props) => {
     );
 };
 
-// const mapStateToProps = state => {
-//     return {
-//         currentLessonState: state.lesson,
-//         userId: state.auth.userUid,
-//         activeStudent: state.course.activeStudent,
-//         mode: state.lesson.lessonMode
-//     }
-// }
+const mapStateToProps = state => {
+    return {
+        currentExerciseState: state.floovio,
+        userId: state.auth.userUid,
+        activeStudent: state.course.activeStudent,
+    }
+}
 
-// const mapDispatchToProps = dispatch => {
-//     return {
-//         setUserInput: (keys,value) => {dispatch(setAnswerInState(keys,value))}
-//     }
-// }
+const mapDispatchToProps = dispatch => {
+    return {
+        setUserInput: (keys,value) => {dispatch(setAnswerInState(keys,value))}
+    }
+}
  
-// export default connect(mapStateToProps,mapDispatchToProps)(PassiveDropDown);
-
-export default FloovioDropDown;
+export default connect(mapStateToProps,mapDispatchToProps)(FloovioDropDown);

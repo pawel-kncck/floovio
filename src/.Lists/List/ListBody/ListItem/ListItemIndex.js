@@ -11,6 +11,9 @@ import ItemOptions from './ItemOptions';
 const useStyles = makeStyles({
     root: {
         height: '30px',
+        '&:hover': {
+            backgroundColor: '#fafafa',
+        },
     },
     cell: {
         border: 'none',

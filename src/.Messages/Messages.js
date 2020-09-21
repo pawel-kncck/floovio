@@ -33,13 +33,10 @@ const Messages = (props) => {
 
     useEffect(() => {
         const db = firebase.firestore()
-        console.log(props);
         return db.collection("courses").doc(props.courseId).onSnapshot((snapshot) => {
-            console.log(snapshot.data());
             let tempMessageArray = [];
             snapshot.data().messages.map(msg => {
                 tempMessageArray.push(msg);
-                console.log(msg);
             })
             setMessageList(tempMessageArray);
         });

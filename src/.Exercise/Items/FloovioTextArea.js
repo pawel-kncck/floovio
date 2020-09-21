@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core';
-// import { getDeepValue } from '../.Utilities/helpers';
+import { getDeepValue } from '../../.Utilities/helpers';
 import { connect } from 'react-redux';
-// import { setAnswerInState } from '../.Store/lesson.actions'
+import { setAnswerInState } from '../../.Store/floovio.actions';
 // import TeacherBox from './TeacherBox';
 
 const useStyles = makeStyles({
@@ -12,7 +12,8 @@ const useStyles = makeStyles({
     textarea: {
         width: '100%',
         fontFamily: 'inherit',
-        fontSize: '16px',
+        fontSize: '14px',
+        minWidth: '500px',
     }
 })
 
@@ -21,14 +22,15 @@ const FloovioTextArea = (props) => {
     const [value, setValue] = useState();
 
     // const userInputKeys = ["lessonData","userInput",props.activeStudent,props.id,"answer"];
-    // const answer = (getDeepValue(props.currentLessonState,userInputKeys) || "");
+    const userInputKeys = ["userInput",props.id,"answer"];
+    const answer = (getDeepValue(props.currentExerciseState,userInputKeys) || "");
     // const scoreInputKeys = ["lessonData","userInput",props.activeStudent,props.id,"score"];
     // const score = getDeepValue(props.currentLessonState,scoreInputKeys);
 
-    // const updateAnswerHandler = (e) => {
-    //     props.setUserInput(userInputKeys,e.target.value)
-    //     props.setUserInput(scoreInputKeys,0)
-    // }
+    const updateAnswerHandler = (e) => {
+        props.setUserInput(userInputKeys,e.target.value)
+        // props.setUserInput(scoreInputKeys,0)
+    }
 
     const bgColor = (score) => {
         switch (score) {
@@ -48,10 +50,10 @@ const FloovioTextArea = (props) => {
                 className={classes.textarea} 
                 id={props.id}
                 // style={{ backgroundColor: bgColor(score) }}
-                value={value}
-                onChange={(e) => setValue(e)}
-                // value={answer}
-                // onChange={(e) => updateAnswerHandler(e)} 
+                // value={value}
+                // onChange={(e) => setValue(e)}
+                value={answer}
+                onChange={(e) => updateAnswerHandler(e)} 
             ></textarea>
             {/* {(props.mode === 'check') ? <TeacherBox id={props.id} /> : null} */}
         </div>
@@ -60,16 +62,15 @@ const FloovioTextArea = (props) => {
 
 const mapStateToProps = state => {
     return {
-        currentLessonState: state.lesson,
+        currentExerciseState: state.floovio,
         userId: state.auth.userUid,
         activeStudent: state.course.activeStudent,
-        mode: state.lesson.lessonMode
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-        // setUserInput: (keys,value) => {dispatch(setAnswerInState(keys,value))}
+        setUserInput: (keys, value) => {dispatch(setAnswerInState(keys, value))}
     }
 }
  

@@ -25,7 +25,6 @@ const Notes = (props) => {
     useEffect(() => {
         const db = firebase.firestore()
         return db.collection("courses").doc(courseIdFromPath).onSnapshot((snapshot) => {
-            console.log(snapshot.data());
             let tempNotesArray = [];
             snapshot.data().notes.map(note => {
                 tempNotesArray.push(note);

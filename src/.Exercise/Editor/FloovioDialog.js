@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
-import { Dialog, DialogTitle, DialogContent, DialogActions, Button, makeStyles, TextField } from '@material-ui/core';
+import { Dialog, DialogTitle, DialogContent, DialogActions, Button, makeStyles, TextField, IconButton } from '@material-ui/core';
 import Editor from './Editor';
 import { connect } from 'react-redux';
 import MediaListDialog from '../../.Lesson/Dialog/Editor/MediaListDialog';
 import { cancelFloovio, updateName } from '../../.Store/floovio.actions'
 import { saveNewExercise, createNewExerciseItem, updateExercise, renameItem } from '../../.Lists/BackendFunctions'
+import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
+import Instructions from '../Instructions';
 
 
 const useStyles = makeStyles({
@@ -22,6 +24,7 @@ const useStyles = makeStyles({
 const FloovioDialog = (props) => {
     const classes = useStyles();
     const [mediaDialogOpen, setMediaDialogOpen] = useState(false);
+    const [helpOpen, setHelpOpen] = useState(false);
     const isValid = (props.name !== '' && props.content)
 
     const handleMediaDialogClose = () => {
@@ -31,6 +34,14 @@ const FloovioDialog = (props) => {
     const handleMediaDialogOpen = () => {
         setMediaDialogOpen(true);
     };
+
+    const handleHelpOpen = () => {
+        setHelpOpen(true);
+    }
+
+    const handleHelpClose = () => {
+        setHelpOpen(false);
+    }
 
     const handleCreate = () => {
         const exerciseData = {
@@ -75,6 +86,9 @@ const FloovioDialog = (props) => {
                 </DialogContent>
                 <DialogActions className={classes.actions}>
                     <div className={classes.leftControls}>
+                        <IconButton onClick={handleHelpOpen}>
+                            <HelpOutlineIcon />
+                        </IconButton>
                         <Button autoFocus onClick={handleMediaDialogOpen} color="primary">
                             View Media
                         </Button>
@@ -99,6 +113,7 @@ const FloovioDialog = (props) => {
                     handleClose={handleMediaDialogClose}
                     courseId={props.courseId}
                 />
+                {helpOpen ? <Instructions close={handleHelpClose} /> : null}
             </Dialog>
         </>
     );

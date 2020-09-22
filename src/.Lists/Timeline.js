@@ -22,6 +22,7 @@ const Timeline = (props) => {
     const courseIdFromPath = props.match.params.courseId || null;
     const currentUser = firebase.auth().currentUser;
     const allPropsLoaded = (Boolean(currentUser) && Boolean(courseIdFromPath))
+    const canUserEdit = (props.courseData.roles) ? props.courseData.roles.teachers.includes(props.activeUser) || props.courseData.roles.editors.includes(props.activeUser) : false;
 
     return (
         <>
@@ -31,7 +32,7 @@ const Timeline = (props) => {
                             return (a[1].name < b[1].name ? -1 : (a[1].name > b[1].name ? 1 : 0))
                         })
                         .map(([key, listData]) => {
-                                return <List key={key} listId={key} listData={listData} courseId={courseIdFromPath} user={currentUser} />
+                                return <List key={key} listId={key} listData={listData} courseId={courseIdFromPath} user={currentUser} canUserEdit={canUserEdit} />
                             })
                 :   <div className={classes.noCoursesContainer}>   
                         <Typography variant='h4' color='textPrimary' align='center'>
@@ -43,7 +44,7 @@ const Timeline = (props) => {
                         </Typography> 
                     </div>
             }
-            { allPropsLoaded ? <AddNewList courseId={courseIdFromPath} user={currentUser} /> : null }
+            { (allPropsLoaded && canUserEdit) ? <AddNewList courseId={courseIdFromPath} user={currentUser} /> : null }
         </>
     );
 }
@@ -51,6 +52,8 @@ const Timeline = (props) => {
 const mapStateToProps = state => {
     return {
         lists: state.course.data.lists,
+        courseData: state.course.data,
+        activeUser: state.auth.userUid
     }
 }
 

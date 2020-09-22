@@ -18,7 +18,7 @@ const useStyles = makeStyles({
 
 })
 
-const List = ({ listData, listId, courseId, user }) => {
+const List = ({ listData, listId, courseId, user, canUserEdit }) => {
     const classes = useStyles();
     const [collapsed, setCollapsed] = useState(false) 
 
@@ -28,14 +28,14 @@ const List = ({ listData, listId, courseId, user }) => {
 
     return (
         <div className={classes.root}>
-            <ListHeader listId={listId} listData={listData} courseId={courseId} onCollapse={toggleCollapse} collapsed={collapsed} user={user} />
+            <ListHeader listId={listId} listData={listData} courseId={courseId} onCollapse={toggleCollapse} collapsed={collapsed} user={user} canUserEdit={canUserEdit} />
             <Table className={classes.table} size='small'>
                 <TableBody>
                     <TableRow>
                         <TableCell colSpan={5} className={classes.cell}>
                             <Collapse in={!collapsed} >
                                 <Table size='small'>
-                                    <ListBody listId={listId} items={listData.items} courseId={courseId} />
+                                    <ListBody listId={listId} items={listData.items} courseId={courseId} canUserEdit={canUserEdit} />
                                     {/* <ListActions listId={listData.id} courseId={courseId} /> */}
                                 </Table>
                             </Collapse>

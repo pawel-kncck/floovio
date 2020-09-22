@@ -22,7 +22,7 @@ const useStyles = makeStyles({
     }
 })
 
-const ListItem = ({ itemId, listId, courseId, itemData }) => {
+const ListItem = ({ itemId, listId, courseId, itemData, canUserEdit }) => {
     const classes = useStyles();
 
     return (
@@ -46,7 +46,7 @@ const ListItem = ({ itemId, listId, courseId, itemData }) => {
                 {/* <PositionButtons /> */}
             </TableCell>
             <TableCell className={classes.cell}>
-                <ItemOptions itemId={itemId} listId={listId} courseId={courseId} itemData={itemData} />
+                { canUserEdit ? <ItemOptions itemId={itemId} listId={listId} courseId={courseId} itemData={itemData} /> : null }
             </TableCell>
         </TableRow>
     );

@@ -20,10 +20,11 @@ const useStyles = makeStyles({
         margin: 0,
         padding: 0,
     },
-    buttomContainer: {
+    buttonContainer: {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
+        marginBottom: '100px',
     },
     button: {
         margin: '10px 0'
@@ -67,41 +68,10 @@ const MediaSidebar = (props) => {
             })
     };
 
-    // const firebaseImageUpload = () => {
-    //     const fileId = makeId(8);
-    //     const file = selectedFile;
-    //     const storageRef = storage.ref(`/media/${courseIdFromPath}/${file.name}`);
-
-    //     const metadata = {
-    //         customMetadata: {
-    //             code: fileId,
-    //         }
-    //     }
-
-    //     storageRef.put(file, metadata)
-    //         .then(res => {
-    //             return storageRef.getDownloadURL()
-    //         })
-    //         .then(url => {
-    //             const fileMetadata = {
-    //                 url: url,
-    //                 id: fileId,
-    //                 name: file.name
-    //             }
-    //             console.log(fileMetadata);
-    //             console.log("CourseID: " + courseIdFromPath);
-    //             console.log("User: " + props.user);
-    //             addMedia(courseIdFromPath, fileMetadata, props.user)
-    //         })
-    //         .catch(err => {
-    //             console.error(err)
-    //         })
-    // };
-
     return (
         <div className={classes.root}>
             <MediaList courseId={courseIdFromPath} />
-            <div className={classes.buttomContainer}>
+            <div className={classes.buttonContainer}>
                 <input 
                     type="file" 
                     id='imageupload' 

@@ -1,0 +1,62 @@
+[
+    {
+        "title": "Table 1 x 2", 
+        "description": "Empty table with 1 row and 2 columns ", 
+        "content": "<table class=\"inside-exercise-table\" style=\"width: 100%;\"><tbody><tr><td style=\"width: 50%;\">&nbsp;</td><td style=\"width: 50%;\">&nbsp;</td></tr></tbody></table>"
+    },
+    {
+        "title": "Table 1 x 3", 
+        "description": "Empty table with 1 row and 3 columns ", 
+        "content": "<table class=\"inside-exercise-table\" style=\"width: 100%;\"><tbody><tr><td style=\"width: 33%;\">&nbsp;</td><td style=\"width: 34%;\">&nbsp;</td><td style=\"width: 33%;\">&nbsp;</td></tr></tbody></table>"
+    },
+    {
+        "title": "Table 1 x 4", 
+        "description": "Empty table with 1 row and 4 columns ", 
+        "content": "<table class=\"inside-exercise-table\" style=\"width: 100%;\"><tbody><tr><td style=\"width: 25%;\">&nbsp;</td><td style=\"width: 25%;\">&nbsp;</td><td style=\"width: 25%;\">&nbsp;</td><td style=\"width: 25%;\">&nbsp;</td></tr></tbody></table>"
+    },
+    {
+        "title": "Table 2 x 2", 
+        "description": "Empty table with 2 rows and 2 columns ", 
+        "content": "<table class=\"inside-exercise-table\" style=\"width: 100%;\"><tbody><tr><td style=\"width: 50%;\">&nbsp;</td><td style=\"width: 50%;\">&nbsp;</td></tr><tr><td style=\"width: 50%;\">&nbsp;</td><td style=\"width: 50%;\">&nbsp;</td></tr></tbody></table>"
+    },
+    {
+        "title": "Table 2 x 3", 
+        "description": "Empty table with 2 rows and 3 columns ", 
+        "content": "<table class=\"inside-exercise-table\" style=\"width: 100%;\"><tbody><tr><td style=\"width: 33%;\">&nbsp;</td><td style=\"width: 34%;\">&nbsp;</td><td style=\"width: 33%;\">&nbsp;</td></tr><tr><td style=\"width: 33%;\">&nbsp;</td><td style=\"width: 34%;\">&nbsp;</td><td style=\"width: 33%;\">&nbsp;</td></tr></tbody></table>"
+    },
+    {
+        "title": "Table 2 x 4", 
+        "description": "Empty table with 2 rows and 4 columns ", 
+        "content": "<table class=\"inside-exercise-table\" style=\"width: 100%;\"><tbody><tr><td style=\"width: 25%;\">&nbsp;</td><td style=\"width: 25%;\">&nbsp;</td><td style=\"width: 25%;\">&nbsp;</td><td style=\"width: 25%;\">&nbsp;</td></tr><tr><td style=\"width: 25%;\">&nbsp;</td><td style=\"width: 25%;\">&nbsp;</td><td style=\"width: 25%;\">&nbsp;</td><td style=\"width: 25%;\">&nbsp;</td></tr></tbody></table>"
+    },
+    {
+        "title": "Table 4 x 2", 
+        "description": "Empty table with 4 rows and 2 columns ", 
+        "content": "<table class=\"inside-exercise-table\" style=\"width: 100%;\"><tbody><tr><td style=\"width: 50%;\">&nbsp;</td><td style=\"width: 50%;\">&nbsp;</td></tr><tr><td style=\"width: 50%;\">&nbsp;</td><td style=\"width: 50%;\">&nbsp;</td></tr><tr><td style=\"width: 50%;\">&nbsp;</td><td style=\"width: 50%;\">&nbsp;</td></tr><tr><td style=\"width: 50%;\">&nbsp;</td><td style=\"width: 50%;\">&nbsp;</td></tr></tbody></table>"
+    },
+    {
+        "title": "Table 4 x 3", 
+        "description": "Empty table with 4 rows and 3 columns ", 
+        "content": "<table class=\"inside-exercise-table\" style=\"width: 100%;\"><tbody><tr><td style=\"width: 33%;\">&nbsp;</td><td style=\"width: 34%;\">&nbsp;</td><td style=\"width: 33%;\">&nbsp;</td></tr><tr><td style=\"width: 33%;\">&nbsp;</td><td style=\"width: 34%;\">&nbsp;</td><td style=\"width: 33%;\">&nbsp;</td></tr><tr><td style=\"width: 33%;\">&nbsp;</td><td style=\"width: 34%;\">&nbsp;</td><td style=\"width: 33%;\">&nbsp;</td></tr><tr><td style=\"width: 33%;\">&nbsp;</td><td style=\"width: 34%;\">&nbsp;</td><td style=\"width: 33%;\">&nbsp;</td></tr></tbody></table>"
+    },
+    {
+        "title": "Table 4 x 4", 
+        "description": "Empty table with 4 rows and 4 columns ", 
+        "content": "<table class=\"inside-exercise-table\" style=\"width: 100%;\"><tbody><tr><td style=\"width: 25%;\">&nbsp;</td><td style=\"width: 25%;\">&nbsp;</td><td style=\"width: 25%;\">&nbsp;</td><td style=\"width: 25%;\">&nbsp;</td></tr><tr><td style=\"width: 25%;\">&nbsp;</td><td style=\"width: 25%;\">&nbsp;</td><td style=\"width: 25%;\">&nbsp;</td><td style=\"width: 25%;\">&nbsp;</td></tr><tr><td style=\"width: 25%;\">&nbsp;</td><td style=\"width: 25%;\">&nbsp;</td><td style=\"width: 25%;\">&nbsp;</td><td style=\"width: 25%;\">&nbsp;</td></tr><tr><td style=\"width: 25%;\">&nbsp;</td><td style=\"width: 25%;\">&nbsp;</td><td style=\"width: 25%;\">&nbsp;</td><td style=\"width: 25%;\">&nbsp;</td></tr></tbody></table>"
+    },
+    {
+        "title": "Table 8 x 2", 
+        "description": "Empty table with 8 rows and 2 columns ", 
+        "content": "<table class=\"inside-exercise-table\" style=\"width: 100%;\"><tbody><tr><td style=\"width: 50%;\">&nbsp;</td><td style=\"width: 50%;\">&nbsp;</td></tr><tr><td style=\"width: 50%;\">&nbsp;</td><td style=\"width: 50%;\">&nbsp;</td></tr><tr><td style=\"width: 50%;\">&nbsp;</td><td style=\"width: 50%;\">&nbsp;</td></tr><tr><td style=\"width: 50%;\">&nbsp;</td><td style=\"width: 50%;\">&nbsp;</td></tr><tr><td style=\"width: 50%;\">&nbsp;</td><td style=\"width: 50%;\">&nbsp;</td></tr><tr><td style=\"width: 50%;\">&nbsp;</td><td style=\"width: 50%;\">&nbsp;</td></tr><tr><td style=\"width: 50%;\">&nbsp;</td><td style=\"width: 50%;\">&nbsp;</td></tr><tr><td style=\"width: 50%;\">&nbsp;</td><td style=\"width: 50%;\">&nbsp;</td></tr></tbody></table>"
+    },
+    {
+        "title": "Table 8 x 3", 
+        "description": "Empty table with 8 rows and 3 columns ", 
+        "content": "<table class=\"inside-exercise-table\" style=\"width: 100%;\"><tbody><tr><td style=\"width: 33%;\">&nbsp;</td><td style=\"width: 34%;\">&nbsp;</td><td style=\"width: 33%;\">&nbsp;</td></tr><tr><td style=\"width: 33%;\">&nbsp;</td><td style=\"width: 34%;\">&nbsp;</td><td style=\"width: 33%;\">&nbsp;</td></tr><tr><td style=\"width: 33%;\">&nbsp;</td><td style=\"width: 34%;\">&nbsp;</td><td style=\"width: 33%;\">&nbsp;</td></tr><tr><td style=\"width: 33%;\">&nbsp;</td><td style=\"width: 34%;\">&nbsp;</td><td style=\"width: 33%;\">&nbsp;</td></tr><tr><td style=\"width: 33%;\">&nbsp;</td><td style=\"width: 34%;\">&nbsp;</td><td style=\"width: 33%;\">&nbsp;</td></tr><tr><td style=\"width: 33%;\">&nbsp;</td><td style=\"width: 34%;\">&nbsp;</td><td style=\"width: 33%;\">&nbsp;</td></tr><tr><td style=\"width: 33%;\">&nbsp;</td><td style=\"width: 34%;\">&nbsp;</td><td style=\"width: 33%;\">&nbsp;</td></tr><tr><td style=\"width: 33%;\">&nbsp;</td><td style=\"width: 34%;\">&nbsp;</td><td style=\"width: 33%;\">&nbsp;</td></tr></tbody></table>"
+    },
+    {
+        "title": "Table 8 x 4", 
+        "description": "Empty table with 8 rows and 4 columns ", 
+        "content": "<table class=\"inside-exercise-table\" style=\"width: 100%;\"><tbody><tr><td style=\"width: 25%;\">&nbsp;</td><td style=\"width: 25%;\">&nbsp;</td><td style=\"width: 25%;\">&nbsp;</td><td style=\"width: 25%;\">&nbsp;</td></tr><tr><td style=\"width: 25%;\">&nbsp;</td><td style=\"width: 25%;\">&nbsp;</td><td style=\"width: 25%;\">&nbsp;</td><td style=\"width: 25%;\">&nbsp;</td></tr><tr><td style=\"width: 25%;\">&nbsp;</td><td style=\"width: 25%;\">&nbsp;</td><td style=\"width: 25%;\">&nbsp;</td><td style=\"width: 25%;\">&nbsp;</td></tr><tr><td style=\"width: 25%;\">&nbsp;</td><td style=\"width: 25%;\">&nbsp;</td><td style=\"width: 25%;\">&nbsp;</td><td style=\"width: 25%;\">&nbsp;</td></tr><tr><td style=\"width: 25%;\">&nbsp;</td><td style=\"width: 25%;\">&nbsp;</td><td style=\"width: 25%;\">&nbsp;</td><td style=\"width: 25%;\">&nbsp;</td></tr><tr><td style=\"width: 25%;\">&nbsp;</td><td style=\"width: 25%;\">&nbsp;</td><td style=\"width: 25%;\">&nbsp;</td><td style=\"width: 25%;\">&nbsp;</td></tr><tr><td style=\"width: 25%;\">&nbsp;</td><td style=\"width: 25%;\">&nbsp;</td><td style=\"width: 25%;\">&nbsp;</td><td style=\"width: 25%;\">&nbsp;</td></tr><tr><td style=\"width: 25%;\">&nbsp;</td><td style=\"width: 25%;\">&nbsp;</td><td style=\"width: 25%;\">&nbsp;</td><td style=\"width: 25%;\">&nbsp;</td></tr></tbody></table>"
+    }
+]

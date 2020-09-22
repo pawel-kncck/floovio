@@ -95,6 +95,23 @@ body li {
   margin: 0 4px;
 }
 
+/* EXERCISE TABLE */
+
+.inside-exercise-table {
+  border: 1px solid #ccc;
+  border-collapse: collapse;
+}
+
+.inside-exercise-table tr {
+  height: 21px;
+}
+
+.inside-exercise-table td {
+  border: 1px solid #ccc;
+  padding: 5px 10px;
+}
+
+
 /* SOLVER */
 
 .app-solver .solver {

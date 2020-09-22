@@ -62,7 +62,7 @@ const Sidebar = (props) => {
     const [chatOpen, setChatOpen] = useState(false);
     const courseId = props.match.params.id;
 
-    const isEditor = (props.roles) ? props.roles.editors.includes(firebase.auth().currentUser.uid) : null;
+    const canUserEdit = (props.roles) ? props.roles.teachers.includes(firebase.auth().currentUser.uid) || props.roles.editors.includes(firebase.auth().currentUser.uid) : null;
 
     const toggleChatOpen = () => {
         setChatOpen(!chatOpen);
@@ -81,7 +81,7 @@ const Sidebar = (props) => {
                     <SidebarButton text='Chat' icon={<ChatIcon />} click={() => toggleChatOpen()} active={chatOpen} />
                 </div>
                 <div className={classes.buttonsBottom}>
-                    <NavLink to={`/course/${courseId}/media`}><SidebarButton text='Media' icon={<MediaIcon />} active={false} /></NavLink>
+                    { canUserEdit ? <NavLink to={`/course/${courseId}/media`}><SidebarButton text='Media' icon={<MediaIcon />} active={false} /></NavLink> : null }
                     <NavLink to={`/course/${courseId}/settings`}><SidebarButton text='Settings' icon={<SettingsIcon />} active={false} /></NavLink>
                 </div>
             </div>

@@ -29,7 +29,7 @@ const ImageElement = (props) => {
 
     return (
         <div className={classes.root}>
-            <img src={url} height={props.height} maxWidth="100%" />
+            <img src={url} height={props.height} />
         </div>
     );
 }

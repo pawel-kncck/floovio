@@ -15,6 +15,7 @@ export const FETCH_USER_START = 'FETCH_USER_START'
 export const FETCH_USER_FAIL = 'FETCH_USER_FAIL'
 export const FETCH_USER_SUCCESS = 'FETCH_USER_SUCCESS'
 export const CLEAN_AUTH_STATE = 'CLEAN_AUTH_STATE'
+export const CLEAR_ERROR = 'CLEAR_ERROR'
 
 
 /*
@@ -22,7 +23,11 @@ export const CLEAN_AUTH_STATE = 'CLEAN_AUTH_STATE'
  */
 
 export const loginStart = () => {
-  return { type: LOGIN_START }
+    return { type: LOGIN_START }
+}
+
+export const clearError = () => {
+    return { type: CLEAR_ERROR }
 }
 
 export const loginSuccess = (loginData) => {

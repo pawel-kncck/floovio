@@ -80,6 +80,11 @@ const reducer = (state = initialState,action) => {
                 userUid: null,
                 isFetching: false
             }
+        case actions.CLEAR_ERROR:
+            return {
+                ...state,
+                error: null,
+            }
 		default:
 			return state;
 	}

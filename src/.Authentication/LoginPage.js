@@ -7,6 +7,7 @@ import * as actions from '../.Store/auth.actions';
 import * as routes from '../.Application/routes';
 import { connect } from 'react-redux';
 import PasswordResetDialog from './PasswordResetDialog';
+import Alert from '../.Alerts/ErrorAlert';
 
 const useStyles = makeStyles({
     textField: {
@@ -53,7 +54,6 @@ const LoginPage = (props) => {
     const [email,setEmail] = useState('');
     const [password,setPassword] = useState('');
     const [resetDialogOpen, setResetDialogOpen] = useState(false);
-    const [error,setError] = useState(null);
     const classes = useStyles();
 
     const isInvalid = (email === '' || password === '');
@@ -94,14 +94,22 @@ const LoginPage = (props) => {
             </form>
         </div>
         <PasswordResetDialog open={resetDialogOpen} close={handleResetDialogClose} />
+        <Alert open={Boolean(props.error)} onClose={props.clearError} message={(props.error) ? props.error.message : ''} />
         </>
     );
 };
 
+const mapStateToProps = state => {
+    return {
+        error: state.auth.error,
+    }
+}
+
 const mapDispatchToProps = dispatch => {
     return {
-        onLogin: (email, password) => dispatch(actions.login(email, password))
+        onLogin: (email, password) => dispatch(actions.login(email, password)),
+        clearError: () => dispatch(actions.clearError())
     }
 }
  
-export default connect(null,mapDispatchToProps)(LoginPage);
+export default connect(mapStateToProps,mapDispatchToProps)(LoginPage);

@@ -2,10 +2,16 @@ import React from 'react';
 import { TableBody, makeStyles } from '@material-ui/core';
 import ListItem from './ListItem/ListItemIndex';
 
+const styles = {
+    root: {
+        width: '100%',
+    }
+}
+
 const ListBody = ({ items, courseId, listId, canUserEdit }) => {
 
     return (
-        <TableBody>
+        <div style={styles.root}>
             {(Boolean(items) && Object.keys(items).length !== 0)
                 ?   Object.entries(items)
                         .sort((a, b) => {
@@ -16,7 +22,7 @@ const ListBody = ({ items, courseId, listId, canUserEdit }) => {
                     })
                 : null
             }
-        </TableBody>
+        </div>
     );
 }
  

@@ -24,7 +24,7 @@ const ListItem = ({ itemId, listId, courseId, itemData, canUserEdit }) => {
     const classes = useStyles();
 
     return (
-        <div key={itemData.id} className={classes.root}>
+        <div key={itemData.id} className={classes.root} onClick={() => console.log("Item clicked")}>
             <OpenItemButton itemData={itemData} />
             <ItemName name={itemData.name} />
             {/* {(itemData.format) ? <FormatTag type={itemData.format} /> : null} */}

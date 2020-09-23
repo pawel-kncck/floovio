@@ -43,6 +43,7 @@ const useStyles = makeStyles(theme => ({
     },
     otherUserContainer: {
         display: 'flex',
+        paddingLeft: '10px',
         width: '100%',
     },
     deleteButton: {

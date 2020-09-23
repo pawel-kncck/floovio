@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
 const MediaCard = (props) => {
     const classes = useStyles();
     const [hover, setHover] = useState(false);
-    const [deleteConfOpen, setDeleteConfOpen] = useState();
+    const [deleteConfOpen, setDeleteConfOpen] = useState(false);
 
     const handleDelete = () => {
         deleteMediaObject(props.courseId, props.mediaObject);

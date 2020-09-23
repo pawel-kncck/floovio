@@ -10,7 +10,6 @@ import SettingsIcon from '@material-ui/icons/Settings';
 import StudentsIcon from '@material-ui/icons/PeopleAltOutlined';
 import Chat from '../../.Messages/Messages';
 import LessonList from '../../.Lesson/LessonList/LessonList';
-import MediaViewer from '../../.Media/MediaSidebar';
 import * as routes from '../../.Application/routes';
 import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';

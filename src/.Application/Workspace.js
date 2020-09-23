@@ -8,7 +8,7 @@ import { fetchCourse, setActiveStudent } from '../.Store/course.actions';
 import { connect } from 'react-redux';
 import Notes from '../.Notes/Notes';
 import Lessons from '../.Lists/Timeline';
-import Media from '../.Media/MediaSidebar';
+import Media from '../.Media/MediaSectionIndex';
 import Settings from '../.Course/CourseSettings/CourseSettings';
 import firebase from '../.Database/firebase';
 

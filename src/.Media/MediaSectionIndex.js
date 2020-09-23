@@ -7,13 +7,13 @@ import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import { connect } from 'react-redux';
 import { makeCustomId } from '../.Utilities/Utilities';
 import { addMedia } from '../.Database/db.media';
-import MediaListItem from './MediaListItem';
-import MediaList from './MediaList';
+import MediaCollection from './MediaCollection';
 
 const useStyles = makeStyles({
     root: {
         width: '100%',
-        margin: 0,
+        margin: 'auto',
+        marginTop: '30px',
         padding: 0,
     },
     listContainer: {
@@ -24,6 +24,7 @@ const useStyles = makeStyles({
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
+        marginTop: '50px',
         marginBottom: '100px',
     },
     button: {
@@ -31,7 +32,7 @@ const useStyles = makeStyles({
     }
 })
 
-const MediaSidebar = (props) => {
+const MediaSection = (props) => {
     const classes = useStyles();
     const courseIdFromPath = props.match.params.courseId || null;
 
@@ -70,7 +71,7 @@ const MediaSidebar = (props) => {
 
     return (
         <div className={classes.root}>
-            <MediaList courseId={courseIdFromPath} />
+            <MediaCollection courseId={courseIdFromPath} />
             <div className={classes.buttonContainer}>
                 <input 
                     type="file" 
@@ -84,7 +85,6 @@ const MediaSidebar = (props) => {
                     startIcon={<CloudUploadIcon />}
                     color="primary" 
                     variant="contained" 
-                    size="small" 
                     onClick={handleClick}
                     >Upload</Button>
             </div>
@@ -105,4 +105,4 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
-export default connect(mapStateToProps,mapDispatchToProps)(MediaSidebar);
+export default connect(mapStateToProps,mapDispatchToProps)(MediaSection);

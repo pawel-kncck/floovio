@@ -425,3 +425,13 @@ export const getCoursesWithUser = (userId) => {
             })
         })
 }
+
+export const deleteMediaObject = (courseId, mediaObject) => {
+    const courseRef = getCourseRef(courseId);
+
+    courseRef.update({
+        media: firebase.firestore.FieldValue.arrayRemove(mediaObject)
+    })
+    .then(res => res)
+    .catch(err => { throw err })
+}

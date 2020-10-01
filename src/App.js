@@ -16,6 +16,7 @@ import Workspace from './.Application/Workspace';
 import * as routes from './.Application/routes';
 import FireFunctions from './.Lab/FireFunctions';
 import BackendAdmin from './.Lab/DatabaseAdmin';
+import ExerciseJson from './.Lab/ExerciseJson';
 
 
 function App(props) {
@@ -42,6 +43,7 @@ function App(props) {
               <Route path="/login" component={Login} />
               <Route path="/signup" component={Signup} />
               <Route path="/lab" exact component={FireFunctions} />
+              <Route path="/exercisejson" exact component={ExerciseJson} />
               <Route path="/unauthorized" component={Unauthorized} />
             </Switch>
           </div>

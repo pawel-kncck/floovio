@@ -7,6 +7,7 @@ import CourseLanguageRow from './CourseLanguageRow';
 import CourseLevelRow from './CourseLevelRow';
 import CourseTeachersRow from './CourseTeachersRow';
 import CourseStudentsRow from './CourseStudentsRow';
+import CourseStatusesRow from './CourseStatusesRow';
 import StudentDeletePrompt from './StudentDeletePrompt';
 
 const useStyles = makeStyles({
@@ -58,6 +59,7 @@ const CourseSettings = (props) => {
         <TableBody>
           <CourseTeachersRow courseId={courseId} courseData={props.courseData} canUserEdit={userIsTeacher} />
           <CourseStudentsRow courseId={courseId} courseData={props.courseData} handleDeleteConfirmation={handleStudentDeletePromptOpen} canUserEdit={userIsTeacher} />
+          <CourseStatusesRow courseData={props.courseData} />
         </TableBody>
       </Table>
     </TableContainer>
